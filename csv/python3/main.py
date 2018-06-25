@@ -6,7 +6,7 @@ from antlr4 import *
 from CSVLexer import CSVLexer
 from CSVListener import CSVListener
 from CSVParser import CSVParser
-import sys
+
 
 class CSVPrintListener(CSVListener):
     def __init__(self):
