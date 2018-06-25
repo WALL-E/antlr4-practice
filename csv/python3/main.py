@@ -54,11 +54,11 @@ def main():
     parser = CSVParser(stream)
     tree = parser.csvFile()
 
-    printer = CSVPrintListener()
+    listener = CSVPrintListener()
     walker = ParseTreeWalker()
-    walker.walk(printer, tree)
+    walker.walk(listener, tree)
 
-    print(printer.rows)
+    print(listener.rows)
 
 if __name__ == '__main__':
     main()
