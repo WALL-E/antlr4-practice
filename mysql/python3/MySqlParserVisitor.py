@@ -2434,13 +2434,13 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#isExpression.
-    def visitIsExpression(self, ctx:MySqlParser.IsExpressionContext):
+    # Visit a parse tree produced by MySqlParser#notExpression.
+    def visitNotExpression(self, ctx:MySqlParser.NotExpressionContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#notExpression.
-    def visitNotExpression(self, ctx:MySqlParser.NotExpressionContext):
+    # Visit a parse tree produced by MySqlParser#isExpression.
+    def visitIsExpression(self, ctx:MySqlParser.IsExpressionContext):
         return self.visitChildren(ctx)
 
 
@@ -2454,8 +2454,8 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#soundsLikePredicate.
-    def visitSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
+    # Visit a parse tree produced by MySqlParser#likePredicate.
+    def visitLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
         return self.visitChildren(ctx)
 
 
@@ -2464,13 +2464,13 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#inPredicate.
-    def visitInPredicate(self, ctx:MySqlParser.InPredicateContext):
+    # Visit a parse tree produced by MySqlParser#binaryComparasionPredicate.
+    def visitBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#subqueryComparasionPredicate.
-    def visitSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
+    # Visit a parse tree produced by MySqlParser#soundsLikePredicate.
+    def visitSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
         return self.visitChildren(ctx)
 
 
@@ -2479,8 +2479,13 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#binaryComparasionPredicate.
-    def visitBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
+    # Visit a parse tree produced by MySqlParser#regexpPredicate.
+    def visitRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#subqueryComparasionPredicate.
+    def visitSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
         return self.visitChildren(ctx)
 
 
@@ -2489,73 +2494,8 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by MySqlParser#likePredicate.
-    def visitLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#regexpPredicate.
-    def visitRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#unaryExpressionAtom.
-    def visitUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#collateExpressionAtom.
-    def visitCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#subqueryExpessionAtom.
-    def visitSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
-    def visitMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#nestedExpressionAtom.
-    def visitNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#nestedRowExpressionAtom.
-    def visitNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#mathExpressionAtom.
-    def visitMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#intervalExpressionAtom.
-    def visitIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#existsExpessionAtom.
-    def visitExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#constantExpressionAtom.
-    def visitConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#functionCallExpressionAtom.
-    def visitFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by MySqlParser#binaryExpressionAtom.
-    def visitBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
+    # Visit a parse tree produced by MySqlParser#inPredicate.
+    def visitInPredicate(self, ctx:MySqlParser.InPredicateContext):
         return self.visitChildren(ctx)
 
 
@@ -2564,8 +2504,68 @@ class MySqlParserVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
+    # Visit a parse tree produced by MySqlParser#existsExpessionAtom.
+    def visitExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#intervalExpressionAtom.
+    def visitIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#nestedRowExpressionAtom.
+    def visitNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#unaryExpressionAtom.
+    def visitUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#subqueryExpessionAtom.
+    def visitSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#functionCallExpressionAtom.
+    def visitFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#collateExpressionAtom.
+    def visitCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#constantExpressionAtom.
+    def visitConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#nestedExpressionAtom.
+    def visitNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#binaryExpressionAtom.
+    def visitBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
     # Visit a parse tree produced by MySqlParser#bitExpressionAtom.
     def visitBitExpressionAtom(self, ctx:MySqlParser.BitExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#mathExpressionAtom.
+    def visitMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
+    def visitMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
         return self.visitChildren(ctx)
 
 

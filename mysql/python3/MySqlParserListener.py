@@ -4373,21 +4373,21 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#isExpression.
-    def enterIsExpression(self, ctx:MySqlParser.IsExpressionContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#isExpression.
-    def exitIsExpression(self, ctx:MySqlParser.IsExpressionContext):
-        pass
-
-
     # Enter a parse tree produced by MySqlParser#notExpression.
     def enterNotExpression(self, ctx:MySqlParser.NotExpressionContext):
         pass
 
     # Exit a parse tree produced by MySqlParser#notExpression.
     def exitNotExpression(self, ctx:MySqlParser.NotExpressionContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#isExpression.
+    def enterIsExpression(self, ctx:MySqlParser.IsExpressionContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#isExpression.
+    def exitIsExpression(self, ctx:MySqlParser.IsExpressionContext):
         pass
 
 
@@ -4409,12 +4409,12 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#soundsLikePredicate.
-    def enterSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
+    # Enter a parse tree produced by MySqlParser#likePredicate.
+    def enterLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
         pass
 
-    # Exit a parse tree produced by MySqlParser#soundsLikePredicate.
-    def exitSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
+    # Exit a parse tree produced by MySqlParser#likePredicate.
+    def exitLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
         pass
 
 
@@ -4427,21 +4427,21 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#inPredicate.
-    def enterInPredicate(self, ctx:MySqlParser.InPredicateContext):
+    # Enter a parse tree produced by MySqlParser#binaryComparasionPredicate.
+    def enterBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
         pass
 
-    # Exit a parse tree produced by MySqlParser#inPredicate.
-    def exitInPredicate(self, ctx:MySqlParser.InPredicateContext):
+    # Exit a parse tree produced by MySqlParser#binaryComparasionPredicate.
+    def exitBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#subqueryComparasionPredicate.
-    def enterSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
+    # Enter a parse tree produced by MySqlParser#soundsLikePredicate.
+    def enterSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
         pass
 
-    # Exit a parse tree produced by MySqlParser#subqueryComparasionPredicate.
-    def exitSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
+    # Exit a parse tree produced by MySqlParser#soundsLikePredicate.
+    def exitSoundsLikePredicate(self, ctx:MySqlParser.SoundsLikePredicateContext):
         pass
 
 
@@ -4454,12 +4454,21 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#binaryComparasionPredicate.
-    def enterBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
+    # Enter a parse tree produced by MySqlParser#regexpPredicate.
+    def enterRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
         pass
 
-    # Exit a parse tree produced by MySqlParser#binaryComparasionPredicate.
-    def exitBinaryComparasionPredicate(self, ctx:MySqlParser.BinaryComparasionPredicateContext):
+    # Exit a parse tree produced by MySqlParser#regexpPredicate.
+    def exitRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#subqueryComparasionPredicate.
+    def enterSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#subqueryComparasionPredicate.
+    def exitSubqueryComparasionPredicate(self, ctx:MySqlParser.SubqueryComparasionPredicateContext):
         pass
 
 
@@ -4472,129 +4481,12 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by MySqlParser#likePredicate.
-    def enterLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
+    # Enter a parse tree produced by MySqlParser#inPredicate.
+    def enterInPredicate(self, ctx:MySqlParser.InPredicateContext):
         pass
 
-    # Exit a parse tree produced by MySqlParser#likePredicate.
-    def exitLikePredicate(self, ctx:MySqlParser.LikePredicateContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#regexpPredicate.
-    def enterRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#regexpPredicate.
-    def exitRegexpPredicate(self, ctx:MySqlParser.RegexpPredicateContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#unaryExpressionAtom.
-    def enterUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#unaryExpressionAtom.
-    def exitUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#collateExpressionAtom.
-    def enterCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#collateExpressionAtom.
-    def exitCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#subqueryExpessionAtom.
-    def enterSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#subqueryExpessionAtom.
-    def exitSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
-    def enterMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
-    def exitMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#nestedExpressionAtom.
-    def enterNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#nestedExpressionAtom.
-    def exitNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#nestedRowExpressionAtom.
-    def enterNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#nestedRowExpressionAtom.
-    def exitNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#mathExpressionAtom.
-    def enterMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#mathExpressionAtom.
-    def exitMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#intervalExpressionAtom.
-    def enterIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#intervalExpressionAtom.
-    def exitIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#existsExpessionAtom.
-    def enterExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#existsExpessionAtom.
-    def exitExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#constantExpressionAtom.
-    def enterConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#constantExpressionAtom.
-    def exitConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#functionCallExpressionAtom.
-    def enterFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#functionCallExpressionAtom.
-    def exitFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
-        pass
-
-
-    # Enter a parse tree produced by MySqlParser#binaryExpressionAtom.
-    def enterBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
-        pass
-
-    # Exit a parse tree produced by MySqlParser#binaryExpressionAtom.
-    def exitBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
+    # Exit a parse tree produced by MySqlParser#inPredicate.
+    def exitInPredicate(self, ctx:MySqlParser.InPredicateContext):
         pass
 
 
@@ -4607,12 +4499,120 @@ class MySqlParserListener(ParseTreeListener):
         pass
 
 
+    # Enter a parse tree produced by MySqlParser#existsExpessionAtom.
+    def enterExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#existsExpessionAtom.
+    def exitExistsExpessionAtom(self, ctx:MySqlParser.ExistsExpessionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#intervalExpressionAtom.
+    def enterIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#intervalExpressionAtom.
+    def exitIntervalExpressionAtom(self, ctx:MySqlParser.IntervalExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#nestedRowExpressionAtom.
+    def enterNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#nestedRowExpressionAtom.
+    def exitNestedRowExpressionAtom(self, ctx:MySqlParser.NestedRowExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#unaryExpressionAtom.
+    def enterUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#unaryExpressionAtom.
+    def exitUnaryExpressionAtom(self, ctx:MySqlParser.UnaryExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#subqueryExpessionAtom.
+    def enterSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#subqueryExpessionAtom.
+    def exitSubqueryExpessionAtom(self, ctx:MySqlParser.SubqueryExpessionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#functionCallExpressionAtom.
+    def enterFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#functionCallExpressionAtom.
+    def exitFunctionCallExpressionAtom(self, ctx:MySqlParser.FunctionCallExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#collateExpressionAtom.
+    def enterCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#collateExpressionAtom.
+    def exitCollateExpressionAtom(self, ctx:MySqlParser.CollateExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#constantExpressionAtom.
+    def enterConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#constantExpressionAtom.
+    def exitConstantExpressionAtom(self, ctx:MySqlParser.ConstantExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#nestedExpressionAtom.
+    def enterNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#nestedExpressionAtom.
+    def exitNestedExpressionAtom(self, ctx:MySqlParser.NestedExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#binaryExpressionAtom.
+    def enterBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#binaryExpressionAtom.
+    def exitBinaryExpressionAtom(self, ctx:MySqlParser.BinaryExpressionAtomContext):
+        pass
+
+
     # Enter a parse tree produced by MySqlParser#bitExpressionAtom.
     def enterBitExpressionAtom(self, ctx:MySqlParser.BitExpressionAtomContext):
         pass
 
     # Exit a parse tree produced by MySqlParser#bitExpressionAtom.
     def exitBitExpressionAtom(self, ctx:MySqlParser.BitExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#mathExpressionAtom.
+    def enterMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#mathExpressionAtom.
+    def exitMathExpressionAtom(self, ctx:MySqlParser.MathExpressionAtomContext):
+        pass
+
+
+    # Enter a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
+    def enterMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
+        pass
+
+    # Exit a parse tree produced by MySqlParser#mysqlVariableExpressionAtom.
+    def exitMysqlVariableExpressionAtom(self, ctx:MySqlParser.MysqlVariableExpressionAtomContext):
         pass
 
 

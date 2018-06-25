@@ -3634,31 +3634,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class CopyCreateTableContext extends CreateTableContext {
-		public TableNameContext parenthesisTable;
-		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
-		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
-		public List<TableNameContext> tableName() {
-			return getRuleContexts(TableNameContext.class);
-		}
-		public TableNameContext tableName(int i) {
-			return getRuleContext(TableNameContext.class,i);
-		}
-		public TerminalNode LIKE() { return getToken(MySqlParser.LIKE, 0); }
-		public TerminalNode TEMPORARY() { return getToken(MySqlParser.TEMPORARY, 0); }
-		public IfNotExistsContext ifNotExists() {
-			return getRuleContext(IfNotExistsContext.class,0);
-		}
-		public CopyCreateTableContext(CreateTableContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCopyCreateTable(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCopyCreateTable(this);
-		}
-	}
 	public static class ColumnCreateTableContext extends CreateTableContext {
 		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
 		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
@@ -3728,6 +3703,31 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitQueryCreateTable(this);
+		}
+	}
+	public static class CopyCreateTableContext extends CreateTableContext {
+		public TableNameContext parenthesisTable;
+		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
+		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
+		public List<TableNameContext> tableName() {
+			return getRuleContexts(TableNameContext.class);
+		}
+		public TableNameContext tableName(int i) {
+			return getRuleContext(TableNameContext.class,i);
+		}
+		public TerminalNode LIKE() { return getToken(MySqlParser.LIKE, 0); }
+		public TerminalNode TEMPORARY() { return getToken(MySqlParser.TEMPORARY, 0); }
+		public IfNotExistsContext ifNotExists() {
+			return getRuleContext(IfNotExistsContext.class,0);
+		}
+		public CopyCreateTableContext(CreateTableContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCopyCreateTable(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCopyCreateTable(this);
 		}
 	}
 
@@ -5699,19 +5699,6 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineBehavior(this);
 		}
 	}
-	public static class RoutineLanguageContext extends RoutineOptionContext {
-		public TerminalNode LANGUAGE() { return getToken(MySqlParser.LANGUAGE, 0); }
-		public TerminalNode SQL() { return getToken(MySqlParser.SQL, 0); }
-		public RoutineLanguageContext(RoutineOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRoutineLanguage(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineLanguage(this);
-		}
-	}
 	public static class RoutineCommentContext extends RoutineOptionContext {
 		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
 		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
@@ -5725,20 +5712,17 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineComment(this);
 		}
 	}
-	public static class RoutineSecurityContext extends RoutineOptionContext {
-		public Token context;
+	public static class RoutineLanguageContext extends RoutineOptionContext {
+		public TerminalNode LANGUAGE() { return getToken(MySqlParser.LANGUAGE, 0); }
 		public TerminalNode SQL() { return getToken(MySqlParser.SQL, 0); }
-		public TerminalNode SECURITY() { return getToken(MySqlParser.SECURITY, 0); }
-		public TerminalNode DEFINER() { return getToken(MySqlParser.DEFINER, 0); }
-		public TerminalNode INVOKER() { return getToken(MySqlParser.INVOKER, 0); }
-		public RoutineSecurityContext(RoutineOptionContext ctx) { copyFrom(ctx); }
+		public RoutineLanguageContext(RoutineOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRoutineSecurity(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRoutineLanguage(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineSecurity(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineLanguage(this);
 		}
 	}
 	public static class RoutineDataContext extends RoutineOptionContext {
@@ -5756,6 +5740,22 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineData(this);
+		}
+	}
+	public static class RoutineSecurityContext extends RoutineOptionContext {
+		public Token context;
+		public TerminalNode SQL() { return getToken(MySqlParser.SQL, 0); }
+		public TerminalNode SECURITY() { return getToken(MySqlParser.SECURITY, 0); }
+		public TerminalNode DEFINER() { return getToken(MySqlParser.DEFINER, 0); }
+		public TerminalNode INVOKER() { return getToken(MySqlParser.INVOKER, 0); }
+		public RoutineSecurityContext(RoutineOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRoutineSecurity(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRoutineSecurity(this);
 		}
 	}
 
@@ -6078,23 +6078,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class ColumnDeclarationContext extends CreateDefinitionContext {
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public ColumnDefinitionContext columnDefinition() {
-			return getRuleContext(ColumnDefinitionContext.class,0);
-		}
-		public ColumnDeclarationContext(CreateDefinitionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterColumnDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitColumnDeclaration(this);
-		}
-	}
 	public static class ConstraintDeclarationContext extends CreateDefinitionContext {
 		public TableConstraintContext tableConstraint() {
 			return getRuleContext(TableConstraintContext.class,0);
@@ -6121,6 +6104,23 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIndexDeclaration(this);
+		}
+	}
+	public static class ColumnDeclarationContext extends CreateDefinitionContext {
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public ColumnDefinitionContext columnDefinition() {
+			return getRuleContext(ColumnDefinitionContext.class,0);
+		}
+		public ColumnDeclarationContext(CreateDefinitionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterColumnDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitColumnDeclaration(this);
 		}
 	}
 
@@ -6902,22 +6902,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class StorageColumnConstraintContext extends ColumnConstraintContext {
-		public Token storageval;
-		public TerminalNode STORAGE() { return getToken(MySqlParser.STORAGE, 0); }
-		public TerminalNode DISK() { return getToken(MySqlParser.DISK, 0); }
-		public TerminalNode MEMORY() { return getToken(MySqlParser.MEMORY, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public StorageColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterStorageColumnConstraint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitStorageColumnConstraint(this);
-		}
-	}
 	public static class FormatColumnConstraintContext extends ColumnConstraintContext {
 		public Token colformat;
 		public TerminalNode COLUMN_FORMAT() { return getToken(MySqlParser.COLUMN_FORMAT, 0); }
@@ -6932,31 +6916,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitFormatColumnConstraint(this);
-		}
-	}
-	public static class AutoIncrementColumnConstraintContext extends ColumnConstraintContext {
-		public TerminalNode AUTO_INCREMENT() { return getToken(MySqlParser.AUTO_INCREMENT, 0); }
-		public AutoIncrementColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAutoIncrementColumnConstraint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAutoIncrementColumnConstraint(this);
-		}
-	}
-	public static class CommentColumnConstraintContext extends ColumnConstraintContext {
-		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public CommentColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCommentColumnConstraint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCommentColumnConstraint(this);
 		}
 	}
 	public static class PrimaryKeyColumnConstraintContext extends ColumnConstraintContext {
@@ -6985,18 +6944,29 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUniqueKeyColumnConstraint(this);
 		}
 	}
-	public static class NullColumnConstraintContext extends ColumnConstraintContext {
-		public NullNotnullContext nullNotnull() {
-			return getRuleContext(NullNotnullContext.class,0);
-		}
-		public NullColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
+	public static class CommentColumnConstraintContext extends ColumnConstraintContext {
+		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public CommentColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNullColumnConstraint(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCommentColumnConstraint(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNullColumnConstraint(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCommentColumnConstraint(this);
+		}
+	}
+	public static class AutoIncrementColumnConstraintContext extends ColumnConstraintContext {
+		public TerminalNode AUTO_INCREMENT() { return getToken(MySqlParser.AUTO_INCREMENT, 0); }
+		public AutoIncrementColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAutoIncrementColumnConstraint(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAutoIncrementColumnConstraint(this);
 		}
 	}
 	public static class DefaultColumnConstraintContext extends ColumnConstraintContext {
@@ -7014,6 +6984,22 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefaultColumnConstraint(this);
 		}
 	}
+	public static class StorageColumnConstraintContext extends ColumnConstraintContext {
+		public Token storageval;
+		public TerminalNode STORAGE() { return getToken(MySqlParser.STORAGE, 0); }
+		public TerminalNode DISK() { return getToken(MySqlParser.DISK, 0); }
+		public TerminalNode MEMORY() { return getToken(MySqlParser.MEMORY, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public StorageColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterStorageColumnConstraint(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitStorageColumnConstraint(this);
+		}
+	}
 	public static class ReferenceColumnConstraintContext extends ColumnConstraintContext {
 		public ReferenceDefinitionContext referenceDefinition() {
 			return getRuleContext(ReferenceDefinitionContext.class,0);
@@ -7026,6 +7012,20 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitReferenceColumnConstraint(this);
+		}
+	}
+	public static class NullColumnConstraintContext extends ColumnConstraintContext {
+		public NullNotnullContext nullNotnull() {
+			return getRuleContext(NullNotnullContext.class,0);
+		}
+		public NullColumnConstraintContext(ColumnConstraintContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNullColumnConstraint(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNullColumnConstraint(this);
 		}
 	}
 
@@ -7184,6 +7184,34 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ForeignKeyTableConstraintContext extends TableConstraintContext {
+		public UidContext name;
+		public UidContext index;
+		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
+		}
+		public ReferenceDefinitionContext referenceDefinition() {
+			return getRuleContext(ReferenceDefinitionContext.class,0);
+		}
+		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
+		public List<UidContext> uid() {
+			return getRuleContexts(UidContext.class);
+		}
+		public UidContext uid(int i) {
+			return getRuleContext(UidContext.class,i);
+		}
+		public ForeignKeyTableConstraintContext(TableConstraintContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterForeignKeyTableConstraint(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitForeignKeyTableConstraint(this);
+		}
+	}
 	public static class UniqueKeyTableConstraintContext extends TableConstraintContext {
 		public UidContext name;
 		public Token indexFormat;
@@ -7263,34 +7291,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPrimaryKeyTableConstraint(this);
-		}
-	}
-	public static class ForeignKeyTableConstraintContext extends TableConstraintContext {
-		public UidContext name;
-		public UidContext index;
-		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public ReferenceDefinitionContext referenceDefinition() {
-			return getRuleContext(ReferenceDefinitionContext.class,0);
-		}
-		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
-		public List<UidContext> uid() {
-			return getRuleContexts(UidContext.class);
-		}
-		public UidContext uid(int i) {
-			return getRuleContext(UidContext.class,i);
-		}
-		public ForeignKeyTableConstraintContext(TableConstraintContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterForeignKeyTableConstraint(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitForeignKeyTableConstraint(this);
 		}
 	}
 
@@ -7785,34 +7785,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SpecialIndexDeclarationContext extends IndexColumnDefinitionContext {
-		public Token indexFormat;
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public TerminalNode FULLTEXT() { return getToken(MySqlParser.FULLTEXT, 0); }
-		public TerminalNode SPATIAL() { return getToken(MySqlParser.SPATIAL, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public List<IndexOptionContext> indexOption() {
-			return getRuleContexts(IndexOptionContext.class);
-		}
-		public IndexOptionContext indexOption(int i) {
-			return getRuleContext(IndexOptionContext.class,i);
-		}
-		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public SpecialIndexDeclarationContext(IndexColumnDefinitionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpecialIndexDeclaration(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpecialIndexDeclaration(this);
-		}
-	}
 	public static class SimpleIndexDeclarationContext extends IndexColumnDefinitionContext {
 		public Token indexFormat;
 		public IndexColumnNamesContext indexColumnNames() {
@@ -7840,6 +7812,34 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleIndexDeclaration(this);
+		}
+	}
+	public static class SpecialIndexDeclarationContext extends IndexColumnDefinitionContext {
+		public Token indexFormat;
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
+		}
+		public TerminalNode FULLTEXT() { return getToken(MySqlParser.FULLTEXT, 0); }
+		public TerminalNode SPATIAL() { return getToken(MySqlParser.SPATIAL, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public List<IndexOptionContext> indexOption() {
+			return getRuleContexts(IndexOptionContext.class);
+		}
+		public IndexOptionContext indexOption(int i) {
+			return getRuleContext(IndexOptionContext.class,i);
+		}
+		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public SpecialIndexDeclarationContext(IndexColumnDefinitionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpecialIndexDeclaration(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpecialIndexDeclaration(this);
 		}
 	}
 
@@ -7993,171 +7993,20 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class TableOptionEngineContext extends TableOptionContext {
-		public TerminalNode ENGINE() { return getToken(MySqlParser.ENGINE, 0); }
-		public EngineNameContext engineName() {
-			return getRuleContext(EngineNameContext.class,0);
-		}
-		public TableOptionEngineContext(TableOptionContext ctx) { copyFrom(ctx); }
+	public static class TableOptionInsertMethodContext extends TableOptionContext {
+		public Token insertMethod;
+		public TerminalNode INSERT_METHOD() { return getToken(MySqlParser.INSERT_METHOD, 0); }
+		public TerminalNode NO() { return getToken(MySqlParser.NO, 0); }
+		public TerminalNode FIRST() { return getToken(MySqlParser.FIRST, 0); }
+		public TerminalNode LAST() { return getToken(MySqlParser.LAST, 0); }
+		public TableOptionInsertMethodContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionEngine(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionInsertMethod(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionEngine(this);
-		}
-	}
-	public static class TableOptionMaxRowsContext extends TableOptionContext {
-		public TerminalNode MAX_ROWS() { return getToken(MySqlParser.MAX_ROWS, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public TableOptionMaxRowsContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionMaxRows(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionMaxRows(this);
-		}
-	}
-	public static class TableOptionCollateContext extends TableOptionContext {
-		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
-		public CollationNameContext collationName() {
-			return getRuleContext(CollationNameContext.class,0);
-		}
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TableOptionCollateContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCollate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCollate(this);
-		}
-	}
-	public static class TableOptionPersistentContext extends TableOptionContext {
-		public Token extBoolValue;
-		public TerminalNode STATS_PERSISTENT() { return getToken(MySqlParser.STATS_PERSISTENT, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TableOptionPersistentContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPersistent(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPersistent(this);
-		}
-	}
-	public static class TableOptionTablespaceContext extends TableOptionContext {
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TablespaceStorageContext tablespaceStorage() {
-			return getRuleContext(TablespaceStorageContext.class,0);
-		}
-		public TableOptionTablespaceContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionTablespace(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionTablespace(this);
-		}
-	}
-	public static class TableOptionPackKeysContext extends TableOptionContext {
-		public Token extBoolValue;
-		public TerminalNode PACK_KEYS() { return getToken(MySqlParser.PACK_KEYS, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TableOptionPackKeysContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPackKeys(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPackKeys(this);
-		}
-	}
-	public static class TableOptionPasswordContext extends TableOptionContext {
-		public TerminalNode PASSWORD() { return getToken(MySqlParser.PASSWORD, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionPasswordContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPassword(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPassword(this);
-		}
-	}
-	public static class TableOptionUnionContext extends TableOptionContext {
-		public TerminalNode UNION() { return getToken(MySqlParser.UNION, 0); }
-		public TablesContext tables() {
-			return getRuleContext(TablesContext.class,0);
-		}
-		public TableOptionUnionContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionUnion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionUnion(this);
-		}
-	}
-	public static class TableOptionSamplePageContext extends TableOptionContext {
-		public TerminalNode STATS_SAMPLE_PAGES() { return getToken(MySqlParser.STATS_SAMPLE_PAGES, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public TableOptionSamplePageContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionSamplePage(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionSamplePage(this);
-		}
-	}
-	public static class TableOptionCharsetContext extends TableOptionContext {
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
-		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
-		public TerminalNode CHARSET() { return getToken(MySqlParser.CHARSET, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TableOptionCharsetContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCharset(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCharset(this);
-		}
-	}
-	public static class TableOptionIndexDirectoryContext extends TableOptionContext {
-		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
-		public TerminalNode DIRECTORY() { return getToken(MySqlParser.DIRECTORY, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionIndexDirectoryContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionIndexDirectory(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionIndexDirectory(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionInsertMethod(this);
 		}
 	}
 	public static class TableOptionKeyBlockSizeContext extends TableOptionContext {
@@ -8175,73 +8024,32 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionKeyBlockSize(this);
 		}
 	}
-	public static class TableOptionEncryptionContext extends TableOptionContext {
-		public TerminalNode ENCRYPTION() { return getToken(MySqlParser.ENCRYPTION, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionEncryptionContext(TableOptionContext ctx) { copyFrom(ctx); }
+	public static class TableOptionPackKeysContext extends TableOptionContext {
+		public Token extBoolValue;
+		public TerminalNode PACK_KEYS() { return getToken(MySqlParser.PACK_KEYS, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TableOptionPackKeysContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionEncryption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPackKeys(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionEncryption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPackKeys(this);
 		}
 	}
-	public static class TableOptionDataDirectoryContext extends TableOptionContext {
-		public TerminalNode DATA() { return getToken(MySqlParser.DATA, 0); }
+	public static class TableOptionIndexDirectoryContext extends TableOptionContext {
+		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
 		public TerminalNode DIRECTORY() { return getToken(MySqlParser.DIRECTORY, 0); }
 		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionDataDirectoryContext(TableOptionContext ctx) { copyFrom(ctx); }
+		public TableOptionIndexDirectoryContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionDataDirectory(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionIndexDirectory(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionDataDirectory(this);
-		}
-	}
-	public static class TableOptionRecalculationContext extends TableOptionContext {
-		public Token extBoolValue;
-		public TerminalNode STATS_AUTO_RECALC() { return getToken(MySqlParser.STATS_AUTO_RECALC, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TableOptionRecalculationContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionRecalculation(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionRecalculation(this);
-		}
-	}
-	public static class TableOptionAutoIncrementContext extends TableOptionContext {
-		public TerminalNode AUTO_INCREMENT() { return getToken(MySqlParser.AUTO_INCREMENT, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public TableOptionAutoIncrementContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionAutoIncrement(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionAutoIncrement(this);
-		}
-	}
-	public static class TableOptionChecksumContext extends TableOptionContext {
-		public Token boolValue;
-		public TerminalNode CHECKSUM() { return getToken(MySqlParser.CHECKSUM, 0); }
-		public TableOptionChecksumContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionChecksum(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionChecksum(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionIndexDirectory(this);
 		}
 	}
 	public static class TableOptionDelayContext extends TableOptionContext {
@@ -8257,45 +8065,61 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionDelay(this);
 		}
 	}
-	public static class TableOptionConnectionContext extends TableOptionContext {
-		public TerminalNode CONNECTION() { return getToken(MySqlParser.CONNECTION, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionConnectionContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionConnection(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionConnection(this);
-		}
-	}
-	public static class TableOptionCommentContext extends TableOptionContext {
-		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionCommentContext(TableOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionComment(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionComment(this);
-		}
-	}
-	public static class TableOptionAverageContext extends TableOptionContext {
-		public TerminalNode AVG_ROW_LENGTH() { return getToken(MySqlParser.AVG_ROW_LENGTH, 0); }
+	public static class TableOptionSamplePageContext extends TableOptionContext {
+		public TerminalNode STATS_SAMPLE_PAGES() { return getToken(MySqlParser.STATS_SAMPLE_PAGES, 0); }
 		public DecimalLiteralContext decimalLiteral() {
 			return getRuleContext(DecimalLiteralContext.class,0);
 		}
-		public TableOptionAverageContext(TableOptionContext ctx) { copyFrom(ctx); }
+		public TableOptionSamplePageContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionAverage(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionSamplePage(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionAverage(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionSamplePage(this);
+		}
+	}
+	public static class TableOptionPersistentContext extends TableOptionContext {
+		public Token extBoolValue;
+		public TerminalNode STATS_PERSISTENT() { return getToken(MySqlParser.STATS_PERSISTENT, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TableOptionPersistentContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPersistent(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPersistent(this);
+		}
+	}
+	public static class TableOptionCompressionContext extends TableOptionContext {
+		public TerminalNode COMPRESSION() { return getToken(MySqlParser.COMPRESSION, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionCompressionContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCompression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCompression(this);
+		}
+	}
+	public static class TableOptionUnionContext extends TableOptionContext {
+		public TerminalNode UNION() { return getToken(MySqlParser.UNION, 0); }
+		public TablesContext tables() {
+			return getRuleContext(TablesContext.class,0);
+		}
+		public TableOptionUnionContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionUnion(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionUnion(this);
 		}
 	}
 	public static class TableOptionRowFormatContext extends TableOptionContext {
@@ -8317,33 +8141,93 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionRowFormat(this);
 		}
 	}
-	public static class TableOptionCompressionContext extends TableOptionContext {
-		public TerminalNode COMPRESSION() { return getToken(MySqlParser.COMPRESSION, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TableOptionCompressionContext(TableOptionContext ctx) { copyFrom(ctx); }
+	public static class TableOptionRecalculationContext extends TableOptionContext {
+		public Token extBoolValue;
+		public TerminalNode STATS_AUTO_RECALC() { return getToken(MySqlParser.STATS_AUTO_RECALC, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TableOptionRecalculationContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCompression(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionRecalculation(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCompression(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionRecalculation(this);
 		}
 	}
-	public static class TableOptionInsertMethodContext extends TableOptionContext {
-		public Token insertMethod;
-		public TerminalNode INSERT_METHOD() { return getToken(MySqlParser.INSERT_METHOD, 0); }
-		public TerminalNode NO() { return getToken(MySqlParser.NO, 0); }
-		public TerminalNode FIRST() { return getToken(MySqlParser.FIRST, 0); }
-		public TerminalNode LAST() { return getToken(MySqlParser.LAST, 0); }
-		public TableOptionInsertMethodContext(TableOptionContext ctx) { copyFrom(ctx); }
+	public static class TableOptionTablespaceContext extends TableOptionContext {
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TablespaceStorageContext tablespaceStorage() {
+			return getRuleContext(TablespaceStorageContext.class,0);
+		}
+		public TableOptionTablespaceContext(TableOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionInsertMethod(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionTablespace(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionInsertMethod(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionTablespace(this);
+		}
+	}
+	public static class TableOptionAutoIncrementContext extends TableOptionContext {
+		public TerminalNode AUTO_INCREMENT() { return getToken(MySqlParser.AUTO_INCREMENT, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public TableOptionAutoIncrementContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionAutoIncrement(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionAutoIncrement(this);
+		}
+	}
+	public static class TableOptionCollateContext extends TableOptionContext {
+		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
+		public CollationNameContext collationName() {
+			return getRuleContext(CollationNameContext.class,0);
+		}
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TableOptionCollateContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCollate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCollate(this);
+		}
+	}
+	public static class TableOptionPasswordContext extends TableOptionContext {
+		public TerminalNode PASSWORD() { return getToken(MySqlParser.PASSWORD, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionPasswordContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionPassword(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionPassword(this);
+		}
+	}
+	public static class TableOptionChecksumContext extends TableOptionContext {
+		public Token boolValue;
+		public TerminalNode CHECKSUM() { return getToken(MySqlParser.CHECKSUM, 0); }
+		public TableOptionChecksumContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionChecksum(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionChecksum(this);
 		}
 	}
 	public static class TableOptionMinRowsContext extends TableOptionContext {
@@ -8359,6 +8243,122 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionMinRows(this);
+		}
+	}
+	public static class TableOptionDataDirectoryContext extends TableOptionContext {
+		public TerminalNode DATA() { return getToken(MySqlParser.DATA, 0); }
+		public TerminalNode DIRECTORY() { return getToken(MySqlParser.DIRECTORY, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionDataDirectoryContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionDataDirectory(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionDataDirectory(this);
+		}
+	}
+	public static class TableOptionMaxRowsContext extends TableOptionContext {
+		public TerminalNode MAX_ROWS() { return getToken(MySqlParser.MAX_ROWS, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public TableOptionMaxRowsContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionMaxRows(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionMaxRows(this);
+		}
+	}
+	public static class TableOptionCommentContext extends TableOptionContext {
+		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionCommentContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionComment(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionComment(this);
+		}
+	}
+	public static class TableOptionEngineContext extends TableOptionContext {
+		public TerminalNode ENGINE() { return getToken(MySqlParser.ENGINE, 0); }
+		public EngineNameContext engineName() {
+			return getRuleContext(EngineNameContext.class,0);
+		}
+		public TableOptionEngineContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionEngine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionEngine(this);
+		}
+	}
+	public static class TableOptionCharsetContext extends TableOptionContext {
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
+		}
+		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
+		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
+		public TerminalNode CHARSET() { return getToken(MySqlParser.CHARSET, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TableOptionCharsetContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionCharset(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionCharset(this);
+		}
+	}
+	public static class TableOptionConnectionContext extends TableOptionContext {
+		public TerminalNode CONNECTION() { return getToken(MySqlParser.CONNECTION, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionConnectionContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionConnection(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionConnection(this);
+		}
+	}
+	public static class TableOptionEncryptionContext extends TableOptionContext {
+		public TerminalNode ENCRYPTION() { return getToken(MySqlParser.ENCRYPTION, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TableOptionEncryptionContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionEncryption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionEncryption(this);
+		}
+	}
+	public static class TableOptionAverageContext extends TableOptionContext {
+		public TerminalNode AVG_ROW_LENGTH() { return getToken(MySqlParser.AVG_ROW_LENGTH, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public TableOptionAverageContext(TableOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableOptionAverage(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableOptionAverage(this);
 		}
 	}
 
@@ -9191,6 +9191,22 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class PartitionFunctionHashContext extends PartitionFunctionDefinitionContext {
+		public TerminalNode HASH() { return getToken(MySqlParser.HASH, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode LINEAR() { return getToken(MySqlParser.LINEAR, 0); }
+		public PartitionFunctionHashContext(PartitionFunctionDefinitionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionFunctionHash(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionFunctionHash(this);
+		}
+	}
 	public static class PartitionFunctionKeyContext extends PartitionFunctionDefinitionContext {
 		public Token algType;
 		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
@@ -9207,22 +9223,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionFunctionKey(this);
-		}
-	}
-	public static class PartitionFunctionHashContext extends PartitionFunctionDefinitionContext {
-		public TerminalNode HASH() { return getToken(MySqlParser.HASH, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode LINEAR() { return getToken(MySqlParser.LINEAR, 0); }
-		public PartitionFunctionHashContext(PartitionFunctionDefinitionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionFunctionHash(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionFunctionHash(this);
 		}
 	}
 	public static class PartitionFunctionListContext extends PartitionFunctionDefinitionContext {
@@ -9577,6 +9577,33 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class PartitionSimpleContext extends PartitionDefinitionContext {
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public List<PartitionOptionContext> partitionOption() {
+			return getRuleContexts(PartitionOptionContext.class);
+		}
+		public PartitionOptionContext partitionOption(int i) {
+			return getRuleContext(PartitionOptionContext.class,i);
+		}
+		public List<SubpartitionDefinitionContext> subpartitionDefinition() {
+			return getRuleContexts(SubpartitionDefinitionContext.class);
+		}
+		public SubpartitionDefinitionContext subpartitionDefinition(int i) {
+			return getRuleContext(SubpartitionDefinitionContext.class,i);
+		}
+		public PartitionSimpleContext(PartitionDefinitionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionSimple(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionSimple(this);
+		}
+	}
 	public static class PartitionComparisionContext extends PartitionDefinitionContext {
 		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
 		public UidContext uid() {
@@ -9681,33 +9708,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionListVector(this);
-		}
-	}
-	public static class PartitionSimpleContext extends PartitionDefinitionContext {
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public List<PartitionOptionContext> partitionOption() {
-			return getRuleContexts(PartitionOptionContext.class);
-		}
-		public PartitionOptionContext partitionOption(int i) {
-			return getRuleContext(PartitionOptionContext.class,i);
-		}
-		public List<SubpartitionDefinitionContext> subpartitionDefinition() {
-			return getRuleContexts(SubpartitionDefinitionContext.class);
-		}
-		public SubpartitionDefinitionContext subpartitionDefinition(int i) {
-			return getRuleContext(SubpartitionDefinitionContext.class,i);
-		}
-		public PartitionSimpleContext(PartitionDefinitionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionSimple(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionSimple(this);
 		}
 	}
 
@@ -10221,6 +10221,69 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class PartitionOptionDataDirectoryContext extends PartitionOptionContext {
+		public Token dataDirectory;
+		public TerminalNode DATA() { return getToken(MySqlParser.DATA, 0); }
+		public TerminalNode DIRECTORY() { return getToken(MySqlParser.DIRECTORY, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public PartitionOptionDataDirectoryContext(PartitionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionDataDirectory(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionDataDirectory(this);
+		}
+	}
+	public static class PartitionOptionMaxRowsContext extends PartitionOptionContext {
+		public DecimalLiteralContext maxRows;
+		public TerminalNode MAX_ROWS() { return getToken(MySqlParser.MAX_ROWS, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public PartitionOptionMaxRowsContext(PartitionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionMaxRows(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionMaxRows(this);
+		}
+	}
+	public static class PartitionOptionMinRowsContext extends PartitionOptionContext {
+		public DecimalLiteralContext minRows;
+		public TerminalNode MIN_ROWS() { return getToken(MySqlParser.MIN_ROWS, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public PartitionOptionMinRowsContext(PartitionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionMinRows(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionMinRows(this);
+		}
+	}
+	public static class PartitionOptionTablespaceContext extends PartitionOptionContext {
+		public UidContext tablespace;
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public PartitionOptionTablespaceContext(PartitionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionTablespace(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionTablespace(this);
+		}
+	}
 	public static class PartitionOptionCommentContext extends PartitionOptionContext {
 		public Token comment;
 		public TerminalNode COMMENT() { return getToken(MySqlParser.COMMENT, 0); }
@@ -10266,38 +10329,6 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionIndexDirectory(this);
 		}
 	}
-	public static class PartitionOptionMaxRowsContext extends PartitionOptionContext {
-		public DecimalLiteralContext maxRows;
-		public TerminalNode MAX_ROWS() { return getToken(MySqlParser.MAX_ROWS, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public PartitionOptionMaxRowsContext(PartitionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionMaxRows(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionMaxRows(this);
-		}
-	}
-	public static class PartitionOptionTablespaceContext extends PartitionOptionContext {
-		public UidContext tablespace;
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public PartitionOptionTablespaceContext(PartitionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionTablespace(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionTablespace(this);
-		}
-	}
 	public static class PartitionOptionEngineContext extends PartitionOptionContext {
 		public TerminalNode ENGINE() { return getToken(MySqlParser.ENGINE, 0); }
 		public EngineNameContext engineName() {
@@ -10312,37 +10343,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionEngine(this);
-		}
-	}
-	public static class PartitionOptionMinRowsContext extends PartitionOptionContext {
-		public DecimalLiteralContext minRows;
-		public TerminalNode MIN_ROWS() { return getToken(MySqlParser.MIN_ROWS, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public PartitionOptionMinRowsContext(PartitionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionMinRows(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionMinRows(this);
-		}
-	}
-	public static class PartitionOptionDataDirectoryContext extends PartitionOptionContext {
-		public Token dataDirectory;
-		public TerminalNode DATA() { return getToken(MySqlParser.DATA, 0); }
-		public TerminalNode DIRECTORY() { return getToken(MySqlParser.DIRECTORY, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public PartitionOptionDataDirectoryContext(PartitionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPartitionOptionDataDirectory(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPartitionOptionDataDirectory(this);
 		}
 	}
 
@@ -11658,260 +11658,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class AlterByDisableKeysContext extends AlterSpecificationContext {
-		public TerminalNode DISABLE() { return getToken(MySqlParser.DISABLE, 0); }
-		public TerminalNode KEYS() { return getToken(MySqlParser.KEYS, 0); }
-		public AlterByDisableKeysContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDisableKeys(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDisableKeys(this);
-		}
-	}
-	public static class AlterByDefaultCharsetContext extends AlterSpecificationContext {
-		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
-		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
-		public CollationNameContext collationName() {
-			return getRuleContext(CollationNameContext.class,0);
-		}
-		public AlterByDefaultCharsetContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDefaultCharset(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDefaultCharset(this);
-		}
-	}
-	public static class AlterByConvertCharsetContext extends AlterSpecificationContext {
-		public TerminalNode CONVERT() { return getToken(MySqlParser.CONVERT, 0); }
-		public TerminalNode TO() { return getToken(MySqlParser.TO, 0); }
-		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
-		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
-		public CollationNameContext collationName() {
-			return getRuleContext(CollationNameContext.class,0);
-		}
-		public AlterByConvertCharsetContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByConvertCharset(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByConvertCharset(this);
-		}
-	}
-	public static class AlterByAddPartitionContext extends AlterSpecificationContext {
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public PartitionDefinitionContext partitionDefinition() {
-			return getRuleContext(PartitionDefinitionContext.class,0);
-		}
-		public AlterByAddPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddPartition(this);
-		}
-	}
-	public static class AlterByAnalyzePartitiionContext extends AlterSpecificationContext {
-		public TerminalNode ANALYZE() { return getToken(MySqlParser.ANALYZE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByAnalyzePartitiionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAnalyzePartitiion(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAnalyzePartitiion(this);
-		}
-	}
-	public static class AlterByAddForeignKeyContext extends AlterSpecificationContext {
-		public UidContext name;
-		public UidContext indexName;
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public ReferenceDefinitionContext referenceDefinition() {
-			return getRuleContext(ReferenceDefinitionContext.class,0);
-		}
-		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
-		public List<UidContext> uid() {
-			return getRuleContexts(UidContext.class);
-		}
-		public UidContext uid(int i) {
-			return getRuleContext(UidContext.class,i);
-		}
-		public AlterByAddForeignKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddForeignKey(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddForeignKey(this);
-		}
-	}
-	public static class AlterByRemovePartitioningContext extends AlterSpecificationContext {
-		public TerminalNode REMOVE() { return getToken(MySqlParser.REMOVE, 0); }
-		public TerminalNode PARTITIONING() { return getToken(MySqlParser.PARTITIONING, 0); }
-		public AlterByRemovePartitioningContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRemovePartitioning(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRemovePartitioning(this);
-		}
-	}
-	public static class AlterByRenameContext extends AlterSpecificationContext {
-		public Token renameFormat;
-		public TerminalNode RENAME() { return getToken(MySqlParser.RENAME, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TerminalNode TO() { return getToken(MySqlParser.TO, 0); }
-		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
-		public AlterByRenameContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRename(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRename(this);
-		}
-	}
-	public static class AlterByOptimizePartitionContext extends AlterSpecificationContext {
-		public TerminalNode OPTIMIZE() { return getToken(MySqlParser.OPTIMIZE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByOptimizePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByOptimizePartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByOptimizePartition(this);
-		}
-	}
-	public static class AlterByImportTablespaceContext extends AlterSpecificationContext {
-		public TerminalNode IMPORT() { return getToken(MySqlParser.IMPORT, 0); }
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public AlterByImportTablespaceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByImportTablespace(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByImportTablespace(this);
-		}
-	}
-	public static class AlterByCoalescePartitionContext extends AlterSpecificationContext {
-		public TerminalNode COALESCE() { return getToken(MySqlParser.COALESCE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public AlterByCoalescePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByCoalescePartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByCoalescePartition(this);
-		}
-	}
-	public static class AlterByAddColumnsContext extends AlterSpecificationContext {
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public List<UidContext> uid() {
-			return getRuleContexts(UidContext.class);
-		}
-		public UidContext uid(int i) {
-			return getRuleContext(UidContext.class,i);
-		}
-		public List<ColumnDefinitionContext> columnDefinition() {
-			return getRuleContexts(ColumnDefinitionContext.class);
-		}
-		public ColumnDefinitionContext columnDefinition(int i) {
-			return getRuleContext(ColumnDefinitionContext.class,i);
-		}
-		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
-		public AlterByAddColumnsContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddColumns(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddColumns(this);
-		}
-	}
-	public static class AlterByDropForeignKeyContext extends AlterSpecificationContext {
-		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
-		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public AlterByDropForeignKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropForeignKey(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropForeignKey(this);
-		}
-	}
-	public static class AlterByRebuildPartitionContext extends AlterSpecificationContext {
-		public TerminalNode REBUILD() { return getToken(MySqlParser.REBUILD, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByRebuildPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRebuildPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRebuildPartition(this);
-		}
-	}
 	public static class AlterByUpgradePartitioningContext extends AlterSpecificationContext {
 		public TerminalNode UPGRADE() { return getToken(MySqlParser.UPGRADE, 0); }
 		public TerminalNode PARTITIONING() { return getToken(MySqlParser.PARTITIONING, 0); }
@@ -11923,232 +11669,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByUpgradePartitioning(this);
-		}
-	}
-	public static class AlterByRepairPartitionContext extends AlterSpecificationContext {
-		public TerminalNode REPAIR() { return getToken(MySqlParser.REPAIR, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByRepairPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRepairPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRepairPartition(this);
-		}
-	}
-	public static class AlterByExchangePartitionContext extends AlterSpecificationContext {
-		public Token validationFormat;
-		public TerminalNode EXCHANGE() { return getToken(MySqlParser.EXCHANGE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public List<TerminalNode> WITH() { return getTokens(MySqlParser.WITH); }
-		public TerminalNode WITH(int i) {
-			return getToken(MySqlParser.WITH, i);
-		}
-		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
-		public TableNameContext tableName() {
-			return getRuleContext(TableNameContext.class,0);
-		}
-		public TerminalNode VALIDATION() { return getToken(MySqlParser.VALIDATION, 0); }
-		public TerminalNode WITHOUT() { return getToken(MySqlParser.WITHOUT, 0); }
-		public AlterByExchangePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByExchangePartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByExchangePartition(this);
-		}
-	}
-	public static class AlterByAddIndexContext extends AlterSpecificationContext {
-		public Token indexFormat;
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public IndexTypeContext indexType() {
-			return getRuleContext(IndexTypeContext.class,0);
-		}
-		public List<IndexOptionContext> indexOption() {
-			return getRuleContexts(IndexOptionContext.class);
-		}
-		public IndexOptionContext indexOption(int i) {
-			return getRuleContext(IndexOptionContext.class,i);
-		}
-		public AlterByAddIndexContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddIndex(this);
-		}
-	}
-	public static class AlterByDropColumnContext extends AlterSpecificationContext {
-		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
-		public AlterByDropColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropColumn(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropColumn(this);
-		}
-	}
-	public static class AlterByImportPartitionContext extends AlterSpecificationContext {
-		public TerminalNode IMPORT() { return getToken(MySqlParser.IMPORT, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByImportPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByImportPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByImportPartition(this);
-		}
-	}
-	public static class AlterByChangeDefaultContext extends AlterSpecificationContext {
-		public TerminalNode ALTER() { return getToken(MySqlParser.ALTER, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public DefaultValueContext defaultValue() {
-			return getRuleContext(DefaultValueContext.class,0);
-		}
-		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
-		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
-		public AlterByChangeDefaultContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByChangeDefault(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByChangeDefault(this);
-		}
-	}
-	public static class AlterByForceContext extends AlterSpecificationContext {
-		public TerminalNode FORCE() { return getToken(MySqlParser.FORCE, 0); }
-		public AlterByForceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByForce(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByForce(this);
-		}
-	}
-	public static class AlterByDropPartitionContext extends AlterSpecificationContext {
-		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public AlterByDropPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropPartition(this);
-		}
-	}
-	public static class AlterByAddSpecialIndexContext extends AlterSpecificationContext {
-		public Token keyType;
-		public Token indexFormat;
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public TerminalNode FULLTEXT() { return getToken(MySqlParser.FULLTEXT, 0); }
-		public TerminalNode SPATIAL() { return getToken(MySqlParser.SPATIAL, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public List<IndexOptionContext> indexOption() {
-			return getRuleContexts(IndexOptionContext.class);
-		}
-		public IndexOptionContext indexOption(int i) {
-			return getRuleContext(IndexOptionContext.class,i);
-		}
-		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public AlterByAddSpecialIndexContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddSpecialIndex(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddSpecialIndex(this);
-		}
-	}
-	public static class AlterByModifyColumnContext extends AlterSpecificationContext {
-		public TerminalNode MODIFY() { return getToken(MySqlParser.MODIFY, 0); }
-		public List<UidContext> uid() {
-			return getRuleContexts(UidContext.class);
-		}
-		public UidContext uid(int i) {
-			return getRuleContext(UidContext.class,i);
-		}
-		public ColumnDefinitionContext columnDefinition() {
-			return getRuleContext(ColumnDefinitionContext.class,0);
-		}
-		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
-		public TerminalNode FIRST() { return getToken(MySqlParser.FIRST, 0); }
-		public TerminalNode AFTER() { return getToken(MySqlParser.AFTER, 0); }
-		public AlterByModifyColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByModifyColumn(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByModifyColumn(this);
-		}
-	}
-	public static class AlterByTableOptionContext extends AlterSpecificationContext {
-		public TableOptionContext tableOption() {
-			return getRuleContext(TableOptionContext.class,0);
-		}
-		public AlterByTableOptionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByTableOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByTableOption(this);
 		}
 	}
 	public static class AlterByDropPrimaryKeyContext extends AlterSpecificationContext {
@@ -12163,169 +11683,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropPrimaryKey(this);
-		}
-	}
-	public static class AlterByLockContext extends AlterSpecificationContext {
-		public Token lockType;
-		public TerminalNode LOCK() { return getToken(MySqlParser.LOCK, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TerminalNode NONE() { return getToken(MySqlParser.NONE, 0); }
-		public TerminalNode SHARED() { return getToken(MySqlParser.SHARED, 0); }
-		public TerminalNode EXCLUSIVE() { return getToken(MySqlParser.EXCLUSIVE, 0); }
-		public AlterByLockContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByLock(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByLock(this);
-		}
-	}
-	public static class AlterByDiscardPartitionContext extends AlterSpecificationContext {
-		public TerminalNode DISCARD() { return getToken(MySqlParser.DISCARD, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByDiscardPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDiscardPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDiscardPartition(this);
-		}
-	}
-	public static class AlterByDiscardTablespaceContext extends AlterSpecificationContext {
-		public TerminalNode DISCARD() { return getToken(MySqlParser.DISCARD, 0); }
-		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
-		public AlterByDiscardTablespaceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDiscardTablespace(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDiscardTablespace(this);
-		}
-	}
-	public static class AlterByValidateContext extends AlterSpecificationContext {
-		public Token validationFormat;
-		public TerminalNode VALIDATION() { return getToken(MySqlParser.VALIDATION, 0); }
-		public TerminalNode WITHOUT() { return getToken(MySqlParser.WITHOUT, 0); }
-		public TerminalNode WITH() { return getToken(MySqlParser.WITH, 0); }
-		public AlterByValidateContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByValidate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByValidate(this);
-		}
-	}
-	public static class AlterByAddPrimaryKeyContext extends AlterSpecificationContext {
-		public UidContext name;
-		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
-		public TerminalNode PRIMARY() { return getToken(MySqlParser.PRIMARY, 0); }
-		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
-		public IndexColumnNamesContext indexColumnNames() {
-			return getRuleContext(IndexColumnNamesContext.class,0);
-		}
-		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
-		public IndexTypeContext indexType() {
-			return getRuleContext(IndexTypeContext.class,0);
-		}
-		public List<IndexOptionContext> indexOption() {
-			return getRuleContexts(IndexOptionContext.class);
-		}
-		public IndexOptionContext indexOption(int i) {
-			return getRuleContext(IndexOptionContext.class,i);
-		}
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public AlterByAddPrimaryKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddPrimaryKey(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddPrimaryKey(this);
-		}
-	}
-	public static class AlterByCheckPartitionContext extends AlterSpecificationContext {
-		public TerminalNode CHECK() { return getToken(MySqlParser.CHECK, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByCheckPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByCheckPartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByCheckPartition(this);
-		}
-	}
-	public static class AlterByEnableKeysContext extends AlterSpecificationContext {
-		public TerminalNode ENABLE() { return getToken(MySqlParser.ENABLE, 0); }
-		public TerminalNode KEYS() { return getToken(MySqlParser.KEYS, 0); }
-		public AlterByEnableKeysContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByEnableKeys(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByEnableKeys(this);
-		}
-	}
-	public static class AlterByReorganizePartitionContext extends AlterSpecificationContext {
-		public TerminalNode REORGANIZE() { return getToken(MySqlParser.REORGANIZE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode INTO() { return getToken(MySqlParser.INTO, 0); }
-		public List<PartitionDefinitionContext> partitionDefinition() {
-			return getRuleContexts(PartitionDefinitionContext.class);
-		}
-		public PartitionDefinitionContext partitionDefinition(int i) {
-			return getRuleContext(PartitionDefinitionContext.class,i);
-		}
-		public AlterByReorganizePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByReorganizePartition(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByReorganizePartition(this);
-		}
-	}
-	public static class AlterBySetAlgorithmContext extends AlterSpecificationContext {
-		public Token algType;
-		public TerminalNode ALGORITHM() { return getToken(MySqlParser.ALGORITHM, 0); }
-		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
-		public TerminalNode INPLACE() { return getToken(MySqlParser.INPLACE, 0); }
-		public TerminalNode COPY() { return getToken(MySqlParser.COPY, 0); }
-		public AlterBySetAlgorithmContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterBySetAlgorithm(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterBySetAlgorithm(this);
 		}
 	}
 	public static class AlterByChangeColumnContext extends AlterSpecificationContext {
@@ -12353,6 +11710,55 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByChangeColumn(this);
+		}
+	}
+	public static class AlterByAddColumnContext extends AlterSpecificationContext {
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public List<UidContext> uid() {
+			return getRuleContexts(UidContext.class);
+		}
+		public UidContext uid(int i) {
+			return getRuleContext(UidContext.class,i);
+		}
+		public ColumnDefinitionContext columnDefinition() {
+			return getRuleContext(ColumnDefinitionContext.class,0);
+		}
+		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
+		public TerminalNode FIRST() { return getToken(MySqlParser.FIRST, 0); }
+		public TerminalNode AFTER() { return getToken(MySqlParser.AFTER, 0); }
+		public AlterByAddColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddColumn(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddColumn(this);
+		}
+	}
+	public static class AlterByDiscardTablespaceContext extends AlterSpecificationContext {
+		public TerminalNode DISCARD() { return getToken(MySqlParser.DISCARD, 0); }
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public AlterByDiscardTablespaceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDiscardTablespace(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDiscardTablespace(this);
+		}
+	}
+	public static class AlterByForceContext extends AlterSpecificationContext {
+		public TerminalNode FORCE() { return getToken(MySqlParser.FORCE, 0); }
+		public AlterByForceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByForce(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByForce(this);
 		}
 	}
 	public static class AlterByAddUniqueKeyContext extends AlterSpecificationContext {
@@ -12392,21 +11798,34 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddUniqueKey(this);
 		}
 	}
-	public static class AlterByTruncatePartitionContext extends AlterSpecificationContext {
-		public TerminalNode TRUNCATE() { return getToken(MySqlParser.TRUNCATE, 0); }
-		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
+	public static class AlterByAddIndexContext extends AlterSpecificationContext {
+		public Token indexFormat;
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
 		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public AlterByTruncatePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public IndexTypeContext indexType() {
+			return getRuleContext(IndexTypeContext.class,0);
+		}
+		public List<IndexOptionContext> indexOption() {
+			return getRuleContexts(IndexOptionContext.class);
+		}
+		public IndexOptionContext indexOption(int i) {
+			return getRuleContext(IndexOptionContext.class,i);
+		}
+		public AlterByAddIndexContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByTruncatePartition(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddIndex(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByTruncatePartition(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddIndex(this);
 		}
 	}
 	public static class AlterByDropIndexContext extends AlterSpecificationContext {
@@ -12427,8 +11846,86 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropIndex(this);
 		}
 	}
-	public static class AlterByAddColumnContext extends AlterSpecificationContext {
+	public static class AlterByReorganizePartitionContext extends AlterSpecificationContext {
+		public TerminalNode REORGANIZE() { return getToken(MySqlParser.REORGANIZE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode INTO() { return getToken(MySqlParser.INTO, 0); }
+		public List<PartitionDefinitionContext> partitionDefinition() {
+			return getRuleContexts(PartitionDefinitionContext.class);
+		}
+		public PartitionDefinitionContext partitionDefinition(int i) {
+			return getRuleContext(PartitionDefinitionContext.class,i);
+		}
+		public AlterByReorganizePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByReorganizePartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByReorganizePartition(this);
+		}
+	}
+	public static class AlterByRepairPartitionContext extends AlterSpecificationContext {
+		public TerminalNode REPAIR() { return getToken(MySqlParser.REPAIR, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByRepairPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRepairPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRepairPartition(this);
+		}
+	}
+	public static class AlterByAddPartitionContext extends AlterSpecificationContext {
 		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public PartitionDefinitionContext partitionDefinition() {
+			return getRuleContext(PartitionDefinitionContext.class,0);
+		}
+		public AlterByAddPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddPartition(this);
+		}
+	}
+	public static class AlterByConvertCharsetContext extends AlterSpecificationContext {
+		public TerminalNode CONVERT() { return getToken(MySqlParser.CONVERT, 0); }
+		public TerminalNode TO() { return getToken(MySqlParser.TO, 0); }
+		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
+		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
+		}
+		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
+		public CollationNameContext collationName() {
+			return getRuleContext(CollationNameContext.class,0);
+		}
+		public AlterByConvertCharsetContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByConvertCharset(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByConvertCharset(this);
+		}
+	}
+	public static class AlterByModifyColumnContext extends AlterSpecificationContext {
+		public TerminalNode MODIFY() { return getToken(MySqlParser.MODIFY, 0); }
 		public List<UidContext> uid() {
 			return getRuleContexts(UidContext.class);
 		}
@@ -12441,14 +11938,496 @@ public class MySqlParser extends Parser {
 		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
 		public TerminalNode FIRST() { return getToken(MySqlParser.FIRST, 0); }
 		public TerminalNode AFTER() { return getToken(MySqlParser.AFTER, 0); }
-		public AlterByAddColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		public AlterByModifyColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddColumn(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByModifyColumn(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddColumn(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByModifyColumn(this);
+		}
+	}
+	public static class AlterByRemovePartitioningContext extends AlterSpecificationContext {
+		public TerminalNode REMOVE() { return getToken(MySqlParser.REMOVE, 0); }
+		public TerminalNode PARTITIONING() { return getToken(MySqlParser.PARTITIONING, 0); }
+		public AlterByRemovePartitioningContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRemovePartitioning(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRemovePartitioning(this);
+		}
+	}
+	public static class AlterBySetAlgorithmContext extends AlterSpecificationContext {
+		public Token algType;
+		public TerminalNode ALGORITHM() { return getToken(MySqlParser.ALGORITHM, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TerminalNode INPLACE() { return getToken(MySqlParser.INPLACE, 0); }
+		public TerminalNode COPY() { return getToken(MySqlParser.COPY, 0); }
+		public AlterBySetAlgorithmContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterBySetAlgorithm(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterBySetAlgorithm(this);
+		}
+	}
+	public static class AlterByTruncatePartitionContext extends AlterSpecificationContext {
+		public TerminalNode TRUNCATE() { return getToken(MySqlParser.TRUNCATE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByTruncatePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByTruncatePartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByTruncatePartition(this);
+		}
+	}
+	public static class AlterByDisableKeysContext extends AlterSpecificationContext {
+		public TerminalNode DISABLE() { return getToken(MySqlParser.DISABLE, 0); }
+		public TerminalNode KEYS() { return getToken(MySqlParser.KEYS, 0); }
+		public AlterByDisableKeysContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDisableKeys(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDisableKeys(this);
+		}
+	}
+	public static class AlterByOptimizePartitionContext extends AlterSpecificationContext {
+		public TerminalNode OPTIMIZE() { return getToken(MySqlParser.OPTIMIZE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByOptimizePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByOptimizePartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByOptimizePartition(this);
+		}
+	}
+	public static class AlterByCoalescePartitionContext extends AlterSpecificationContext {
+		public TerminalNode COALESCE() { return getToken(MySqlParser.COALESCE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public AlterByCoalescePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByCoalescePartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByCoalescePartition(this);
+		}
+	}
+	public static class AlterByEnableKeysContext extends AlterSpecificationContext {
+		public TerminalNode ENABLE() { return getToken(MySqlParser.ENABLE, 0); }
+		public TerminalNode KEYS() { return getToken(MySqlParser.KEYS, 0); }
+		public AlterByEnableKeysContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByEnableKeys(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByEnableKeys(this);
+		}
+	}
+	public static class AlterByAnalyzePartitiionContext extends AlterSpecificationContext {
+		public TerminalNode ANALYZE() { return getToken(MySqlParser.ANALYZE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByAnalyzePartitiionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAnalyzePartitiion(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAnalyzePartitiion(this);
+		}
+	}
+	public static class AlterByChangeDefaultContext extends AlterSpecificationContext {
+		public TerminalNode ALTER() { return getToken(MySqlParser.ALTER, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public DefaultValueContext defaultValue() {
+			return getRuleContext(DefaultValueContext.class,0);
+		}
+		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
+		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
+		public AlterByChangeDefaultContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByChangeDefault(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByChangeDefault(this);
+		}
+	}
+	public static class AlterByDiscardPartitionContext extends AlterSpecificationContext {
+		public TerminalNode DISCARD() { return getToken(MySqlParser.DISCARD, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByDiscardPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDiscardPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDiscardPartition(this);
+		}
+	}
+	public static class AlterByLockContext extends AlterSpecificationContext {
+		public Token lockType;
+		public TerminalNode LOCK() { return getToken(MySqlParser.LOCK, 0); }
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TerminalNode NONE() { return getToken(MySqlParser.NONE, 0); }
+		public TerminalNode SHARED() { return getToken(MySqlParser.SHARED, 0); }
+		public TerminalNode EXCLUSIVE() { return getToken(MySqlParser.EXCLUSIVE, 0); }
+		public AlterByLockContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByLock(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByLock(this);
+		}
+	}
+	public static class AlterByAddSpecialIndexContext extends AlterSpecificationContext {
+		public Token keyType;
+		public Token indexFormat;
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
+		}
+		public TerminalNode FULLTEXT() { return getToken(MySqlParser.FULLTEXT, 0); }
+		public TerminalNode SPATIAL() { return getToken(MySqlParser.SPATIAL, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public List<IndexOptionContext> indexOption() {
+			return getRuleContexts(IndexOptionContext.class);
+		}
+		public IndexOptionContext indexOption(int i) {
+			return getRuleContext(IndexOptionContext.class,i);
+		}
+		public TerminalNode INDEX() { return getToken(MySqlParser.INDEX, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public AlterByAddSpecialIndexContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddSpecialIndex(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddSpecialIndex(this);
+		}
+	}
+	public static class AlterByRenameContext extends AlterSpecificationContext {
+		public Token renameFormat;
+		public TerminalNode RENAME() { return getToken(MySqlParser.RENAME, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TerminalNode TO() { return getToken(MySqlParser.TO, 0); }
+		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
+		public AlterByRenameContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRename(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRename(this);
+		}
+	}
+	public static class AlterByAddColumnsContext extends AlterSpecificationContext {
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public List<UidContext> uid() {
+			return getRuleContexts(UidContext.class);
+		}
+		public UidContext uid(int i) {
+			return getRuleContext(UidContext.class,i);
+		}
+		public List<ColumnDefinitionContext> columnDefinition() {
+			return getRuleContexts(ColumnDefinitionContext.class);
+		}
+		public ColumnDefinitionContext columnDefinition(int i) {
+			return getRuleContext(ColumnDefinitionContext.class,i);
+		}
+		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
+		public AlterByAddColumnsContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddColumns(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddColumns(this);
+		}
+	}
+	public static class AlterByExchangePartitionContext extends AlterSpecificationContext {
+		public Token validationFormat;
+		public TerminalNode EXCHANGE() { return getToken(MySqlParser.EXCHANGE, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public List<TerminalNode> WITH() { return getTokens(MySqlParser.WITH); }
+		public TerminalNode WITH(int i) {
+			return getToken(MySqlParser.WITH, i);
+		}
+		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
+		public TableNameContext tableName() {
+			return getRuleContext(TableNameContext.class,0);
+		}
+		public TerminalNode VALIDATION() { return getToken(MySqlParser.VALIDATION, 0); }
+		public TerminalNode WITHOUT() { return getToken(MySqlParser.WITHOUT, 0); }
+		public AlterByExchangePartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByExchangePartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByExchangePartition(this);
+		}
+	}
+	public static class AlterByDropForeignKeyContext extends AlterSpecificationContext {
+		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
+		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public AlterByDropForeignKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropForeignKey(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropForeignKey(this);
+		}
+	}
+	public static class AlterByValidateContext extends AlterSpecificationContext {
+		public Token validationFormat;
+		public TerminalNode VALIDATION() { return getToken(MySqlParser.VALIDATION, 0); }
+		public TerminalNode WITHOUT() { return getToken(MySqlParser.WITHOUT, 0); }
+		public TerminalNode WITH() { return getToken(MySqlParser.WITH, 0); }
+		public AlterByValidateContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByValidate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByValidate(this);
+		}
+	}
+	public static class AlterByImportPartitionContext extends AlterSpecificationContext {
+		public TerminalNode IMPORT() { return getToken(MySqlParser.IMPORT, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByImportPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByImportPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByImportPartition(this);
+		}
+	}
+	public static class AlterByImportTablespaceContext extends AlterSpecificationContext {
+		public TerminalNode IMPORT() { return getToken(MySqlParser.IMPORT, 0); }
+		public TerminalNode TABLESPACE() { return getToken(MySqlParser.TABLESPACE, 0); }
+		public AlterByImportTablespaceContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByImportTablespace(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByImportTablespace(this);
+		}
+	}
+	public static class AlterByDropPartitionContext extends AlterSpecificationContext {
+		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public AlterByDropPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropPartition(this);
+		}
+	}
+	public static class AlterByRebuildPartitionContext extends AlterSpecificationContext {
+		public TerminalNode REBUILD() { return getToken(MySqlParser.REBUILD, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByRebuildPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByRebuildPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByRebuildPartition(this);
+		}
+	}
+	public static class AlterByCheckPartitionContext extends AlterSpecificationContext {
+		public TerminalNode CHECK() { return getToken(MySqlParser.CHECK, 0); }
+		public TerminalNode PARTITION() { return getToken(MySqlParser.PARTITION, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public AlterByCheckPartitionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByCheckPartition(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByCheckPartition(this);
+		}
+	}
+	public static class AlterByAddForeignKeyContext extends AlterSpecificationContext {
+		public UidContext name;
+		public UidContext indexName;
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public TerminalNode FOREIGN() { return getToken(MySqlParser.FOREIGN, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
+		}
+		public ReferenceDefinitionContext referenceDefinition() {
+			return getRuleContext(ReferenceDefinitionContext.class,0);
+		}
+		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
+		public List<UidContext> uid() {
+			return getRuleContexts(UidContext.class);
+		}
+		public UidContext uid(int i) {
+			return getRuleContext(UidContext.class,i);
+		}
+		public AlterByAddForeignKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddForeignKey(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddForeignKey(this);
+		}
+	}
+	public static class AlterByAddPrimaryKeyContext extends AlterSpecificationContext {
+		public UidContext name;
+		public TerminalNode ADD() { return getToken(MySqlParser.ADD, 0); }
+		public TerminalNode PRIMARY() { return getToken(MySqlParser.PRIMARY, 0); }
+		public TerminalNode KEY() { return getToken(MySqlParser.KEY, 0); }
+		public IndexColumnNamesContext indexColumnNames() {
+			return getRuleContext(IndexColumnNamesContext.class,0);
+		}
+		public TerminalNode CONSTRAINT() { return getToken(MySqlParser.CONSTRAINT, 0); }
+		public IndexTypeContext indexType() {
+			return getRuleContext(IndexTypeContext.class,0);
+		}
+		public List<IndexOptionContext> indexOption() {
+			return getRuleContexts(IndexOptionContext.class);
+		}
+		public IndexOptionContext indexOption(int i) {
+			return getRuleContext(IndexOptionContext.class,i);
+		}
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public AlterByAddPrimaryKeyContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByAddPrimaryKey(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByAddPrimaryKey(this);
+		}
+	}
+	public static class AlterByTableOptionContext extends AlterSpecificationContext {
+		public TableOptionContext tableOption() {
+			return getRuleContext(TableOptionContext.class,0);
+		}
+		public AlterByTableOptionContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByTableOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByTableOption(this);
+		}
+	}
+	public static class AlterByDropColumnContext extends AlterSpecificationContext {
+		public TerminalNode DROP() { return getToken(MySqlParser.DROP, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TerminalNode COLUMN() { return getToken(MySqlParser.COLUMN, 0); }
+		public AlterByDropColumnContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDropColumn(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDropColumn(this);
 		}
 	}
 	public static class AlterByOrderContext extends AlterSpecificationContext {
@@ -12465,6 +12444,27 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByOrder(this);
+		}
+	}
+	public static class AlterByDefaultCharsetContext extends AlterSpecificationContext {
+		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
+		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
+		}
+		public TerminalNode DEFAULT() { return getToken(MySqlParser.DEFAULT, 0); }
+		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
+		public CollationNameContext collationName() {
+			return getRuleContext(CollationNameContext.class,0);
+		}
+		public AlterByDefaultCharsetContext(AlterSpecificationContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterByDefaultCharset(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterByDefaultCharset(this);
 		}
 	}
 
@@ -21168,6 +21168,59 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class UnionParenthesisSelectContext extends SelectStatementContext {
+		public Token unionType;
+		public QueryExpressionNointoContext queryExpressionNointo() {
+			return getRuleContext(QueryExpressionNointoContext.class,0);
+		}
+		public List<UnionParenthesisContext> unionParenthesis() {
+			return getRuleContexts(UnionParenthesisContext.class);
+		}
+		public UnionParenthesisContext unionParenthesis(int i) {
+			return getRuleContext(UnionParenthesisContext.class,i);
+		}
+		public TerminalNode UNION() { return getToken(MySqlParser.UNION, 0); }
+		public QueryExpressionContext queryExpression() {
+			return getRuleContext(QueryExpressionContext.class,0);
+		}
+		public OrderByClauseContext orderByClause() {
+			return getRuleContext(OrderByClauseContext.class,0);
+		}
+		public LimitClauseContext limitClause() {
+			return getRuleContext(LimitClauseContext.class,0);
+		}
+		public LockClauseContext lockClause() {
+			return getRuleContext(LockClauseContext.class,0);
+		}
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public TerminalNode DISTINCT() { return getToken(MySqlParser.DISTINCT, 0); }
+		public UnionParenthesisSelectContext(SelectStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterUnionParenthesisSelect(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUnionParenthesisSelect(this);
+		}
+	}
+	public static class ParenthesisSelectContext extends SelectStatementContext {
+		public QueryExpressionContext queryExpression() {
+			return getRuleContext(QueryExpressionContext.class,0);
+		}
+		public LockClauseContext lockClause() {
+			return getRuleContext(LockClauseContext.class,0);
+		}
+		public ParenthesisSelectContext(SelectStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterParenthesisSelect(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitParenthesisSelect(this);
+		}
+	}
 	public static class UnionSelectContext extends SelectStatementContext {
 		public Token unionType;
 		public QuerySpecificationNointoContext querySpecificationNointo() {
@@ -21207,42 +21260,6 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUnionSelect(this);
 		}
 	}
-	public static class UnionParenthesisSelectContext extends SelectStatementContext {
-		public Token unionType;
-		public QueryExpressionNointoContext queryExpressionNointo() {
-			return getRuleContext(QueryExpressionNointoContext.class,0);
-		}
-		public List<UnionParenthesisContext> unionParenthesis() {
-			return getRuleContexts(UnionParenthesisContext.class);
-		}
-		public UnionParenthesisContext unionParenthesis(int i) {
-			return getRuleContext(UnionParenthesisContext.class,i);
-		}
-		public TerminalNode UNION() { return getToken(MySqlParser.UNION, 0); }
-		public QueryExpressionContext queryExpression() {
-			return getRuleContext(QueryExpressionContext.class,0);
-		}
-		public OrderByClauseContext orderByClause() {
-			return getRuleContext(OrderByClauseContext.class,0);
-		}
-		public LimitClauseContext limitClause() {
-			return getRuleContext(LimitClauseContext.class,0);
-		}
-		public LockClauseContext lockClause() {
-			return getRuleContext(LockClauseContext.class,0);
-		}
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public TerminalNode DISTINCT() { return getToken(MySqlParser.DISTINCT, 0); }
-		public UnionParenthesisSelectContext(SelectStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterUnionParenthesisSelect(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUnionParenthesisSelect(this);
-		}
-	}
 	public static class SimpleSelectContext extends SelectStatementContext {
 		public QuerySpecificationContext querySpecification() {
 			return getRuleContext(QuerySpecificationContext.class,0);
@@ -21258,23 +21275,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleSelect(this);
-		}
-	}
-	public static class ParenthesisSelectContext extends SelectStatementContext {
-		public QueryExpressionContext queryExpression() {
-			return getRuleContext(QueryExpressionContext.class,0);
-		}
-		public LockClauseContext lockClause() {
-			return getRuleContext(LockClauseContext.class,0);
-		}
-		public ParenthesisSelectContext(SelectStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterParenthesisSelect(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitParenthesisSelect(this);
 		}
 	}
 
@@ -25050,26 +25050,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class TableSourceNestedContext extends TableSourceContext {
-		public TableSourceItemContext tableSourceItem() {
-			return getRuleContext(TableSourceItemContext.class,0);
-		}
-		public List<JoinPartContext> joinPart() {
-			return getRuleContexts(JoinPartContext.class);
-		}
-		public JoinPartContext joinPart(int i) {
-			return getRuleContext(JoinPartContext.class,i);
-		}
-		public TableSourceNestedContext(TableSourceContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableSourceNested(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableSourceNested(this);
-		}
-	}
 	public static class TableSourceBaseContext extends TableSourceContext {
 		public TableSourceItemContext tableSourceItem() {
 			return getRuleContext(TableSourceItemContext.class,0);
@@ -25088,6 +25068,26 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableSourceBase(this);
+		}
+	}
+	public static class TableSourceNestedContext extends TableSourceContext {
+		public TableSourceItemContext tableSourceItem() {
+			return getRuleContext(TableSourceItemContext.class,0);
+		}
+		public List<JoinPartContext> joinPart() {
+			return getRuleContexts(JoinPartContext.class);
+		}
+		public JoinPartContext joinPart(int i) {
+			return getRuleContext(JoinPartContext.class,i);
+		}
+		public TableSourceNestedContext(TableSourceContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableSourceNested(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableSourceNested(this);
 		}
 	}
 
@@ -25174,6 +25174,20 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class TableSourcesItemContext extends TableSourceItemContext {
+		public TableSourcesContext tableSources() {
+			return getRuleContext(TableSourcesContext.class,0);
+		}
+		public TableSourcesItemContext(TableSourceItemContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableSourcesItem(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableSourcesItem(this);
+		}
+	}
 	public static class SubqueryTableItemContext extends TableSourceItemContext {
 		public SelectStatementContext parenthesisSubquery;
 		public UidContext alias;
@@ -25221,20 +25235,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAtomTableItem(this);
-		}
-	}
-	public static class TableSourcesItemContext extends TableSourceItemContext {
-		public TableSourcesContext tableSources() {
-			return getRuleContext(TableSourcesContext.class,0);
-		}
-		public TableSourcesItemContext(TableSourceItemContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableSourcesItem(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableSourcesItem(this);
 		}
 	}
 
@@ -25548,50 +25548,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class InnerJoinContext extends JoinPartContext {
-		public TerminalNode JOIN() { return getToken(MySqlParser.JOIN, 0); }
-		public TableSourceItemContext tableSourceItem() {
-			return getRuleContext(TableSourceItemContext.class,0);
-		}
-		public TerminalNode ON() { return getToken(MySqlParser.ON, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
-		}
-		public TerminalNode INNER() { return getToken(MySqlParser.INNER, 0); }
-		public TerminalNode CROSS() { return getToken(MySqlParser.CROSS, 0); }
-		public InnerJoinContext(JoinPartContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterInnerJoin(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitInnerJoin(this);
-		}
-	}
-	public static class NaturalJoinContext extends JoinPartContext {
-		public TerminalNode NATURAL() { return getToken(MySqlParser.NATURAL, 0); }
-		public TerminalNode JOIN() { return getToken(MySqlParser.JOIN, 0); }
-		public TableSourceItemContext tableSourceItem() {
-			return getRuleContext(TableSourceItemContext.class,0);
-		}
-		public TerminalNode LEFT() { return getToken(MySqlParser.LEFT, 0); }
-		public TerminalNode RIGHT() { return getToken(MySqlParser.RIGHT, 0); }
-		public TerminalNode OUTER() { return getToken(MySqlParser.OUTER, 0); }
-		public NaturalJoinContext(JoinPartContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNaturalJoin(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNaturalJoin(this);
-		}
-	}
 	public static class OuterJoinContext extends JoinPartContext {
 		public TerminalNode JOIN() { return getToken(MySqlParser.JOIN, 0); }
 		public TableSourceItemContext tableSourceItem() {
@@ -25618,6 +25574,25 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitOuterJoin(this);
 		}
 	}
+	public static class NaturalJoinContext extends JoinPartContext {
+		public TerminalNode NATURAL() { return getToken(MySqlParser.NATURAL, 0); }
+		public TerminalNode JOIN() { return getToken(MySqlParser.JOIN, 0); }
+		public TableSourceItemContext tableSourceItem() {
+			return getRuleContext(TableSourceItemContext.class,0);
+		}
+		public TerminalNode LEFT() { return getToken(MySqlParser.LEFT, 0); }
+		public TerminalNode RIGHT() { return getToken(MySqlParser.RIGHT, 0); }
+		public TerminalNode OUTER() { return getToken(MySqlParser.OUTER, 0); }
+		public NaturalJoinContext(JoinPartContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNaturalJoin(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNaturalJoin(this);
+		}
+	}
 	public static class StraightJoinContext extends JoinPartContext {
 		public TerminalNode STRAIGHT_JOIN() { return getToken(MySqlParser.STRAIGHT_JOIN, 0); }
 		public TableSourceItemContext tableSourceItem() {
@@ -25635,6 +25610,31 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitStraightJoin(this);
+		}
+	}
+	public static class InnerJoinContext extends JoinPartContext {
+		public TerminalNode JOIN() { return getToken(MySqlParser.JOIN, 0); }
+		public TableSourceItemContext tableSourceItem() {
+			return getRuleContext(TableSourceItemContext.class,0);
+		}
+		public TerminalNode ON() { return getToken(MySqlParser.ON, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
+		}
+		public TerminalNode INNER() { return getToken(MySqlParser.INNER, 0); }
+		public TerminalNode CROSS() { return getToken(MySqlParser.CROSS, 0); }
+		public InnerJoinContext(JoinPartContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterInnerJoin(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitInnerJoin(this);
 		}
 	}
 
@@ -27333,24 +27333,18 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SelectExpressionElementContext extends SelectElementContext {
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
+	public static class SelectStarElementContext extends SelectElementContext {
+		public FullIdContext fullId() {
+			return getRuleContext(FullIdContext.class,0);
 		}
-		public TerminalNode LOCAL_ID() { return getToken(MySqlParser.LOCAL_ID, 0); }
-		public TerminalNode VAR_ASSIGN() { return getToken(MySqlParser.VAR_ASSIGN, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
-		public SelectExpressionElementContext(SelectElementContext ctx) { copyFrom(ctx); }
+		public SelectStarElementContext(SelectElementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectExpressionElement(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectStarElement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectExpressionElement(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectStarElement(this);
 		}
 	}
 	public static class SelectFunctionElementContext extends SelectElementContext {
@@ -27371,18 +27365,24 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectFunctionElement(this);
 		}
 	}
-	public static class SelectStarElementContext extends SelectElementContext {
-		public FullIdContext fullId() {
-			return getRuleContext(FullIdContext.class,0);
+	public static class SelectExpressionElementContext extends SelectElementContext {
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
 		}
-		public SelectStarElementContext(SelectElementContext ctx) { copyFrom(ctx); }
+		public TerminalNode LOCAL_ID() { return getToken(MySqlParser.LOCAL_ID, 0); }
+		public TerminalNode VAR_ASSIGN() { return getToken(MySqlParser.VAR_ASSIGN, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
+		public SelectExpressionElementContext(SelectElementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectStarElement(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectExpressionElement(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectStarElement(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectExpressionElement(this);
 		}
 	}
 	public static class SelectColumnElementContext extends SelectElementContext {
@@ -27562,6 +27562,20 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectIntoVariables(this);
 		}
 	}
+	public static class SelectIntoDumpFileContext extends SelectIntoExpressionContext {
+		public TerminalNode INTO() { return getToken(MySqlParser.INTO, 0); }
+		public TerminalNode DUMPFILE() { return getToken(MySqlParser.DUMPFILE, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public SelectIntoDumpFileContext(SelectIntoExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectIntoDumpFile(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectIntoDumpFile(this);
+		}
+	}
 	public static class SelectIntoTextFileContext extends SelectIntoExpressionContext {
 		public Token filename;
 		public CharsetNameContext charset;
@@ -27597,20 +27611,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectIntoTextFile(this);
-		}
-	}
-	public static class SelectIntoDumpFileContext extends SelectIntoExpressionContext {
-		public TerminalNode INTO() { return getToken(MySqlParser.INTO, 0); }
-		public TerminalNode DUMPFILE() { return getToken(MySqlParser.DUMPFILE, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public SelectIntoDumpFileContext(SelectIntoExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSelectIntoDumpFile(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSelectIntoDumpFile(this);
 		}
 	}
 
@@ -29891,21 +29891,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class MasterStringOptionContext extends MasterOptionContext {
-		public StringMasterOptionContext stringMasterOption() {
-			return getRuleContext(StringMasterOptionContext.class,0);
-		}
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public MasterStringOptionContext(MasterOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterStringOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterStringOption(this);
-		}
-	}
 	public static class MasterRealOptionContext extends MasterOptionContext {
 		public TerminalNode MASTER_HEARTBEAT_PERIOD() { return getToken(MySqlParser.MASTER_HEARTBEAT_PERIOD, 0); }
 		public TerminalNode REAL_LITERAL() { return getToken(MySqlParser.REAL_LITERAL, 0); }
@@ -29919,19 +29904,19 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterRealOption(this);
 		}
 	}
-	public static class MasterBoolOptionContext extends MasterOptionContext {
-		public Token boolVal;
-		public BoolMasterOptionContext boolMasterOption() {
-			return getRuleContext(BoolMasterOptionContext.class,0);
+	public static class MasterStringOptionContext extends MasterOptionContext {
+		public StringMasterOptionContext stringMasterOption() {
+			return getRuleContext(StringMasterOptionContext.class,0);
 		}
-		public MasterBoolOptionContext(MasterOptionContext ctx) { copyFrom(ctx); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public MasterStringOptionContext(MasterOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterBoolOption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterStringOption(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterBoolOption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterStringOption(this);
 		}
 	}
 	public static class MasterUidListOptionContext extends MasterOptionContext {
@@ -29950,6 +29935,21 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterUidListOption(this);
+		}
+	}
+	public static class MasterBoolOptionContext extends MasterOptionContext {
+		public Token boolVal;
+		public BoolMasterOptionContext boolMasterOption() {
+			return getRuleContext(BoolMasterOptionContext.class,0);
+		}
+		public MasterBoolOptionContext(MasterOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterBoolOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterBoolOption(this);
 		}
 	}
 	public static class MasterDecimalOptionContext extends MasterOptionContext {
@@ -30322,19 +30322,19 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class WildIgnoreTableReplicationContext extends ReplicationFilterContext {
-		public TerminalNode REPLICATE_WILD_IGNORE_TABLE() { return getToken(MySqlParser.REPLICATE_WILD_IGNORE_TABLE, 0); }
+	public static class WildDoTableReplicationContext extends ReplicationFilterContext {
+		public TerminalNode REPLICATE_WILD_DO_TABLE() { return getToken(MySqlParser.REPLICATE_WILD_DO_TABLE, 0); }
 		public SimpleStringsContext simpleStrings() {
 			return getRuleContext(SimpleStringsContext.class,0);
 		}
-		public WildIgnoreTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
+		public WildDoTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWildIgnoreTableReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWildDoTableReplication(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWildIgnoreTableReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWildDoTableReplication(this);
 		}
 	}
 	public static class DoTableReplicationContext extends ReplicationFilterContext {
@@ -30352,19 +30352,34 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDoTableReplication(this);
 		}
 	}
-	public static class IgnoreTableReplicationContext extends ReplicationFilterContext {
-		public TerminalNode REPLICATE_IGNORE_TABLE() { return getToken(MySqlParser.REPLICATE_IGNORE_TABLE, 0); }
-		public TablesContext tables() {
-			return getRuleContext(TablesContext.class,0);
+	public static class IgnoreDbReplicationContext extends ReplicationFilterContext {
+		public TerminalNode REPLICATE_IGNORE_DB() { return getToken(MySqlParser.REPLICATE_IGNORE_DB, 0); }
+		public UidListContext uidList() {
+			return getRuleContext(UidListContext.class,0);
 		}
-		public IgnoreTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
+		public IgnoreDbReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterIgnoreTableReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterIgnoreDbReplication(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIgnoreTableReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIgnoreDbReplication(this);
+		}
+	}
+	public static class WildIgnoreTableReplicationContext extends ReplicationFilterContext {
+		public TerminalNode REPLICATE_WILD_IGNORE_TABLE() { return getToken(MySqlParser.REPLICATE_WILD_IGNORE_TABLE, 0); }
+		public SimpleStringsContext simpleStrings() {
+			return getRuleContext(SimpleStringsContext.class,0);
+		}
+		public WildIgnoreTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWildIgnoreTableReplication(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWildIgnoreTableReplication(this);
 		}
 	}
 	public static class RewriteDbReplicationContext extends ReplicationFilterContext {
@@ -30400,34 +30415,19 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDoDbReplication(this);
 		}
 	}
-	public static class IgnoreDbReplicationContext extends ReplicationFilterContext {
-		public TerminalNode REPLICATE_IGNORE_DB() { return getToken(MySqlParser.REPLICATE_IGNORE_DB, 0); }
-		public UidListContext uidList() {
-			return getRuleContext(UidListContext.class,0);
+	public static class IgnoreTableReplicationContext extends ReplicationFilterContext {
+		public TerminalNode REPLICATE_IGNORE_TABLE() { return getToken(MySqlParser.REPLICATE_IGNORE_TABLE, 0); }
+		public TablesContext tables() {
+			return getRuleContext(TablesContext.class,0);
 		}
-		public IgnoreDbReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
+		public IgnoreTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterIgnoreDbReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterIgnoreTableReplication(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIgnoreDbReplication(this);
-		}
-	}
-	public static class WildDoTableReplicationContext extends ReplicationFilterContext {
-		public TerminalNode REPLICATE_WILD_DO_TABLE() { return getToken(MySqlParser.REPLICATE_WILD_DO_TABLE, 0); }
-		public SimpleStringsContext simpleStrings() {
-			return getRuleContext(SimpleStringsContext.class,0);
-		}
-		public WildDoTableReplicationContext(ReplicationFilterContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWildDoTableReplication(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWildDoTableReplication(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIgnoreTableReplication(this);
 		}
 	}
 
@@ -30692,6 +30692,23 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class MasterLogUntilOptionContext extends UntilOptionContext {
+		public TerminalNode MASTER_LOG_FILE() { return getToken(MySqlParser.MASTER_LOG_FILE, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public TerminalNode MASTER_LOG_POS() { return getToken(MySqlParser.MASTER_LOG_POS, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public MasterLogUntilOptionContext(UntilOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterLogUntilOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterLogUntilOption(this);
+		}
+	}
 	public static class GtidsUntilOptionContext extends UntilOptionContext {
 		public Token gtids;
 		public GtuidSetContext gtuidSet() {
@@ -30719,23 +30736,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSqlGapsUntilOption(this);
-		}
-	}
-	public static class MasterLogUntilOptionContext extends UntilOptionContext {
-		public TerminalNode MASTER_LOG_FILE() { return getToken(MySqlParser.MASTER_LOG_FILE, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public TerminalNode MASTER_LOG_POS() { return getToken(MySqlParser.MASTER_LOG_POS, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public MasterLogUntilOptionContext(UntilOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMasterLogUntilOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMasterLogUntilOption(this);
 		}
 	}
 	public static class RelayLogUntilOptionContext extends UntilOptionContext {
@@ -30860,20 +30860,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class PluginDirConnectionOptionContext extends ConnectionOptionContext {
-		public Token conOptPluginDir;
-		public TerminalNode PLUGIN_DIR() { return getToken(MySqlParser.PLUGIN_DIR, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public PluginDirConnectionOptionContext(ConnectionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPluginDirConnectionOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPluginDirConnectionOption(this);
-		}
-	}
 	public static class UserConnectionOptionContext extends ConnectionOptionContext {
 		public Token conOptUser;
 		public TerminalNode USER() { return getToken(MySqlParser.USER, 0); }
@@ -30888,20 +30874,6 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUserConnectionOption(this);
 		}
 	}
-	public static class DefaultAuthConnectionOptionContext extends ConnectionOptionContext {
-		public Token conOptDefAuth;
-		public TerminalNode DEFAULT_AUTH() { return getToken(MySqlParser.DEFAULT_AUTH, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public DefaultAuthConnectionOptionContext(ConnectionOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDefaultAuthConnectionOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefaultAuthConnectionOption(this);
-		}
-	}
 	public static class PasswordConnectionOptionContext extends ConnectionOptionContext {
 		public Token conOptPassword;
 		public TerminalNode PASSWORD() { return getToken(MySqlParser.PASSWORD, 0); }
@@ -30914,6 +30886,34 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPasswordConnectionOption(this);
+		}
+	}
+	public static class PluginDirConnectionOptionContext extends ConnectionOptionContext {
+		public Token conOptPluginDir;
+		public TerminalNode PLUGIN_DIR() { return getToken(MySqlParser.PLUGIN_DIR, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public PluginDirConnectionOptionContext(ConnectionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPluginDirConnectionOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPluginDirConnectionOption(this);
+		}
+	}
+	public static class DefaultAuthConnectionOptionContext extends ConnectionOptionContext {
+		public Token conOptDefAuth;
+		public TerminalNode DEFAULT_AUTH() { return getToken(MySqlParser.DEFAULT_AUTH, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public DefaultAuthConnectionOptionContext(ConnectionOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDefaultAuthConnectionOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefaultAuthConnectionOption(this);
 		}
 	}
 
@@ -32534,21 +32534,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class CloseCursorContext extends CursorStatementContext {
-		public TerminalNode CLOSE() { return getToken(MySqlParser.CLOSE, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public CloseCursorContext(CursorStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCloseCursor(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCloseCursor(this);
-		}
-	}
 	public static class OpenCursorContext extends CursorStatementContext {
 		public TerminalNode OPEN() { return getToken(MySqlParser.OPEN, 0); }
 		public UidContext uid() {
@@ -32562,6 +32547,21 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitOpenCursor(this);
+		}
+	}
+	public static class CloseCursorContext extends CursorStatementContext {
+		public TerminalNode CLOSE() { return getToken(MySqlParser.CLOSE, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public CloseCursorContext(CursorStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCloseCursor(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCloseCursor(this);
 		}
 	}
 	public static class FetchCursorContext extends CursorStatementContext {
@@ -32967,43 +32967,18 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class HandlerConditionWarningContext extends HandlerConditionValueContext {
-		public TerminalNode SQLWARNING() { return getToken(MySqlParser.SQLWARNING, 0); }
-		public HandlerConditionWarningContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
+	public static class HandlerConditionNameContext extends HandlerConditionValueContext {
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public HandlerConditionNameContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionWarning(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionName(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionWarning(this);
-		}
-	}
-	public static class HandlerConditionCodeContext extends HandlerConditionValueContext {
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public HandlerConditionCodeContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionCode(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionCode(this);
-		}
-	}
-	public static class HandlerConditionNotfoundContext extends HandlerConditionValueContext {
-		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public TerminalNode FOUND() { return getToken(MySqlParser.FOUND, 0); }
-		public HandlerConditionNotfoundContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionNotfound(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionNotfound(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionName(this);
 		}
 	}
 	public static class HandlerConditionStateContext extends HandlerConditionValueContext {
@@ -33020,6 +32995,18 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionState(this);
 		}
 	}
+	public static class HandlerConditionWarningContext extends HandlerConditionValueContext {
+		public TerminalNode SQLWARNING() { return getToken(MySqlParser.SQLWARNING, 0); }
+		public HandlerConditionWarningContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionWarning(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionWarning(this);
+		}
+	}
 	public static class HandlerConditionExceptionContext extends HandlerConditionValueContext {
 		public TerminalNode SQLEXCEPTION() { return getToken(MySqlParser.SQLEXCEPTION, 0); }
 		public HandlerConditionExceptionContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
@@ -33032,18 +33019,31 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionException(this);
 		}
 	}
-	public static class HandlerConditionNameContext extends HandlerConditionValueContext {
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public HandlerConditionNameContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
+	public static class HandlerConditionNotfoundContext extends HandlerConditionValueContext {
+		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
+		public TerminalNode FOUND() { return getToken(MySqlParser.FOUND, 0); }
+		public HandlerConditionNotfoundContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionName(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionNotfound(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionName(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionNotfound(this);
+		}
+	}
+	public static class HandlerConditionCodeContext extends HandlerConditionValueContext {
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public HandlerConditionCodeContext(HandlerConditionValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHandlerConditionCode(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHandlerConditionCode(this);
 		}
 	}
 
@@ -34006,25 +34006,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class AlterUserMysqlV56Context extends AlterUserContext {
-		public TerminalNode ALTER() { return getToken(MySqlParser.ALTER, 0); }
-		public TerminalNode USER() { return getToken(MySqlParser.USER, 0); }
-		public List<UserSpecificationContext> userSpecification() {
-			return getRuleContexts(UserSpecificationContext.class);
-		}
-		public UserSpecificationContext userSpecification(int i) {
-			return getRuleContext(UserSpecificationContext.class,i);
-		}
-		public AlterUserMysqlV56Context(AlterUserContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterUserMysqlV56(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterUserMysqlV56(this);
-		}
-	}
 	public static class AlterUserMysqlV57Context extends AlterUserContext {
 		public Token tlsNone;
 		public TerminalNode ALTER() { return getToken(MySqlParser.ALTER, 0); }
@@ -34077,6 +34058,25 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterUserMysqlV57(this);
+		}
+	}
+	public static class AlterUserMysqlV56Context extends AlterUserContext {
+		public TerminalNode ALTER() { return getToken(MySqlParser.ALTER, 0); }
+		public TerminalNode USER() { return getToken(MySqlParser.USER, 0); }
+		public List<UserSpecificationContext> userSpecification() {
+			return getRuleContexts(UserSpecificationContext.class);
+		}
+		public UserSpecificationContext userSpecification(int i) {
+			return getRuleContext(UserSpecificationContext.class,i);
+		}
+		public AlterUserMysqlV56Context(AlterUserContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAlterUserMysqlV56(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAlterUserMysqlV56(this);
 		}
 	}
 
@@ -35052,6 +35052,29 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ShortRevokeContext extends RevokeStatementContext {
+		public TerminalNode REVOKE() { return getToken(MySqlParser.REVOKE, 0); }
+		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
+		public TerminalNode GRANT() { return getToken(MySqlParser.GRANT, 0); }
+		public TerminalNode OPTION() { return getToken(MySqlParser.OPTION, 0); }
+		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public List<UserNameContext> userName() {
+			return getRuleContexts(UserNameContext.class);
+		}
+		public UserNameContext userName(int i) {
+			return getRuleContext(UserNameContext.class,i);
+		}
+		public TerminalNode PRIVILEGES() { return getToken(MySqlParser.PRIVILEGES, 0); }
+		public ShortRevokeContext(RevokeStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShortRevoke(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShortRevoke(this);
+		}
+	}
 	public static class DetailRevokeContext extends RevokeStatementContext {
 		public Token privilegeObject;
 		public TerminalNode REVOKE() { return getToken(MySqlParser.REVOKE, 0); }
@@ -35083,29 +35106,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDetailRevoke(this);
-		}
-	}
-	public static class ShortRevokeContext extends RevokeStatementContext {
-		public TerminalNode REVOKE() { return getToken(MySqlParser.REVOKE, 0); }
-		public TerminalNode ALL() { return getToken(MySqlParser.ALL, 0); }
-		public TerminalNode GRANT() { return getToken(MySqlParser.GRANT, 0); }
-		public TerminalNode OPTION() { return getToken(MySqlParser.OPTION, 0); }
-		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
-		public List<UserNameContext> userName() {
-			return getRuleContexts(UserNameContext.class);
-		}
-		public UserNameContext userName(int i) {
-			return getRuleContext(UserNameContext.class,i);
-		}
-		public TerminalNode PRIVILEGES() { return getToken(MySqlParser.PRIVILEGES, 0); }
-		public ShortRevokeContext(RevokeStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShortRevoke(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShortRevoke(this);
 		}
 	}
 
@@ -35460,20 +35460,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SimpleAuthOptionContext extends UserAuthOptionContext {
-		public UserNameContext userName() {
-			return getRuleContext(UserNameContext.class,0);
-		}
-		public SimpleAuthOptionContext(UserAuthOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleAuthOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleAuthOption(this);
-		}
-	}
 	public static class PasswordAuthOptionContext extends UserAuthOptionContext {
 		public Token hashed;
 		public UserNameContext userName() {
@@ -35491,6 +35477,27 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPasswordAuthOption(this);
+		}
+	}
+	public static class HashAuthOptionContext extends UserAuthOptionContext {
+		public UserNameContext userName() {
+			return getRuleContext(UserNameContext.class,0);
+		}
+		public TerminalNode IDENTIFIED() { return getToken(MySqlParser.IDENTIFIED, 0); }
+		public TerminalNode WITH() { return getToken(MySqlParser.WITH, 0); }
+		public AuthPluginContext authPlugin() {
+			return getRuleContext(AuthPluginContext.class,0);
+		}
+		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public HashAuthOptionContext(UserAuthOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHashAuthOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHashAuthOption(this);
 		}
 	}
 	public static class StringAuthOptionContext extends UserAuthOptionContext {
@@ -35514,25 +35521,18 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitStringAuthOption(this);
 		}
 	}
-	public static class HashAuthOptionContext extends UserAuthOptionContext {
+	public static class SimpleAuthOptionContext extends UserAuthOptionContext {
 		public UserNameContext userName() {
 			return getRuleContext(UserNameContext.class,0);
 		}
-		public TerminalNode IDENTIFIED() { return getToken(MySqlParser.IDENTIFIED, 0); }
-		public TerminalNode WITH() { return getToken(MySqlParser.WITH, 0); }
-		public AuthPluginContext authPlugin() {
-			return getRuleContext(AuthPluginContext.class,0);
-		}
-		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public HashAuthOptionContext(UserAuthOptionContext ctx) { copyFrom(ctx); }
+		public SimpleAuthOptionContext(UserAuthOptionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterHashAuthOption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleAuthOption(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitHashAuthOption(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleAuthOption(this);
 		}
 	}
 
@@ -36327,20 +36327,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class DefiniteSchemaPrivLevelContext extends PrivilegeLevelContext {
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public DefiniteSchemaPrivLevelContext(PrivilegeLevelContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDefiniteSchemaPrivLevel(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefiniteSchemaPrivLevel(this);
-		}
-	}
 	public static class DefiniteFullTablePrivLevelContext extends PrivilegeLevelContext {
 		public List<UidContext> uid() {
 			return getRuleContexts(UidContext.class);
@@ -36356,17 +36342,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefiniteFullTablePrivLevel(this);
-		}
-	}
-	public static class GlobalPrivLevelContext extends PrivilegeLevelContext {
-		public GlobalPrivLevelContext(PrivilegeLevelContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterGlobalPrivLevel(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitGlobalPrivLevel(this);
 		}
 	}
 	public static class DefiniteTablePrivLevelContext extends PrivilegeLevelContext {
@@ -36392,6 +36367,31 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCurrentSchemaPriviLevel(this);
+		}
+	}
+	public static class GlobalPrivLevelContext extends PrivilegeLevelContext {
+		public GlobalPrivLevelContext(PrivilegeLevelContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterGlobalPrivLevel(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitGlobalPrivLevel(this);
+		}
+	}
+	public static class DefiniteSchemaPrivLevelContext extends PrivilegeLevelContext {
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public DefiniteSchemaPrivLevelContext(PrivilegeLevelContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDefiniteSchemaPrivLevel(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDefiniteSchemaPrivLevel(this);
 		}
 	}
 
@@ -37164,6 +37164,20 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class SetAutocommitContext extends SetStatementContext {
+		public SetAutocommitStatementContext setAutocommitStatement() {
+			return getRuleContext(SetAutocommitStatementContext.class,0);
+		}
+		public SetAutocommitContext(SetStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSetAutocommit(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetAutocommit(this);
+		}
+	}
 	public static class SetTransactionContext extends SetStatementContext {
 		public SetTransactionStatementContext setTransactionStatement() {
 			return getRuleContext(SetTransactionStatementContext.class,0);
@@ -37199,6 +37213,30 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetCharset(this);
 		}
 	}
+	public static class SetVariableContext extends SetStatementContext {
+		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
+		public List<VariableClauseContext> variableClause() {
+			return getRuleContexts(VariableClauseContext.class);
+		}
+		public VariableClauseContext variableClause(int i) {
+			return getRuleContext(VariableClauseContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public SetVariableContext(SetStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSetVariable(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetVariable(this);
+		}
+	}
 	public static class SetNamesContext extends SetStatementContext {
 		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
 		public TerminalNode NAMES() { return getToken(MySqlParser.NAMES, 0); }
@@ -37232,44 +37270,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetPassword(this);
-		}
-	}
-	public static class SetAutocommitContext extends SetStatementContext {
-		public SetAutocommitStatementContext setAutocommitStatement() {
-			return getRuleContext(SetAutocommitStatementContext.class,0);
-		}
-		public SetAutocommitContext(SetStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSetAutocommit(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetAutocommit(this);
-		}
-	}
-	public static class SetVariableContext extends SetStatementContext {
-		public TerminalNode SET() { return getToken(MySqlParser.SET, 0); }
-		public List<VariableClauseContext> variableClause() {
-			return getRuleContexts(VariableClauseContext.class);
-		}
-		public VariableClauseContext variableClause(int i) {
-			return getRuleContext(VariableClauseContext.class,i);
-		}
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public SetVariableContext(SetStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSetVariable(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSetVariable(this);
 		}
 	}
 
@@ -37533,124 +37533,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class ShowOpenTablesContext extends ShowStatementContext {
-		public Token schemaFormat;
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode OPEN() { return getToken(MySqlParser.OPEN, 0); }
-		public TerminalNode TABLES() { return getToken(MySqlParser.TABLES, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public ShowFilterContext showFilter() {
-			return getRuleContext(ShowFilterContext.class,0);
-		}
-		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
-		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
-		public ShowOpenTablesContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowOpenTables(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowOpenTables(this);
-		}
-	}
-	public static class ShowGlobalInfoContext extends ShowStatementContext {
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public ShowGlobalInfoClauseContext showGlobalInfoClause() {
-			return getRuleContext(ShowGlobalInfoClauseContext.class,0);
-		}
-		public ShowGlobalInfoContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowGlobalInfo(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowGlobalInfo(this);
-		}
-	}
-	public static class ShowCreateFullIdObjectContext extends ShowStatementContext {
-		public Token namedEntity;
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
-		public FullIdContext fullId() {
-			return getRuleContext(FullIdContext.class,0);
-		}
-		public TerminalNode EVENT() { return getToken(MySqlParser.EVENT, 0); }
-		public TerminalNode FUNCTION() { return getToken(MySqlParser.FUNCTION, 0); }
-		public TerminalNode PROCEDURE() { return getToken(MySqlParser.PROCEDURE, 0); }
-		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
-		public TerminalNode TRIGGER() { return getToken(MySqlParser.TRIGGER, 0); }
-		public TerminalNode VIEW() { return getToken(MySqlParser.VIEW, 0); }
-		public ShowCreateFullIdObjectContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateFullIdObject(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateFullIdObject(this);
-		}
-	}
-	public static class ShowCreateUserContext extends ShowStatementContext {
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
-		public TerminalNode USER() { return getToken(MySqlParser.USER, 0); }
-		public UserNameContext userName() {
-			return getRuleContext(UserNameContext.class,0);
-		}
-		public ShowCreateUserContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateUser(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateUser(this);
-		}
-	}
-	public static class ShowErrorsContext extends ShowStatementContext {
-		public Token errorFormat;
-		public DecimalLiteralContext offset;
-		public DecimalLiteralContext rowCount;
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode ERRORS() { return getToken(MySqlParser.ERRORS, 0); }
-		public TerminalNode WARNINGS() { return getToken(MySqlParser.WARNINGS, 0); }
-		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
-		public List<DecimalLiteralContext> decimalLiteral() {
-			return getRuleContexts(DecimalLiteralContext.class);
-		}
-		public DecimalLiteralContext decimalLiteral(int i) {
-			return getRuleContext(DecimalLiteralContext.class,i);
-		}
-		public ShowErrorsContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowErrors(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowErrors(this);
-		}
-	}
-	public static class ShowCountErrorsContext extends ShowStatementContext {
-		public Token errorFormat;
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode COUNT() { return getToken(MySqlParser.COUNT, 0); }
-		public TerminalNode ERRORS() { return getToken(MySqlParser.ERRORS, 0); }
-		public TerminalNode WARNINGS() { return getToken(MySqlParser.WARNINGS, 0); }
-		public ShowCountErrorsContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCountErrors(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCountErrors(this);
-		}
-	}
 	public static class ShowObjectFilterContext extends ShowStatementContext {
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
 		public ShowCommonEntityContext showCommonEntity() {
@@ -37669,69 +37551,67 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowObjectFilter(this);
 		}
 	}
-	public static class ShowCreateDbContext extends ShowStatementContext {
-		public Token schemaFormat;
+	public static class ShowCountErrorsContext extends ShowStatementContext {
+		public Token errorFormat;
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public TerminalNode DATABASE() { return getToken(MySqlParser.DATABASE, 0); }
-		public TerminalNode SCHEMA() { return getToken(MySqlParser.SCHEMA, 0); }
-		public IfNotExistsContext ifNotExists() {
-			return getRuleContext(IfNotExistsContext.class,0);
-		}
-		public ShowCreateDbContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		public TerminalNode COUNT() { return getToken(MySqlParser.COUNT, 0); }
+		public TerminalNode ERRORS() { return getToken(MySqlParser.ERRORS, 0); }
+		public TerminalNode WARNINGS() { return getToken(MySqlParser.WARNINGS, 0); }
+		public ShowCountErrorsContext(ShowStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateDb(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCountErrors(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateDb(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCountErrors(this);
 		}
 	}
-	public static class ShowEngineContext extends ShowStatementContext {
-		public Token engineOption;
+	public static class ShowGrantsContext extends ShowStatementContext {
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode ENGINE() { return getToken(MySqlParser.ENGINE, 0); }
-		public EngineNameContext engineName() {
-			return getRuleContext(EngineNameContext.class,0);
+		public TerminalNode GRANTS() { return getToken(MySqlParser.GRANTS, 0); }
+		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
+		public UserNameContext userName() {
+			return getRuleContext(UserNameContext.class,0);
 		}
-		public TerminalNode STATUS() { return getToken(MySqlParser.STATUS, 0); }
-		public TerminalNode MUTEX() { return getToken(MySqlParser.MUTEX, 0); }
-		public ShowEngineContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		public ShowGrantsContext(ShowStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowEngine(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowGrants(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowEngine(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowGrants(this);
 		}
 	}
-	public static class ShowSchemaFilterContext extends ShowStatementContext {
-		public Token schemaFormat;
+	public static class ShowLogEventsContext extends ShowStatementContext {
+		public Token logFormat;
+		public Token filename;
+		public DecimalLiteralContext fromPosition;
+		public DecimalLiteralContext offset;
+		public DecimalLiteralContext rowCount;
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public ShowSchemaEntityContext showSchemaEntity() {
-			return getRuleContext(ShowSchemaEntityContext.class,0);
-		}
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public ShowFilterContext showFilter() {
-			return getRuleContext(ShowFilterContext.class,0);
-		}
-		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public TerminalNode EVENTS() { return getToken(MySqlParser.EVENTS, 0); }
+		public TerminalNode BINLOG() { return getToken(MySqlParser.BINLOG, 0); }
+		public TerminalNode RELAYLOG() { return getToken(MySqlParser.RELAYLOG, 0); }
 		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
-		public ShowSchemaFilterContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public List<DecimalLiteralContext> decimalLiteral() {
+			return getRuleContexts(DecimalLiteralContext.class);
+		}
+		public DecimalLiteralContext decimalLiteral(int i) {
+			return getRuleContext(DecimalLiteralContext.class,i);
+		}
+		public ShowLogEventsContext(ShowStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowSchemaFilter(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowLogEvents(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowSchemaFilter(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowLogEvents(this);
 		}
 	}
 	public static class ShowIndexesContext extends ShowStatementContext {
@@ -37770,84 +37650,19 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowIndexes(this);
 		}
 	}
-	public static class ShowLogEventsContext extends ShowStatementContext {
-		public Token logFormat;
-		public Token filename;
-		public DecimalLiteralContext fromPosition;
-		public DecimalLiteralContext offset;
-		public DecimalLiteralContext rowCount;
+	public static class ShowGlobalInfoContext extends ShowStatementContext {
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode EVENTS() { return getToken(MySqlParser.EVENTS, 0); }
-		public TerminalNode BINLOG() { return getToken(MySqlParser.BINLOG, 0); }
-		public TerminalNode RELAYLOG() { return getToken(MySqlParser.RELAYLOG, 0); }
-		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
-		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
-		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public List<DecimalLiteralContext> decimalLiteral() {
-			return getRuleContexts(DecimalLiteralContext.class);
+		public ShowGlobalInfoClauseContext showGlobalInfoClause() {
+			return getRuleContext(ShowGlobalInfoClauseContext.class,0);
 		}
-		public DecimalLiteralContext decimalLiteral(int i) {
-			return getRuleContext(DecimalLiteralContext.class,i);
-		}
-		public ShowLogEventsContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		public ShowGlobalInfoContext(ShowStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowLogEvents(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowGlobalInfo(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowLogEvents(this);
-		}
-	}
-	public static class ShowMasterLogsContext extends ShowStatementContext {
-		public Token logFormat;
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode LOGS() { return getToken(MySqlParser.LOGS, 0); }
-		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
-		public TerminalNode MASTER() { return getToken(MySqlParser.MASTER, 0); }
-		public ShowMasterLogsContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowMasterLogs(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowMasterLogs(this);
-		}
-	}
-	public static class ShowGrantsContext extends ShowStatementContext {
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode GRANTS() { return getToken(MySqlParser.GRANTS, 0); }
-		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
-		public UserNameContext userName() {
-			return getRuleContext(UserNameContext.class,0);
-		}
-		public ShowGrantsContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowGrants(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowGrants(this);
-		}
-	}
-	public static class ShowSlaveStatusContext extends ShowStatementContext {
-		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode SLAVE() { return getToken(MySqlParser.SLAVE, 0); }
-		public TerminalNode STATUS() { return getToken(MySqlParser.STATUS, 0); }
-		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
-		public TerminalNode CHANNEL() { return getToken(MySqlParser.CHANNEL, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public ShowSlaveStatusContext(ShowStatementContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowSlaveStatus(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowSlaveStatus(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowGlobalInfo(this);
 		}
 	}
 	public static class ShowRoutineContext extends ShowStatementContext {
@@ -37869,35 +37684,20 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowRoutine(this);
 		}
 	}
-	public static class ShowProfileContext extends ShowStatementContext {
-		public DecimalLiteralContext queryCount;
-		public DecimalLiteralContext offset;
-		public DecimalLiteralContext rowCount;
+	public static class ShowMasterLogsContext extends ShowStatementContext {
+		public Token logFormat;
 		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
-		public TerminalNode PROFILE() { return getToken(MySqlParser.PROFILE, 0); }
-		public List<ShowProfileTypeContext> showProfileType() {
-			return getRuleContexts(ShowProfileTypeContext.class);
-		}
-		public ShowProfileTypeContext showProfileType(int i) {
-			return getRuleContext(ShowProfileTypeContext.class,i);
-		}
-		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
-		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
-		public TerminalNode QUERY() { return getToken(MySqlParser.QUERY, 0); }
-		public List<DecimalLiteralContext> decimalLiteral() {
-			return getRuleContexts(DecimalLiteralContext.class);
-		}
-		public DecimalLiteralContext decimalLiteral(int i) {
-			return getRuleContext(DecimalLiteralContext.class,i);
-		}
-		public ShowProfileContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		public TerminalNode LOGS() { return getToken(MySqlParser.LOGS, 0); }
+		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
+		public TerminalNode MASTER() { return getToken(MySqlParser.MASTER, 0); }
+		public ShowMasterLogsContext(ShowStatementContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowProfile(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowMasterLogs(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowProfile(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowMasterLogs(this);
 		}
 	}
 	public static class ShowColumnsContext extends ShowStatementContext {
@@ -37933,6 +37733,206 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowColumns(this);
+		}
+	}
+	public static class ShowCreateFullIdObjectContext extends ShowStatementContext {
+		public Token namedEntity;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
+		public FullIdContext fullId() {
+			return getRuleContext(FullIdContext.class,0);
+		}
+		public TerminalNode EVENT() { return getToken(MySqlParser.EVENT, 0); }
+		public TerminalNode FUNCTION() { return getToken(MySqlParser.FUNCTION, 0); }
+		public TerminalNode PROCEDURE() { return getToken(MySqlParser.PROCEDURE, 0); }
+		public TerminalNode TABLE() { return getToken(MySqlParser.TABLE, 0); }
+		public TerminalNode TRIGGER() { return getToken(MySqlParser.TRIGGER, 0); }
+		public TerminalNode VIEW() { return getToken(MySqlParser.VIEW, 0); }
+		public ShowCreateFullIdObjectContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateFullIdObject(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateFullIdObject(this);
+		}
+	}
+	public static class ShowSchemaFilterContext extends ShowStatementContext {
+		public Token schemaFormat;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public ShowSchemaEntityContext showSchemaEntity() {
+			return getRuleContext(ShowSchemaEntityContext.class,0);
+		}
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public ShowFilterContext showFilter() {
+			return getRuleContext(ShowFilterContext.class,0);
+		}
+		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
+		public ShowSchemaFilterContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowSchemaFilter(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowSchemaFilter(this);
+		}
+	}
+	public static class ShowProfileContext extends ShowStatementContext {
+		public DecimalLiteralContext queryCount;
+		public DecimalLiteralContext offset;
+		public DecimalLiteralContext rowCount;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode PROFILE() { return getToken(MySqlParser.PROFILE, 0); }
+		public List<ShowProfileTypeContext> showProfileType() {
+			return getRuleContexts(ShowProfileTypeContext.class);
+		}
+		public ShowProfileTypeContext showProfileType(int i) {
+			return getRuleContext(ShowProfileTypeContext.class,i);
+		}
+		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
+		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
+		public TerminalNode QUERY() { return getToken(MySqlParser.QUERY, 0); }
+		public List<DecimalLiteralContext> decimalLiteral() {
+			return getRuleContexts(DecimalLiteralContext.class);
+		}
+		public DecimalLiteralContext decimalLiteral(int i) {
+			return getRuleContext(DecimalLiteralContext.class,i);
+		}
+		public ShowProfileContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowProfile(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowProfile(this);
+		}
+	}
+	public static class ShowCreateUserContext extends ShowStatementContext {
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
+		public TerminalNode USER() { return getToken(MySqlParser.USER, 0); }
+		public UserNameContext userName() {
+			return getRuleContext(UserNameContext.class,0);
+		}
+		public ShowCreateUserContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateUser(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateUser(this);
+		}
+	}
+	public static class ShowEngineContext extends ShowStatementContext {
+		public Token engineOption;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode ENGINE() { return getToken(MySqlParser.ENGINE, 0); }
+		public EngineNameContext engineName() {
+			return getRuleContext(EngineNameContext.class,0);
+		}
+		public TerminalNode STATUS() { return getToken(MySqlParser.STATUS, 0); }
+		public TerminalNode MUTEX() { return getToken(MySqlParser.MUTEX, 0); }
+		public ShowEngineContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowEngine(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowEngine(this);
+		}
+	}
+	public static class ShowSlaveStatusContext extends ShowStatementContext {
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode SLAVE() { return getToken(MySqlParser.SLAVE, 0); }
+		public TerminalNode STATUS() { return getToken(MySqlParser.STATUS, 0); }
+		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
+		public TerminalNode CHANNEL() { return getToken(MySqlParser.CHANNEL, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public ShowSlaveStatusContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowSlaveStatus(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowSlaveStatus(this);
+		}
+	}
+	public static class ShowCreateDbContext extends ShowStatementContext {
+		public Token schemaFormat;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode CREATE() { return getToken(MySqlParser.CREATE, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public TerminalNode DATABASE() { return getToken(MySqlParser.DATABASE, 0); }
+		public TerminalNode SCHEMA() { return getToken(MySqlParser.SCHEMA, 0); }
+		public IfNotExistsContext ifNotExists() {
+			return getRuleContext(IfNotExistsContext.class,0);
+		}
+		public ShowCreateDbContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowCreateDb(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowCreateDb(this);
+		}
+	}
+	public static class ShowOpenTablesContext extends ShowStatementContext {
+		public Token schemaFormat;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode OPEN() { return getToken(MySqlParser.OPEN, 0); }
+		public TerminalNode TABLES() { return getToken(MySqlParser.TABLES, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public ShowFilterContext showFilter() {
+			return getRuleContext(ShowFilterContext.class,0);
+		}
+		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
+		public ShowOpenTablesContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowOpenTables(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowOpenTables(this);
+		}
+	}
+	public static class ShowErrorsContext extends ShowStatementContext {
+		public Token errorFormat;
+		public DecimalLiteralContext offset;
+		public DecimalLiteralContext rowCount;
+		public TerminalNode SHOW() { return getToken(MySqlParser.SHOW, 0); }
+		public TerminalNode ERRORS() { return getToken(MySqlParser.ERRORS, 0); }
+		public TerminalNode WARNINGS() { return getToken(MySqlParser.WARNINGS, 0); }
+		public TerminalNode LIMIT() { return getToken(MySqlParser.LIMIT, 0); }
+		public List<DecimalLiteralContext> decimalLiteral() {
+			return getRuleContexts(DecimalLiteralContext.class);
+		}
+		public DecimalLiteralContext decimalLiteral(int i) {
+			return getRuleContext(DecimalLiteralContext.class,i);
+		}
+		public ShowErrorsContext(ShowStatementContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterShowErrors(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitShowErrors(this);
 		}
 	}
 
@@ -41081,40 +41081,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class TableFlushOptionContext extends FlushOptionContext {
-		public TerminalNode TABLES() { return getToken(MySqlParser.TABLES, 0); }
-		public TablesContext tables() {
-			return getRuleContext(TablesContext.class,0);
-		}
-		public FlushTableOptionContext flushTableOption() {
-			return getRuleContext(FlushTableOptionContext.class,0);
-		}
-		public TableFlushOptionContext(FlushOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableFlushOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableFlushOption(this);
-		}
-	}
-	public static class ChannelFlushOptionContext extends FlushOptionContext {
-		public TerminalNode RELAY() { return getToken(MySqlParser.RELAY, 0); }
-		public TerminalNode LOGS() { return getToken(MySqlParser.LOGS, 0); }
-		public ChannelOptionContext channelOption() {
-			return getRuleContext(ChannelOptionContext.class,0);
-		}
-		public ChannelFlushOptionContext(FlushOptionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterChannelFlushOption(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitChannelFlushOption(this);
-		}
-	}
 	public static class SimpleFlushOptionContext extends FlushOptionContext {
 		public TerminalNode DES_KEY_FILE() { return getToken(MySqlParser.DES_KEY_FILE, 0); }
 		public TerminalNode HOSTS() { return getToken(MySqlParser.HOSTS, 0); }
@@ -41143,6 +41109,40 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleFlushOption(this);
+		}
+	}
+	public static class ChannelFlushOptionContext extends FlushOptionContext {
+		public TerminalNode RELAY() { return getToken(MySqlParser.RELAY, 0); }
+		public TerminalNode LOGS() { return getToken(MySqlParser.LOGS, 0); }
+		public ChannelOptionContext channelOption() {
+			return getRuleContext(ChannelOptionContext.class,0);
+		}
+		public ChannelFlushOptionContext(FlushOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterChannelFlushOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitChannelFlushOption(this);
+		}
+	}
+	public static class TableFlushOptionContext extends FlushOptionContext {
+		public TerminalNode TABLES() { return getToken(MySqlParser.TABLES, 0); }
+		public TablesContext tables() {
+			return getRuleContext(TablesContext.class,0);
+		}
+		public FlushTableOptionContext flushTableOption() {
+			return getRuleContext(FlushTableOptionContext.class,0);
+		}
+		public TableFlushOptionContext(FlushOptionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterTableFlushOption(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTableFlushOption(this);
 		}
 	}
 
@@ -43081,6 +43081,22 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class DescribeConnectionContext extends DescribeObjectClauseContext {
+		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
+		public TerminalNode CONNECTION() { return getToken(MySqlParser.CONNECTION, 0); }
+		public UidContext uid() {
+			return getRuleContext(UidContext.class,0);
+		}
+		public DescribeConnectionContext(DescribeObjectClauseContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDescribeConnection(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDescribeConnection(this);
+		}
+	}
 	public static class DescribeStatementsContext extends DescribeObjectClauseContext {
 		public SelectStatementContext selectStatement() {
 			return getRuleContext(SelectStatementContext.class,0);
@@ -43105,22 +43121,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDescribeStatements(this);
-		}
-	}
-	public static class DescribeConnectionContext extends DescribeObjectClauseContext {
-		public TerminalNode FOR() { return getToken(MySqlParser.FOR, 0); }
-		public TerminalNode CONNECTION() { return getToken(MySqlParser.CONNECTION, 0); }
-		public UidContext uid() {
-			return getRuleContext(UidContext.class,0);
-		}
-		public DescribeConnectionContext(DescribeObjectClauseContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDescribeConnection(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDescribeConnection(this);
 		}
 	}
 
@@ -46787,53 +46787,23 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SpatialDataTypeContext extends DataTypeContext {
+	public static class SimpleDataTypeContext extends DataTypeContext {
 		public Token typeName;
-		public TerminalNode GEOMETRYCOLLECTION() { return getToken(MySqlParser.GEOMETRYCOLLECTION, 0); }
-		public TerminalNode LINESTRING() { return getToken(MySqlParser.LINESTRING, 0); }
-		public TerminalNode MULTILINESTRING() { return getToken(MySqlParser.MULTILINESTRING, 0); }
-		public TerminalNode MULTIPOINT() { return getToken(MySqlParser.MULTIPOINT, 0); }
-		public TerminalNode MULTIPOLYGON() { return getToken(MySqlParser.MULTIPOLYGON, 0); }
-		public TerminalNode POINT() { return getToken(MySqlParser.POINT, 0); }
-		public TerminalNode POLYGON() { return getToken(MySqlParser.POLYGON, 0); }
-		public SpatialDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
+		public TerminalNode DATE() { return getToken(MySqlParser.DATE, 0); }
+		public TerminalNode TINYBLOB() { return getToken(MySqlParser.TINYBLOB, 0); }
+		public TerminalNode BLOB() { return getToken(MySqlParser.BLOB, 0); }
+		public TerminalNode MEDIUMBLOB() { return getToken(MySqlParser.MEDIUMBLOB, 0); }
+		public TerminalNode LONGBLOB() { return getToken(MySqlParser.LONGBLOB, 0); }
+		public TerminalNode BOOL() { return getToken(MySqlParser.BOOL, 0); }
+		public TerminalNode BOOLEAN() { return getToken(MySqlParser.BOOLEAN, 0); }
+		public SimpleDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpatialDataType(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleDataType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpatialDataType(this);
-		}
-	}
-	public static class CollectionDataTypeContext extends DataTypeContext {
-		public Token typeName;
-		public List<TerminalNode> STRING_LITERAL() { return getTokens(MySqlParser.STRING_LITERAL); }
-		public TerminalNode STRING_LITERAL(int i) {
-			return getToken(MySqlParser.STRING_LITERAL, i);
-		}
-		public TerminalNode ENUM() { return getToken(MySqlParser.ENUM, 0); }
-		public List<TerminalNode> SET() { return getTokens(MySqlParser.SET); }
-		public TerminalNode SET(int i) {
-			return getToken(MySqlParser.SET, i);
-		}
-		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
-		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
-		public CollationNameContext collationName() {
-			return getRuleContext(CollationNameContext.class,0);
-		}
-		public CollectionDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCollectionDataType(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCollectionDataType(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleDataType(this);
 		}
 	}
 	public static class DimensionDataTypeContext extends DataTypeContext {
@@ -46877,6 +46847,25 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDimensionDataType(this);
 		}
 	}
+	public static class SpatialDataTypeContext extends DataTypeContext {
+		public Token typeName;
+		public TerminalNode GEOMETRYCOLLECTION() { return getToken(MySqlParser.GEOMETRYCOLLECTION, 0); }
+		public TerminalNode LINESTRING() { return getToken(MySqlParser.LINESTRING, 0); }
+		public TerminalNode MULTILINESTRING() { return getToken(MySqlParser.MULTILINESTRING, 0); }
+		public TerminalNode MULTIPOINT() { return getToken(MySqlParser.MULTIPOINT, 0); }
+		public TerminalNode MULTIPOLYGON() { return getToken(MySqlParser.MULTIPOLYGON, 0); }
+		public TerminalNode POINT() { return getToken(MySqlParser.POINT, 0); }
+		public TerminalNode POLYGON() { return getToken(MySqlParser.POLYGON, 0); }
+		public SpatialDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpatialDataType(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpatialDataType(this);
+		}
+	}
 	public static class StringDataTypeContext extends DataTypeContext {
 		public Token typeName;
 		public TerminalNode CHAR() { return getToken(MySqlParser.CHAR, 0); }
@@ -46908,23 +46897,34 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitStringDataType(this);
 		}
 	}
-	public static class SimpleDataTypeContext extends DataTypeContext {
+	public static class CollectionDataTypeContext extends DataTypeContext {
 		public Token typeName;
-		public TerminalNode DATE() { return getToken(MySqlParser.DATE, 0); }
-		public TerminalNode TINYBLOB() { return getToken(MySqlParser.TINYBLOB, 0); }
-		public TerminalNode BLOB() { return getToken(MySqlParser.BLOB, 0); }
-		public TerminalNode MEDIUMBLOB() { return getToken(MySqlParser.MEDIUMBLOB, 0); }
-		public TerminalNode LONGBLOB() { return getToken(MySqlParser.LONGBLOB, 0); }
-		public TerminalNode BOOL() { return getToken(MySqlParser.BOOL, 0); }
-		public TerminalNode BOOLEAN() { return getToken(MySqlParser.BOOLEAN, 0); }
-		public SimpleDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
+		public List<TerminalNode> STRING_LITERAL() { return getTokens(MySqlParser.STRING_LITERAL); }
+		public TerminalNode STRING_LITERAL(int i) {
+			return getToken(MySqlParser.STRING_LITERAL, i);
+		}
+		public TerminalNode ENUM() { return getToken(MySqlParser.ENUM, 0); }
+		public List<TerminalNode> SET() { return getTokens(MySqlParser.SET); }
+		public TerminalNode SET(int i) {
+			return getToken(MySqlParser.SET, i);
+		}
+		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
+		public TerminalNode CHARACTER() { return getToken(MySqlParser.CHARACTER, 0); }
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
+		}
+		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
+		public CollationNameContext collationName() {
+			return getRuleContext(CollationNameContext.class,0);
+		}
+		public CollectionDataTypeContext(DataTypeContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleDataType(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCollectionDataType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleDataType(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCollectionDataType(this);
 		}
 	}
 
@@ -49187,34 +49187,6 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class SpecificFunctionCallContext extends FunctionCallContext {
-		public SpecificFunctionContext specificFunction() {
-			return getRuleContext(SpecificFunctionContext.class,0);
-		}
-		public SpecificFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpecificFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpecificFunctionCall(this);
-		}
-	}
-	public static class PasswordFunctionCallContext extends FunctionCallContext {
-		public PasswordFunctionClauseContext passwordFunctionClause() {
-			return getRuleContext(PasswordFunctionClauseContext.class,0);
-		}
-		public PasswordFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPasswordFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPasswordFunctionCall(this);
-		}
-	}
 	public static class UdfFunctionCallContext extends FunctionCallContext {
 		public FullIdContext fullId() {
 			return getRuleContext(FullIdContext.class,0);
@@ -49232,18 +49204,32 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUdfFunctionCall(this);
 		}
 	}
-	public static class AggregateFunctionCallContext extends FunctionCallContext {
-		public AggregateWindowedFunctionContext aggregateWindowedFunction() {
-			return getRuleContext(AggregateWindowedFunctionContext.class,0);
+	public static class PasswordFunctionCallContext extends FunctionCallContext {
+		public PasswordFunctionClauseContext passwordFunctionClause() {
+			return getRuleContext(PasswordFunctionClauseContext.class,0);
 		}
-		public AggregateFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
+		public PasswordFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAggregateFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPasswordFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAggregateFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPasswordFunctionCall(this);
+		}
+	}
+	public static class SpecificFunctionCallContext extends FunctionCallContext {
+		public SpecificFunctionContext specificFunction() {
+			return getRuleContext(SpecificFunctionContext.class,0);
+		}
+		public SpecificFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSpecificFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSpecificFunctionCall(this);
 		}
 	}
 	public static class ScalarFunctionCallContext extends FunctionCallContext {
@@ -49261,6 +49247,20 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitScalarFunctionCall(this);
+		}
+	}
+	public static class AggregateFunctionCallContext extends FunctionCallContext {
+		public AggregateWindowedFunctionContext aggregateWindowedFunction() {
+			return getRuleContext(AggregateWindowedFunctionContext.class,0);
+		}
+		public AggregateFunctionCallContext(FunctionCallContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterAggregateFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitAggregateFunctionCall(this);
 		}
 	}
 
@@ -49364,33 +49364,64 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class PositionFunctionCallContext extends SpecificFunctionContext {
-		public StringLiteralContext positionString;
-		public ExpressionContext positionExpression;
-		public StringLiteralContext inString;
-		public ExpressionContext inExpression;
-		public TerminalNode POSITION() { return getToken(MySqlParser.POSITION, 0); }
-		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
-		public List<StringLiteralContext> stringLiteral() {
-			return getRuleContexts(StringLiteralContext.class);
+	public static class CharFunctionCallContext extends SpecificFunctionContext {
+		public TerminalNode CHAR() { return getToken(MySqlParser.CHAR, 0); }
+		public FunctionArgsContext functionArgs() {
+			return getRuleContext(FunctionArgsContext.class,0);
 		}
-		public StringLiteralContext stringLiteral(int i) {
-			return getRuleContext(StringLiteralContext.class,i);
+		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
 		}
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public PositionFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		public CharFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPositionFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCharFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPositionFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCharFunctionCall(this);
+		}
+	}
+	public static class DataTypeFunctionCallContext extends SpecificFunctionContext {
+		public Token separator;
+		public TerminalNode CONVERT() { return getToken(MySqlParser.CONVERT, 0); }
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ConvertedDataTypeContext convertedDataType() {
+			return getRuleContext(ConvertedDataTypeContext.class,0);
+		}
+		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
+		public CharsetNameContext charsetName() {
+			return getRuleContext(CharsetNameContext.class,0);
+		}
+		public TerminalNode CAST() { return getToken(MySqlParser.CAST, 0); }
+		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
+		public DataTypeFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDataTypeFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDataTypeFunctionCall(this);
+		}
+	}
+	public static class SimpleFunctionCallContext extends SpecificFunctionContext {
+		public TerminalNode CURRENT_DATE() { return getToken(MySqlParser.CURRENT_DATE, 0); }
+		public TerminalNode CURRENT_TIME() { return getToken(MySqlParser.CURRENT_TIME, 0); }
+		public TerminalNode CURRENT_TIMESTAMP() { return getToken(MySqlParser.CURRENT_TIMESTAMP, 0); }
+		public TerminalNode CURRENT_USER() { return getToken(MySqlParser.CURRENT_USER, 0); }
+		public TerminalNode LOCALTIME() { return getToken(MySqlParser.LOCALTIME, 0); }
+		public SimpleFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleFunctionCall(this);
 		}
 	}
 	public static class TrimFunctionCallContext extends SpecificFunctionContext {
@@ -49426,88 +49457,6 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitTrimFunctionCall(this);
 		}
 	}
-	public static class SimpleFunctionCallContext extends SpecificFunctionContext {
-		public TerminalNode CURRENT_DATE() { return getToken(MySqlParser.CURRENT_DATE, 0); }
-		public TerminalNode CURRENT_TIME() { return getToken(MySqlParser.CURRENT_TIME, 0); }
-		public TerminalNode CURRENT_TIMESTAMP() { return getToken(MySqlParser.CURRENT_TIMESTAMP, 0); }
-		public TerminalNode CURRENT_USER() { return getToken(MySqlParser.CURRENT_USER, 0); }
-		public TerminalNode LOCALTIME() { return getToken(MySqlParser.LOCALTIME, 0); }
-		public SimpleFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSimpleFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSimpleFunctionCall(this);
-		}
-	}
-	public static class CharFunctionCallContext extends SpecificFunctionContext {
-		public TerminalNode CHAR() { return getToken(MySqlParser.CHAR, 0); }
-		public FunctionArgsContext functionArgs() {
-			return getRuleContext(FunctionArgsContext.class,0);
-		}
-		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public CharFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCharFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCharFunctionCall(this);
-		}
-	}
-	public static class WeightFunctionCallContext extends SpecificFunctionContext {
-		public Token stringFormat;
-		public TerminalNode WEIGHT_STRING() { return getToken(MySqlParser.WEIGHT_STRING, 0); }
-		public StringLiteralContext stringLiteral() {
-			return getRuleContext(StringLiteralContext.class,0);
-		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
-		public DecimalLiteralContext decimalLiteral() {
-			return getRuleContext(DecimalLiteralContext.class,0);
-		}
-		public LevelsInWeightStringContext levelsInWeightString() {
-			return getRuleContext(LevelsInWeightStringContext.class,0);
-		}
-		public TerminalNode CHAR() { return getToken(MySqlParser.CHAR, 0); }
-		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
-		public WeightFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWeightFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWeightFunctionCall(this);
-		}
-	}
-	public static class GetFormatFunctionCallContext extends SpecificFunctionContext {
-		public Token datetimeFormat;
-		public TerminalNode GET_FORMAT() { return getToken(MySqlParser.GET_FORMAT, 0); }
-		public StringLiteralContext stringLiteral() {
-			return getRuleContext(StringLiteralContext.class,0);
-		}
-		public TerminalNode DATE() { return getToken(MySqlParser.DATE, 0); }
-		public TerminalNode TIME() { return getToken(MySqlParser.TIME, 0); }
-		public TerminalNode DATETIME() { return getToken(MySqlParser.DATETIME, 0); }
-		public GetFormatFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterGetFormatFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitGetFormatFunctionCall(this);
-		}
-	}
 	public static class CaseFunctionCallContext extends SpecificFunctionContext {
 		public FunctionArgContext elseArg;
 		public TerminalNode CASE() { return getToken(MySqlParser.CASE, 0); }
@@ -49535,68 +49484,52 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCaseFunctionCall(this);
 		}
 	}
-	public static class ExtractFunctionCallContext extends SpecificFunctionContext {
-		public StringLiteralContext sourceString;
-		public ExpressionContext sourceExpression;
-		public TerminalNode EXTRACT() { return getToken(MySqlParser.EXTRACT, 0); }
-		public IntervalTypeContext intervalType() {
-			return getRuleContext(IntervalTypeContext.class,0);
+	public static class PositionFunctionCallContext extends SpecificFunctionContext {
+		public StringLiteralContext positionString;
+		public ExpressionContext positionExpression;
+		public StringLiteralContext inString;
+		public ExpressionContext inExpression;
+		public TerminalNode POSITION() { return getToken(MySqlParser.POSITION, 0); }
+		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
+		public List<StringLiteralContext> stringLiteral() {
+			return getRuleContexts(StringLiteralContext.class);
 		}
-		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public StringLiteralContext stringLiteral(int i) {
+			return getRuleContext(StringLiteralContext.class,i);
+		}
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public PositionFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterPositionFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitPositionFunctionCall(this);
+		}
+	}
+	public static class GetFormatFunctionCallContext extends SpecificFunctionContext {
+		public Token datetimeFormat;
+		public TerminalNode GET_FORMAT() { return getToken(MySqlParser.GET_FORMAT, 0); }
 		public StringLiteralContext stringLiteral() {
 			return getRuleContext(StringLiteralContext.class,0);
 		}
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ExtractFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		public TerminalNode DATE() { return getToken(MySqlParser.DATE, 0); }
+		public TerminalNode TIME() { return getToken(MySqlParser.TIME, 0); }
+		public TerminalNode DATETIME() { return getToken(MySqlParser.DATETIME, 0); }
+		public GetFormatFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExtractFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterGetFormatFunctionCall(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExtractFunctionCall(this);
-		}
-	}
-	public static class DataTypeFunctionCallContext extends SpecificFunctionContext {
-		public Token separator;
-		public TerminalNode CONVERT() { return getToken(MySqlParser.CONVERT, 0); }
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public ConvertedDataTypeContext convertedDataType() {
-			return getRuleContext(ConvertedDataTypeContext.class,0);
-		}
-		public TerminalNode USING() { return getToken(MySqlParser.USING, 0); }
-		public CharsetNameContext charsetName() {
-			return getRuleContext(CharsetNameContext.class,0);
-		}
-		public TerminalNode CAST() { return getToken(MySqlParser.CAST, 0); }
-		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
-		public DataTypeFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterDataTypeFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitDataTypeFunctionCall(this);
-		}
-	}
-	public static class ValuesFunctionCallContext extends SpecificFunctionContext {
-		public TerminalNode VALUES() { return getToken(MySqlParser.VALUES, 0); }
-		public FullColumnNameContext fullColumnName() {
-			return getRuleContext(FullColumnNameContext.class,0);
-		}
-		public ValuesFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterValuesFunctionCall(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitValuesFunctionCall(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitGetFormatFunctionCall(this);
 		}
 	}
 	public static class SubstrFunctionCallContext extends SpecificFunctionContext {
@@ -49633,6 +49566,73 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSubstrFunctionCall(this);
+		}
+	}
+	public static class ExtractFunctionCallContext extends SpecificFunctionContext {
+		public StringLiteralContext sourceString;
+		public ExpressionContext sourceExpression;
+		public TerminalNode EXTRACT() { return getToken(MySqlParser.EXTRACT, 0); }
+		public IntervalTypeContext intervalType() {
+			return getRuleContext(IntervalTypeContext.class,0);
+		}
+		public TerminalNode FROM() { return getToken(MySqlParser.FROM, 0); }
+		public StringLiteralContext stringLiteral() {
+			return getRuleContext(StringLiteralContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public ExtractFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExtractFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExtractFunctionCall(this);
+		}
+	}
+	public static class WeightFunctionCallContext extends SpecificFunctionContext {
+		public Token stringFormat;
+		public TerminalNode WEIGHT_STRING() { return getToken(MySqlParser.WEIGHT_STRING, 0); }
+		public StringLiteralContext stringLiteral() {
+			return getRuleContext(StringLiteralContext.class,0);
+		}
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode AS() { return getToken(MySqlParser.AS, 0); }
+		public DecimalLiteralContext decimalLiteral() {
+			return getRuleContext(DecimalLiteralContext.class,0);
+		}
+		public LevelsInWeightStringContext levelsInWeightString() {
+			return getRuleContext(LevelsInWeightStringContext.class,0);
+		}
+		public TerminalNode CHAR() { return getToken(MySqlParser.CHAR, 0); }
+		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
+		public WeightFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterWeightFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitWeightFunctionCall(this);
+		}
+	}
+	public static class ValuesFunctionCallContext extends SpecificFunctionContext {
+		public TerminalNode VALUES() { return getToken(MySqlParser.VALUES, 0); }
+		public FullColumnNameContext fullColumnName() {
+			return getRuleContext(FullColumnNameContext.class,0);
+		}
+		public ValuesFunctionCallContext(SpecificFunctionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterValuesFunctionCall(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitValuesFunctionCall(this);
 		}
 	}
 
@@ -50257,6 +50257,24 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class LevelWeightListContext extends LevelsInWeightStringContext {
+		public TerminalNode LEVEL() { return getToken(MySqlParser.LEVEL, 0); }
+		public List<LevelInWeightListElementContext> levelInWeightListElement() {
+			return getRuleContexts(LevelInWeightListElementContext.class);
+		}
+		public LevelInWeightListElementContext levelInWeightListElement(int i) {
+			return getRuleContext(LevelInWeightListElementContext.class,i);
+		}
+		public LevelWeightListContext(LevelsInWeightStringContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterLevelWeightList(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitLevelWeightList(this);
+		}
+	}
 	public static class LevelWeightRangeContext extends LevelsInWeightStringContext {
 		public DecimalLiteralContext firstLevel;
 		public DecimalLiteralContext lastLevel;
@@ -50275,24 +50293,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitLevelWeightRange(this);
-		}
-	}
-	public static class LevelWeightListContext extends LevelsInWeightStringContext {
-		public TerminalNode LEVEL() { return getToken(MySqlParser.LEVEL, 0); }
-		public List<LevelInWeightListElementContext> levelInWeightListElement() {
-			return getRuleContexts(LevelInWeightListElementContext.class);
-		}
-		public LevelInWeightListElementContext levelInWeightListElement(int i) {
-			return getRuleContext(LevelInWeightListElementContext.class,i);
-		}
-		public LevelWeightListContext(LevelsInWeightStringContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterLevelWeightList(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitLevelWeightList(this);
 		}
 	}
 
@@ -52211,6 +52211,22 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class NotExpressionContext extends ExpressionContext {
+		public Token notOperator;
+		public ExpressionContext expression() {
+			return getRuleContext(ExpressionContext.class,0);
+		}
+		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
+		public NotExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNotExpression(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNotExpression(this);
+		}
+	}
 	public static class IsExpressionContext extends ExpressionContext {
 		public Token testValue;
 		public PredicateContext predicate() {
@@ -52229,22 +52245,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIsExpression(this);
-		}
-	}
-	public static class NotExpressionContext extends ExpressionContext {
-		public Token notOperator;
-		public ExpressionContext expression() {
-			return getRuleContext(ExpressionContext.class,0);
-		}
-		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public NotExpressionContext(ExpressionContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNotExpression(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNotExpression(this);
 		}
 	}
 	public static class LogicalExpressionContext extends ExpressionContext {
@@ -52413,6 +52413,65 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
+	public static class ExpressionAtomPredicateContext extends PredicateContext {
+		public ExpressionAtomContext expressionAtom() {
+			return getRuleContext(ExpressionAtomContext.class,0);
+		}
+		public TerminalNode LOCAL_ID() { return getToken(MySqlParser.LOCAL_ID, 0); }
+		public TerminalNode VAR_ASSIGN() { return getToken(MySqlParser.VAR_ASSIGN, 0); }
+		public ExpressionAtomPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExpressionAtomPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExpressionAtomPredicate(this);
+		}
+	}
+	public static class LikePredicateContext extends PredicateContext {
+		public List<PredicateContext> predicate() {
+			return getRuleContexts(PredicateContext.class);
+		}
+		public PredicateContext predicate(int i) {
+			return getRuleContext(PredicateContext.class,i);
+		}
+		public TerminalNode LIKE() { return getToken(MySqlParser.LIKE, 0); }
+		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
+		public TerminalNode ESCAPE() { return getToken(MySqlParser.ESCAPE, 0); }
+		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
+		public LikePredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterLikePredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitLikePredicate(this);
+		}
+	}
+	public static class BinaryComparasionPredicateContext extends PredicateContext {
+		public PredicateContext left;
+		public PredicateContext right;
+		public ComparisonOperatorContext comparisonOperator() {
+			return getRuleContext(ComparisonOperatorContext.class,0);
+		}
+		public List<PredicateContext> predicate() {
+			return getRuleContexts(PredicateContext.class);
+		}
+		public PredicateContext predicate(int i) {
+			return getRuleContext(PredicateContext.class,i);
+		}
+		public BinaryComparasionPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterBinaryComparasionPredicate(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBinaryComparasionPredicate(this);
+		}
+	}
 	public static class SoundsLikePredicateContext extends PredicateContext {
 		public List<PredicateContext> predicate() {
 			return getRuleContexts(PredicateContext.class);
@@ -52432,42 +52491,45 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSoundsLikePredicate(this);
 		}
 	}
-	public static class ExpressionAtomPredicateContext extends PredicateContext {
-		public ExpressionAtomContext expressionAtom() {
-			return getRuleContext(ExpressionAtomContext.class,0);
+	public static class BetweenPredicateContext extends PredicateContext {
+		public List<PredicateContext> predicate() {
+			return getRuleContexts(PredicateContext.class);
 		}
-		public TerminalNode LOCAL_ID() { return getToken(MySqlParser.LOCAL_ID, 0); }
-		public TerminalNode VAR_ASSIGN() { return getToken(MySqlParser.VAR_ASSIGN, 0); }
-		public ExpressionAtomPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		public PredicateContext predicate(int i) {
+			return getRuleContext(PredicateContext.class,i);
+		}
+		public TerminalNode BETWEEN() { return getToken(MySqlParser.BETWEEN, 0); }
+		public TerminalNode AND() { return getToken(MySqlParser.AND, 0); }
+		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
+		public BetweenPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExpressionAtomPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterBetweenPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExpressionAtomPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBetweenPredicate(this);
 		}
 	}
-	public static class InPredicateContext extends PredicateContext {
-		public PredicateContext predicate() {
-			return getRuleContext(PredicateContext.class,0);
+	public static class RegexpPredicateContext extends PredicateContext {
+		public Token regex;
+		public List<PredicateContext> predicate() {
+			return getRuleContexts(PredicateContext.class);
 		}
-		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
-		public SelectStatementContext selectStatement() {
-			return getRuleContext(SelectStatementContext.class,0);
+		public PredicateContext predicate(int i) {
+			return getRuleContext(PredicateContext.class,i);
 		}
-		public ExpressionsContext expressions() {
-			return getRuleContext(ExpressionsContext.class,0);
-		}
+		public TerminalNode REGEXP() { return getToken(MySqlParser.REGEXP, 0); }
+		public TerminalNode RLIKE() { return getToken(MySqlParser.RLIKE, 0); }
 		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public InPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		public RegexpPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterInPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRegexpPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitInPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRegexpPredicate(this);
 		}
 	}
 	public static class SubqueryComparasionPredicateContext extends PredicateContext {
@@ -52494,46 +52556,26 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSubqueryComparasionPredicate(this);
 		}
 	}
-	public static class BetweenPredicateContext extends PredicateContext {
-		public List<PredicateContext> predicate() {
-			return getRuleContexts(PredicateContext.class);
+	public static class InPredicateContext extends PredicateContext {
+		public PredicateContext predicate() {
+			return getRuleContext(PredicateContext.class,0);
 		}
-		public PredicateContext predicate(int i) {
-			return getRuleContext(PredicateContext.class,i);
+		public TerminalNode IN() { return getToken(MySqlParser.IN, 0); }
+		public SelectStatementContext selectStatement() {
+			return getRuleContext(SelectStatementContext.class,0);
 		}
-		public TerminalNode BETWEEN() { return getToken(MySqlParser.BETWEEN, 0); }
-		public TerminalNode AND() { return getToken(MySqlParser.AND, 0); }
+		public ExpressionsContext expressions() {
+			return getRuleContext(ExpressionsContext.class,0);
+		}
 		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public BetweenPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
+		public InPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterBetweenPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterInPredicate(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBetweenPredicate(this);
-		}
-	}
-	public static class BinaryComparasionPredicateContext extends PredicateContext {
-		public PredicateContext left;
-		public PredicateContext right;
-		public ComparisonOperatorContext comparisonOperator() {
-			return getRuleContext(ComparisonOperatorContext.class,0);
-		}
-		public List<PredicateContext> predicate() {
-			return getRuleContexts(PredicateContext.class);
-		}
-		public PredicateContext predicate(int i) {
-			return getRuleContext(PredicateContext.class,i);
-		}
-		public BinaryComparasionPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterBinaryComparasionPredicate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBinaryComparasionPredicate(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitInPredicate(this);
 		}
 	}
 	public static class IsNullPredicateContext extends PredicateContext {
@@ -52552,48 +52594,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIsNullPredicate(this);
-		}
-	}
-	public static class LikePredicateContext extends PredicateContext {
-		public List<PredicateContext> predicate() {
-			return getRuleContexts(PredicateContext.class);
-		}
-		public PredicateContext predicate(int i) {
-			return getRuleContext(PredicateContext.class,i);
-		}
-		public TerminalNode LIKE() { return getToken(MySqlParser.LIKE, 0); }
-		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public TerminalNode ESCAPE() { return getToken(MySqlParser.ESCAPE, 0); }
-		public TerminalNode STRING_LITERAL() { return getToken(MySqlParser.STRING_LITERAL, 0); }
-		public LikePredicateContext(PredicateContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterLikePredicate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitLikePredicate(this);
-		}
-	}
-	public static class RegexpPredicateContext extends PredicateContext {
-		public Token regex;
-		public List<PredicateContext> predicate() {
-			return getRuleContexts(PredicateContext.class);
-		}
-		public PredicateContext predicate(int i) {
-			return getRuleContext(PredicateContext.class,i);
-		}
-		public TerminalNode REGEXP() { return getToken(MySqlParser.REGEXP, 0); }
-		public TerminalNode RLIKE() { return getToken(MySqlParser.RLIKE, 0); }
-		public TerminalNode NOT() { return getToken(MySqlParser.NOT, 0); }
-		public RegexpPredicateContext(PredicateContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterRegexpPredicate(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitRegexpPredicate(this);
 		}
 	}
 
@@ -52873,124 +52873,33 @@ public class MySqlParser extends Parser {
 			super.copyFrom(ctx);
 		}
 	}
-	public static class UnaryExpressionAtomContext extends ExpressionAtomContext {
-		public UnaryOperatorContext unaryOperator() {
-			return getRuleContext(UnaryOperatorContext.class,0);
+	public static class FullColumnNameExpressionAtomContext extends ExpressionAtomContext {
+		public FullColumnNameContext fullColumnName() {
+			return getRuleContext(FullColumnNameContext.class,0);
 		}
-		public ExpressionAtomContext expressionAtom() {
-			return getRuleContext(ExpressionAtomContext.class,0);
-		}
-		public UnaryExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		public FullColumnNameExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterUnaryExpressionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterFullColumnNameExpressionAtom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUnaryExpressionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitFullColumnNameExpressionAtom(this);
 		}
 	}
-	public static class CollateExpressionAtomContext extends ExpressionAtomContext {
-		public ExpressionAtomContext expressionAtom() {
-			return getRuleContext(ExpressionAtomContext.class,0);
-		}
-		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
-		public CollationNameContext collationName() {
-			return getRuleContext(CollationNameContext.class,0);
-		}
-		public CollateExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCollateExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCollateExpressionAtom(this);
-		}
-	}
-	public static class SubqueryExpessionAtomContext extends ExpressionAtomContext {
+	public static class ExistsExpessionAtomContext extends ExpressionAtomContext {
+		public TerminalNode EXISTS() { return getToken(MySqlParser.EXISTS, 0); }
 		public SelectStatementContext selectStatement() {
 			return getRuleContext(SelectStatementContext.class,0);
 		}
-		public SubqueryExpessionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		public ExistsExpessionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSubqueryExpessionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExistsExpessionAtom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSubqueryExpessionAtom(this);
-		}
-	}
-	public static class MysqlVariableExpressionAtomContext extends ExpressionAtomContext {
-		public MysqlVariableContext mysqlVariable() {
-			return getRuleContext(MysqlVariableContext.class,0);
-		}
-		public MysqlVariableExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMysqlVariableExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMysqlVariableExpressionAtom(this);
-		}
-	}
-	public static class NestedExpressionAtomContext extends ExpressionAtomContext {
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public NestedExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNestedExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNestedExpressionAtom(this);
-		}
-	}
-	public static class NestedRowExpressionAtomContext extends ExpressionAtomContext {
-		public TerminalNode ROW() { return getToken(MySqlParser.ROW, 0); }
-		public List<ExpressionContext> expression() {
-			return getRuleContexts(ExpressionContext.class);
-		}
-		public ExpressionContext expression(int i) {
-			return getRuleContext(ExpressionContext.class,i);
-		}
-		public NestedRowExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNestedRowExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNestedRowExpressionAtom(this);
-		}
-	}
-	public static class MathExpressionAtomContext extends ExpressionAtomContext {
-		public ExpressionAtomContext left;
-		public ExpressionAtomContext right;
-		public MathOperatorContext mathOperator() {
-			return getRuleContext(MathOperatorContext.class,0);
-		}
-		public List<ExpressionAtomContext> expressionAtom() {
-			return getRuleContexts(ExpressionAtomContext.class);
-		}
-		public ExpressionAtomContext expressionAtom(int i) {
-			return getRuleContext(ExpressionAtomContext.class,i);
-		}
-		public MathExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMathExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMathExpressionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExistsExpessionAtom(this);
 		}
 	}
 	public static class IntervalExpressionAtomContext extends ExpressionAtomContext {
@@ -53011,33 +52920,53 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitIntervalExpressionAtom(this);
 		}
 	}
-	public static class ExistsExpessionAtomContext extends ExpressionAtomContext {
-		public TerminalNode EXISTS() { return getToken(MySqlParser.EXISTS, 0); }
+	public static class NestedRowExpressionAtomContext extends ExpressionAtomContext {
+		public TerminalNode ROW() { return getToken(MySqlParser.ROW, 0); }
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public NestedRowExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNestedRowExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNestedRowExpressionAtom(this);
+		}
+	}
+	public static class UnaryExpressionAtomContext extends ExpressionAtomContext {
+		public UnaryOperatorContext unaryOperator() {
+			return getRuleContext(UnaryOperatorContext.class,0);
+		}
+		public ExpressionAtomContext expressionAtom() {
+			return getRuleContext(ExpressionAtomContext.class,0);
+		}
+		public UnaryExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterUnaryExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitUnaryExpressionAtom(this);
+		}
+	}
+	public static class SubqueryExpessionAtomContext extends ExpressionAtomContext {
 		public SelectStatementContext selectStatement() {
 			return getRuleContext(SelectStatementContext.class,0);
 		}
-		public ExistsExpessionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		public SubqueryExpessionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterExistsExpessionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterSubqueryExpessionAtom(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitExistsExpessionAtom(this);
-		}
-	}
-	public static class ConstantExpressionAtomContext extends ExpressionAtomContext {
-		public ConstantContext constant() {
-			return getRuleContext(ConstantContext.class,0);
-		}
-		public ConstantExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterConstantExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitConstantExpressionAtom(this);
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitSubqueryExpessionAtom(this);
 		}
 	}
 	public static class FunctionCallExpressionAtomContext extends ExpressionAtomContext {
@@ -53054,6 +52983,55 @@ public class MySqlParser extends Parser {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitFunctionCallExpressionAtom(this);
 		}
 	}
+	public static class CollateExpressionAtomContext extends ExpressionAtomContext {
+		public ExpressionAtomContext expressionAtom() {
+			return getRuleContext(ExpressionAtomContext.class,0);
+		}
+		public TerminalNode COLLATE() { return getToken(MySqlParser.COLLATE, 0); }
+		public CollationNameContext collationName() {
+			return getRuleContext(CollationNameContext.class,0);
+		}
+		public CollateExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterCollateExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitCollateExpressionAtom(this);
+		}
+	}
+	public static class ConstantExpressionAtomContext extends ExpressionAtomContext {
+		public ConstantContext constant() {
+			return getRuleContext(ConstantContext.class,0);
+		}
+		public ConstantExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterConstantExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitConstantExpressionAtom(this);
+		}
+	}
+	public static class NestedExpressionAtomContext extends ExpressionAtomContext {
+		public List<ExpressionContext> expression() {
+			return getRuleContexts(ExpressionContext.class);
+		}
+		public ExpressionContext expression(int i) {
+			return getRuleContext(ExpressionContext.class,i);
+		}
+		public NestedExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterNestedExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitNestedExpressionAtom(this);
+		}
+	}
 	public static class BinaryExpressionAtomContext extends ExpressionAtomContext {
 		public TerminalNode BINARY() { return getToken(MySqlParser.BINARY, 0); }
 		public ExpressionAtomContext expressionAtom() {
@@ -53067,20 +53045,6 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBinaryExpressionAtom(this);
-		}
-	}
-	public static class FullColumnNameExpressionAtomContext extends ExpressionAtomContext {
-		public FullColumnNameContext fullColumnName() {
-			return getRuleContext(FullColumnNameContext.class,0);
-		}
-		public FullColumnNameExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
-		@Override
-		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterFullColumnNameExpressionAtom(this);
-		}
-		@Override
-		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitFullColumnNameExpressionAtom(this);
 		}
 	}
 	public static class BitExpressionAtomContext extends ExpressionAtomContext {
@@ -53103,6 +53067,42 @@ public class MySqlParser extends Parser {
 		@Override
 		public void exitRule(ParseTreeListener listener) {
 			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitBitExpressionAtom(this);
+		}
+	}
+	public static class MysqlVariableExpressionAtomContext extends ExpressionAtomContext {
+		public MysqlVariableContext mysqlVariable() {
+			return getRuleContext(MysqlVariableContext.class,0);
+		}
+		public MysqlVariableExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMysqlVariableExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMysqlVariableExpressionAtom(this);
+		}
+	}
+	public static class MathExpressionAtomContext extends ExpressionAtomContext {
+		public ExpressionAtomContext left;
+		public ExpressionAtomContext right;
+		public MathOperatorContext mathOperator() {
+			return getRuleContext(MathOperatorContext.class,0);
+		}
+		public List<ExpressionAtomContext> expressionAtom() {
+			return getRuleContexts(ExpressionAtomContext.class);
+		}
+		public ExpressionAtomContext expressionAtom(int i) {
+			return getRuleContext(ExpressionAtomContext.class,i);
+		}
+		public MathExpressionAtomContext(ExpressionAtomContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).enterMathExpressionAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof MySqlParserListener ) ((MySqlParserListener)listener).exitMathExpressionAtom(this);
 		}
 	}
 
