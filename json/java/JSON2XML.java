@@ -8,33 +8,37 @@ import java.util.*;
 
 
 class Loader extends JSONBaseListener {
-    public static final String EMPTY = "";
+    ParseTreeProperty<String> xml = new ParseTreeProperty<String>();
+    
+    String getXML(ParseTree ctx) {return xml.get(ctx);}
+    void setXML(ParseTree ctx, String s) {xml.put(ctx, s)}
+    
 
-    List<Map<String,String>> rows = new ArrayList<Map<String,String>>();
-
-    List<String> header;
-
-    List<String> currentRowFieldValues;
-
- 
-    public void exitString(CSVParser.StringContext ctx) {
-        currentRowFieldValues.add(ctx.STRING().getText());
+    public void exitAtom(JSONParser.AtomContext ctx) {
+        setXML(ctx, ctx.getText());
     }
 
-    public void exitText(CSVParser.TextContext ctx) {
-        currentRowFieldValues.add(ctx.TEXT().getText());
+    public void exitString(JSONParser.TextContext ctx) {
+        setXML(ctx, stripQuotes(ctx.getText()));
     }
 
-    public void exitEmpty(CSVParser.EmptyContext ctx) {
-        currentRowFieldValues.add(EMPTY);
+    public void exitArrayValue(JSONParser.EmptyContext ctx) {
+         setXML(ctx, getXML(ctx.array()));
+    }
+    
+    public void exitObjectValue(JSONParser.EmptyContext ctx) {
+         setXML(ctx, getXML(ctx.object()));
     }
 
-    public void exitHdr(CSVParser.HdrContext ctx) {
-        header = new ArrayList<String>();
-        header.addAll(currentRowFieldValues);
+    public void exitPair(JSONParser.HdrContext ctx) {
+        String tag = stripQuotes(ctx.STRING().getText());
+        JSONParser.ValueContext vctx = ctx.value();
+        String x = String.format("<%s>%s<%s>", tag, getXML(vctx), tag);
+        
+        setXML(ctx, x);
     }
 
-    public void enterRow(CSVParser.RowContext ctx) {
+    public void enterRow(JSONParser.RowContext ctx) {
         currentRowFieldValues = new ArrayList<String>();
     }
 
@@ -62,14 +66,14 @@ public class JSON2XML {
         if (inputFile != null) is = new FileInputStream(inputFile);
         ANTLRInputStream input = new ANTLRInputStream(is);
 
-        CSVLexer lexer = new CSVLexer(input);
-        CSVParser parser = new CSVParser(new CommonTokenStream(lexer));
+        JSONLexer lexer = new JSONLexer(input);
+        JSONParser parser = new JSONParser(new CommonTokenStream(lexer));
         ParseTree tree = parser.csvFile();
 
         ParseTreeWalker walker = new ParseTreeWalker();
         Loader loader = new Loader();
         walker.walk(loader, tree);
         
-        System.out.println(loader.rows);
+        System.out.println(loader.xml);
     }
 }
