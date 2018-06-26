@@ -18,40 +18,49 @@ class Loader extends JSONBaseListener {
         setXML(ctx, ctx.getText());
     }
 
-    public void exitString(JSONParser.TextContext ctx) {
+    public void exitString(JSONParser.StringContext ctx) {
         setXML(ctx, stripQuotes(ctx.getText()));
     }
 
-    public void exitArrayValue(JSONParser.EmptyContext ctx) {
+    public void exitArrayValue(JSONParser.ArrayValueContext ctx) {
          setXML(ctx, getXML(ctx.array()));
     }
     
-    public void exitObjectValue(JSONParser.EmptyContext ctx) {
+    public void exitObjectValue(JSONParser.ObjectValueContext ctx) {
          setXML(ctx, getXML(ctx.object()));
     }
 
-    public void exitPair(JSONParser.HdrContext ctx) {
+    public void exitPair(JSONParser.PairContext ctx) {
         String tag = stripQuotes(ctx.STRING().getText());
         JSONParser.ValueContext vctx = ctx.value();
         String x = String.format("<%s>%s<%s>", tag, getXML(vctx), tag);
         
         setXML(ctx, x);
     }
-
-    public void enterRow(JSONParser.RowContext ctx) {
-        currentRowFieldValues = new ArrayList<String>();
+    
+    public void exitAnObject(JSONParser.AnObjectContext ctx) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("\n");
+        for (JSONParser.PairContext pctx : ctx.pair()) {
+            buf.append(getXML(pctx));
+        }
+        setXML(ctx, buf.toString());
+    }
+    
+    public void exitAnObject(JSONParser.AnObjectContext ctx) {
+        StringBuilder buf = new StringBuilder();
+        buf.append("\n");
+        for (JSONParser.ValueContext vctx : ctx.value()) {
+            buf.append("<element>");
+            buf.append(getXML(vctx));
+            buf.append("</element>");
+            buf.append("\n");
+        }
+        setXML(ctx, buf.toString());
     }
 
-    public void exitRow(CSVParser.RowContext ctx) {
-        if ( ctx.getParent().getRuleIndex() == CSVParser.RULE_hdr ) return;
-        
-        Map<String, String> m = new LinkedHashMap<String, String>();
-        int i = 0;
-        for (String v : currentRowFieldValues) {
-            m.put(header.get(i), v);
-            i++;
-        }
-        rows.add(m);
+    public void exitJson(JSONParser.JsonContext ctx) {
+         setXML(ctx, getXML(ctx.getChild(0)));
     }
 }
 
@@ -74,6 +83,6 @@ public class JSON2XML {
         Loader loader = new Loader();
         walker.walk(loader, tree);
         
-        System.out.println(loader.xml);
+        System.out.println("translate ok");
     }
 }
