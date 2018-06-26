@@ -47,7 +47,11 @@ class Loader extends JSONBaseListener {
         setXML(ctx, buf.toString());
     }
     
-    public void exitAnObject(JSONParser.AnObjectContext ctx) {
+    public void exitEmptyObject(JSONParser.EmptyObjectContext ctx) {
+        setXML(ctx, "");
+    }
+    
+    public void exitArrayOfValues(JSONParser.ArrayOfValuesContext ctx) {
         StringBuilder buf = new StringBuilder();
         buf.append("\n");
         for (JSONParser.ValueContext vctx : ctx.value()) {
@@ -59,6 +63,10 @@ class Loader extends JSONBaseListener {
         setXML(ctx, buf.toString());
     }
 
+    public void exitEmptyArray(JSONParser.EmptyArrayContext ctx) {
+        setXML(ctx, "");
+    }
+    
     public void exitJson(JSONParser.JsonContext ctx) {
          setXML(ctx, getXML(ctx.getChild(0)));
     }
