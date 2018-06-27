@@ -1,0 +1,14 @@
+digraph G {
+  ranksep=.25;
+  edge [arrowsize=.5]
+  node [shape=circle, fontname="ArialNarrow", 
+        fontsize=12, fixedsize=true, height=.45];
+  a;b;c;d;f;
+  a -> b
+  a -> c
+  b -> c
+  c -> b
+  f -> a
+  f -> f
+}
+
