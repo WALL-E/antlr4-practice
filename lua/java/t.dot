@@ -1,14 +1,30 @@
 digraph G {
-  ranksep=.25;
+  ranksep=.75;
   edge [arrowsize=.5]
   node [shape=circle, fontname="ArialNarrow", 
-        fontsize=12, fixedsize=true, height=.45];
-  a;b;c;d;f;
-  a -> b
-  a -> c
-  b -> c
-  c -> b
-  f -> a
-  f -> f
+        fontsize=18, fixedsize=false, height=2.5];
+  "_M.exec";"_M.new";"_M.set_var";"_M.set_option";"_M.init";"_M.load_secrules";"_M.sieve_rule";"_M.write_log_events";
+  "_M.exec" -> "logger.fatal_fail"
+  "_M.exec" -> "self"
+  "_M.exec" -> "collections_t.lookup[phase]"
+  "_M.exec" -> "storage.set_var"
+  "_M.exec" -> "_merge_rulesets"
+  "_M.exec" -> "logger.fatal_fail"
+  "_M.exec" -> "_calculate_offset"
+  "_M.exec" -> "_build_exception_table"
+  "_M.exec" -> "_finalize"
+  "_M.set_option" -> "_M.set_option"
+  "_M.set_option" -> "options.lookup[option]"
+  "_M.init" -> "ngx.log"
+  "_M.init" -> "_calculate_offset"
+  "_M.init" -> "_build_exception_table"
+  "_M.load_secrules" -> "f"
+  "_M.load_secrules" -> "ngx.log"
+  "_M.load_secrules" -> "ngx.log"
+  "_M.load_secrules" -> "table_insert"
+  "_M.load_secrules" -> "_calculate_offset"
+  "_M.sieve_rule" -> "ngx.log"
+  "_M.write_log_events" -> "ngx.log"
+  "_M.write_log_events" -> "logger.write_log_events[self._event_log_target]"
 }
 

@@ -19,24 +19,26 @@ class Graph {
     public String toDot() {
         StringBuilder buf = new StringBuilder();
         buf.append("digraph G {\n");
-        buf.append("  ranksep=.25;\n");
+        buf.append("  ranksep=.75;\n");
         buf.append("  edge [arrowsize=.5]\n");
         buf.append("  node [shape=circle, fontname=\"ArialNarrow\", \n");
-        buf.append("        fontsize=12, fixedsize=true, height=.45];\n");
+        buf.append("        fontsize=18, fixedsize=false, height=2.5];\n");
         buf.append("  ");
 
         for (String node : nodes) {
-            buf.append(node);
+            buf.append(String.format("\"%s\"", node));
             buf.append(";");
         }
         buf.append("\n");
 
         for (String src : edges.keySet()) {
             for (String dst : edges.get(src)) {
+                if (src == null) continue;
+
                 buf.append("  ");
-                buf.append(src);
+                buf.append(String.format("\"%s\"", src));
                 buf.append(" -> ");
-                buf.append(dst);
+                buf.append(String.format("\"%s\"", dst));
                 buf.append("\n");
             }
         }
