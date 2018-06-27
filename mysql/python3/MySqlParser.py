@@ -8458,6 +8458,46 @@ class MySqlParser ( Parser ):
 
 
 
+    class CopyCreateTableContext(CreateTableContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateTableContext
+            super().__init__(parser)
+            self.parenthesisTable = None # TableNameContext
+            self.copyFrom(ctx)
+
+        def CREATE(self):
+            return self.getToken(MySqlParser.CREATE, 0)
+        def TABLE(self):
+            return self.getToken(MySqlParser.TABLE, 0)
+        def tableName(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.TableNameContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.TableNameContext,i)
+
+        def LIKE(self):
+            return self.getToken(MySqlParser.LIKE, 0)
+        def TEMPORARY(self):
+            return self.getToken(MySqlParser.TEMPORARY, 0)
+        def ifNotExists(self):
+            return self.getTypedRuleContext(MySqlParser.IfNotExistsContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCopyCreateTable" ):
+                listener.enterCopyCreateTable(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCopyCreateTable" ):
+                listener.exitCopyCreateTable(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCopyCreateTable" ):
+                return visitor.visitCopyCreateTable(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class ColumnCreateTableContext(CreateTableContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateTableContext
@@ -8556,46 +8596,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitQueryCreateTable" ):
                 return visitor.visitQueryCreateTable(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class CopyCreateTableContext(CreateTableContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateTableContext
-            super().__init__(parser)
-            self.parenthesisTable = None # TableNameContext
-            self.copyFrom(ctx)
-
-        def CREATE(self):
-            return self.getToken(MySqlParser.CREATE, 0)
-        def TABLE(self):
-            return self.getToken(MySqlParser.TABLE, 0)
-        def tableName(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.TableNameContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.TableNameContext,i)
-
-        def LIKE(self):
-            return self.getToken(MySqlParser.LIKE, 0)
-        def TEMPORARY(self):
-            return self.getToken(MySqlParser.TEMPORARY, 0)
-        def ifNotExists(self):
-            return self.getTypedRuleContext(MySqlParser.IfNotExistsContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCopyCreateTable" ):
-                listener.enterCopyCreateTable(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCopyCreateTable" ):
-                listener.exitCopyCreateTable(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCopyCreateTable" ):
-                return visitor.visitCopyCreateTable(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -10700,6 +10700,32 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class RoutineLanguageContext(RoutineOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RoutineOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LANGUAGE(self):
+            return self.getToken(MySqlParser.LANGUAGE, 0)
+        def SQL(self):
+            return self.getToken(MySqlParser.SQL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterRoutineLanguage" ):
+                listener.enterRoutineLanguage(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitRoutineLanguage" ):
+                listener.exitRoutineLanguage(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRoutineLanguage" ):
+                return visitor.visitRoutineLanguage(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class RoutineCommentContext(RoutineOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RoutineOptionContext
@@ -10726,28 +10752,33 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class RoutineLanguageContext(RoutineOptionContext):
+    class RoutineSecurityContext(RoutineOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RoutineOptionContext
             super().__init__(parser)
+            self.context = None # Token
             self.copyFrom(ctx)
 
-        def LANGUAGE(self):
-            return self.getToken(MySqlParser.LANGUAGE, 0)
         def SQL(self):
             return self.getToken(MySqlParser.SQL, 0)
+        def SECURITY(self):
+            return self.getToken(MySqlParser.SECURITY, 0)
+        def DEFINER(self):
+            return self.getToken(MySqlParser.DEFINER, 0)
+        def INVOKER(self):
+            return self.getToken(MySqlParser.INVOKER, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRoutineLanguage" ):
-                listener.enterRoutineLanguage(self)
+            if hasattr( listener, "enterRoutineSecurity" ):
+                listener.enterRoutineSecurity(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRoutineLanguage" ):
-                listener.exitRoutineLanguage(self)
+            if hasattr( listener, "exitRoutineSecurity" ):
+                listener.exitRoutineSecurity(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRoutineLanguage" ):
-                return visitor.visitRoutineLanguage(self)
+            if hasattr( visitor, "visitRoutineSecurity" ):
+                return visitor.visitRoutineSecurity(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -10782,37 +10813,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitRoutineData" ):
                 return visitor.visitRoutineData(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class RoutineSecurityContext(RoutineOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RoutineOptionContext
-            super().__init__(parser)
-            self.context = None # Token
-            self.copyFrom(ctx)
-
-        def SQL(self):
-            return self.getToken(MySqlParser.SQL, 0)
-        def SECURITY(self):
-            return self.getToken(MySqlParser.SECURITY, 0)
-        def DEFINER(self):
-            return self.getToken(MySqlParser.DEFINER, 0)
-        def INVOKER(self):
-            return self.getToken(MySqlParser.INVOKER, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRoutineSecurity" ):
-                listener.enterRoutineSecurity(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRoutineSecurity" ):
-                listener.exitRoutineSecurity(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRoutineSecurity" ):
-                return visitor.visitRoutineSecurity(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -11126,6 +11126,34 @@ class MySqlParser ( Parser ):
 
 
 
+    class ColumnDeclarationContext(CreateDefinitionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateDefinitionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def columnDefinition(self):
+            return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterColumnDeclaration" ):
+                listener.enterColumnDeclaration(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitColumnDeclaration" ):
+                listener.exitColumnDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitColumnDeclaration" ):
+                return visitor.visitColumnDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class ConstraintDeclarationContext(CreateDefinitionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateDefinitionContext
@@ -11172,34 +11200,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitIndexDeclaration" ):
                 return visitor.visitIndexDeclaration(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ColumnDeclarationContext(CreateDefinitionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CreateDefinitionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def columnDefinition(self):
-            return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterColumnDeclaration" ):
-                listener.enterColumnDeclaration(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitColumnDeclaration" ):
-                listener.exitColumnDeclaration(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitColumnDeclaration" ):
-                return visitor.visitColumnDeclaration(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -11324,6 +11324,37 @@ class MySqlParser ( Parser ):
 
 
 
+    class StorageColumnConstraintContext(ColumnConstraintContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
+            super().__init__(parser)
+            self.storageval = None # Token
+            self.copyFrom(ctx)
+
+        def STORAGE(self):
+            return self.getToken(MySqlParser.STORAGE, 0)
+        def DISK(self):
+            return self.getToken(MySqlParser.DISK, 0)
+        def MEMORY(self):
+            return self.getToken(MySqlParser.MEMORY, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterStorageColumnConstraint" ):
+                listener.enterStorageColumnConstraint(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitStorageColumnConstraint" ):
+                listener.exitStorageColumnConstraint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitStorageColumnConstraint" ):
+                return visitor.visitStorageColumnConstraint(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class FormatColumnConstraintContext(ColumnConstraintContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
@@ -11351,6 +11382,56 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitFormatColumnConstraint" ):
                 return visitor.visitFormatColumnConstraint(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AutoIncrementColumnConstraintContext(ColumnConstraintContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def AUTO_INCREMENT(self):
+            return self.getToken(MySqlParser.AUTO_INCREMENT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAutoIncrementColumnConstraint" ):
+                listener.enterAutoIncrementColumnConstraint(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAutoIncrementColumnConstraint" ):
+                listener.exitAutoIncrementColumnConstraint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAutoIncrementColumnConstraint" ):
+                return visitor.visitAutoIncrementColumnConstraint(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class CommentColumnConstraintContext(ColumnConstraintContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COMMENT(self):
+            return self.getToken(MySqlParser.COMMENT, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCommentColumnConstraint" ):
+                listener.enterCommentColumnConstraint(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCommentColumnConstraint" ):
+                listener.exitCommentColumnConstraint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCommentColumnConstraint" ):
+                return visitor.visitCommentColumnConstraint(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -11407,52 +11488,27 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class CommentColumnConstraintContext(ColumnConstraintContext):
+    class NullColumnConstraintContext(ColumnConstraintContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def COMMENT(self):
-            return self.getToken(MySqlParser.COMMENT, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+        def nullNotnull(self):
+            return self.getTypedRuleContext(MySqlParser.NullNotnullContext,0)
+
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCommentColumnConstraint" ):
-                listener.enterCommentColumnConstraint(self)
+            if hasattr( listener, "enterNullColumnConstraint" ):
+                listener.enterNullColumnConstraint(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCommentColumnConstraint" ):
-                listener.exitCommentColumnConstraint(self)
+            if hasattr( listener, "exitNullColumnConstraint" ):
+                listener.exitNullColumnConstraint(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCommentColumnConstraint" ):
-                return visitor.visitCommentColumnConstraint(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AutoIncrementColumnConstraintContext(ColumnConstraintContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def AUTO_INCREMENT(self):
-            return self.getToken(MySqlParser.AUTO_INCREMENT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAutoIncrementColumnConstraint" ):
-                listener.enterAutoIncrementColumnConstraint(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAutoIncrementColumnConstraint" ):
-                listener.exitAutoIncrementColumnConstraint(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAutoIncrementColumnConstraint" ):
-                return visitor.visitAutoIncrementColumnConstraint(self)
+            if hasattr( visitor, "visitNullColumnConstraint" ):
+                return visitor.visitNullColumnConstraint(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -11484,37 +11540,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class StorageColumnConstraintContext(ColumnConstraintContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
-            super().__init__(parser)
-            self.storageval = None # Token
-            self.copyFrom(ctx)
-
-        def STORAGE(self):
-            return self.getToken(MySqlParser.STORAGE, 0)
-        def DISK(self):
-            return self.getToken(MySqlParser.DISK, 0)
-        def MEMORY(self):
-            return self.getToken(MySqlParser.MEMORY, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterStorageColumnConstraint" ):
-                listener.enterStorageColumnConstraint(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitStorageColumnConstraint" ):
-                listener.exitStorageColumnConstraint(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitStorageColumnConstraint" ):
-                return visitor.visitStorageColumnConstraint(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class ReferenceColumnConstraintContext(ColumnConstraintContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
@@ -11536,31 +11561,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitReferenceColumnConstraint" ):
                 return visitor.visitReferenceColumnConstraint(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class NullColumnConstraintContext(ColumnConstraintContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ColumnConstraintContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def nullNotnull(self):
-            return self.getTypedRuleContext(MySqlParser.NullNotnullContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNullColumnConstraint" ):
-                listener.enterNullColumnConstraint(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNullColumnConstraint" ):
-                listener.exitNullColumnConstraint(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNullColumnConstraint" ):
-                return visitor.visitNullColumnConstraint(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -11692,48 +11692,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class ForeignKeyTableConstraintContext(TableConstraintContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableConstraintContext
-            super().__init__(parser)
-            self.name = None # UidContext
-            self.index = None # UidContext
-            self.copyFrom(ctx)
-
-        def FOREIGN(self):
-            return self.getToken(MySqlParser.FOREIGN, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
-
-        def referenceDefinition(self):
-            return self.getTypedRuleContext(MySqlParser.ReferenceDefinitionContext,0)
-
-        def CONSTRAINT(self):
-            return self.getToken(MySqlParser.CONSTRAINT, 0)
-        def uid(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UidContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UidContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterForeignKeyTableConstraint" ):
-                listener.enterForeignKeyTableConstraint(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitForeignKeyTableConstraint" ):
-                listener.exitForeignKeyTableConstraint(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitForeignKeyTableConstraint" ):
-                return visitor.visitForeignKeyTableConstraint(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class UniqueKeyTableConstraintContext(TableConstraintContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableConstraintContext
@@ -11852,6 +11810,48 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPrimaryKeyTableConstraint" ):
                 return visitor.visitPrimaryKeyTableConstraint(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ForeignKeyTableConstraintContext(TableConstraintContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableConstraintContext
+            super().__init__(parser)
+            self.name = None # UidContext
+            self.index = None # UidContext
+            self.copyFrom(ctx)
+
+        def FOREIGN(self):
+            return self.getToken(MySqlParser.FOREIGN, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def referenceDefinition(self):
+            return self.getTypedRuleContext(MySqlParser.ReferenceDefinitionContext,0)
+
+        def CONSTRAINT(self):
+            return self.getToken(MySqlParser.CONSTRAINT, 0)
+        def uid(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UidContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UidContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterForeignKeyTableConstraint" ):
+                listener.enterForeignKeyTableConstraint(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitForeignKeyTableConstraint" ):
+                listener.exitForeignKeyTableConstraint(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitForeignKeyTableConstraint" ):
+                return visitor.visitForeignKeyTableConstraint(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -12346,48 +12346,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class SimpleIndexDeclarationContext(IndexColumnDefinitionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.IndexColumnDefinitionContext
-            super().__init__(parser)
-            self.indexFormat = None # Token
-            self.copyFrom(ctx)
-
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
-
-        def INDEX(self):
-            return self.getToken(MySqlParser.INDEX, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def indexType(self):
-            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
-
-        def indexOption(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSimpleIndexDeclaration" ):
-                listener.enterSimpleIndexDeclaration(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSimpleIndexDeclaration" ):
-                listener.exitSimpleIndexDeclaration(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSimpleIndexDeclaration" ):
-                return visitor.visitSimpleIndexDeclaration(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SpecialIndexDeclarationContext(IndexColumnDefinitionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.IndexColumnDefinitionContext
@@ -12427,6 +12385,48 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSpecialIndexDeclaration" ):
                 return visitor.visitSpecialIndexDeclaration(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SimpleIndexDeclarationContext(IndexColumnDefinitionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.IndexColumnDefinitionContext
+            super().__init__(parser)
+            self.indexFormat = None # Token
+            self.copyFrom(ctx)
+
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def INDEX(self):
+            return self.getToken(MySqlParser.INDEX, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def indexType(self):
+            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
+
+        def indexOption(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSimpleIndexDeclaration" ):
+                listener.enterSimpleIndexDeclaration(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSimpleIndexDeclaration" ):
+                listener.exitSimpleIndexDeclaration(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleIndexDeclaration" ):
+                return visitor.visitSimpleIndexDeclaration(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -12553,60 +12553,142 @@ class MySqlParser ( Parser ):
 
 
 
-    class TableOptionInsertMethodContext(TableOptionContext):
+    class TableOptionEngineContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
             super().__init__(parser)
-            self.insertMethod = None # Token
             self.copyFrom(ctx)
 
-        def INSERT_METHOD(self):
-            return self.getToken(MySqlParser.INSERT_METHOD, 0)
-        def NO(self):
-            return self.getToken(MySqlParser.NO, 0)
-        def FIRST(self):
-            return self.getToken(MySqlParser.FIRST, 0)
-        def LAST(self):
-            return self.getToken(MySqlParser.LAST, 0)
+        def ENGINE(self):
+            return self.getToken(MySqlParser.ENGINE, 0)
+        def engineName(self):
+            return self.getTypedRuleContext(MySqlParser.EngineNameContext,0)
+
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionInsertMethod" ):
-                listener.enterTableOptionInsertMethod(self)
+            if hasattr( listener, "enterTableOptionEngine" ):
+                listener.enterTableOptionEngine(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionInsertMethod" ):
-                listener.exitTableOptionInsertMethod(self)
+            if hasattr( listener, "exitTableOptionEngine" ):
+                listener.exitTableOptionEngine(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionInsertMethod" ):
-                return visitor.visitTableOptionInsertMethod(self)
+            if hasattr( visitor, "visitTableOptionEngine" ):
+                return visitor.visitTableOptionEngine(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class TableOptionKeyBlockSizeContext(TableOptionContext):
+    class TableOptionMaxRowsContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def KEY_BLOCK_SIZE(self):
-            return self.getToken(MySqlParser.KEY_BLOCK_SIZE, 0)
-        def fileSizeLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.FileSizeLiteralContext,0)
+        def MAX_ROWS(self):
+            return self.getToken(MySqlParser.MAX_ROWS, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionKeyBlockSize" ):
-                listener.enterTableOptionKeyBlockSize(self)
+            if hasattr( listener, "enterTableOptionMaxRows" ):
+                listener.enterTableOptionMaxRows(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionKeyBlockSize" ):
-                listener.exitTableOptionKeyBlockSize(self)
+            if hasattr( listener, "exitTableOptionMaxRows" ):
+                listener.exitTableOptionMaxRows(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionKeyBlockSize" ):
-                return visitor.visitTableOptionKeyBlockSize(self)
+            if hasattr( visitor, "visitTableOptionMaxRows" ):
+                return visitor.visitTableOptionMaxRows(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionCollateContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COLLATE(self):
+            return self.getToken(MySqlParser.COLLATE, 0)
+        def collationName(self):
+            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
+
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionCollate" ):
+                listener.enterTableOptionCollate(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionCollate" ):
+                listener.exitTableOptionCollate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionCollate" ):
+                return visitor.visitTableOptionCollate(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionPersistentContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.extBoolValue = None # Token
+            self.copyFrom(ctx)
+
+        def STATS_PERSISTENT(self):
+            return self.getToken(MySqlParser.STATS_PERSISTENT, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionPersistent" ):
+                listener.enterTableOptionPersistent(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionPersistent" ):
+                listener.exitTableOptionPersistent(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionPersistent" ):
+                return visitor.visitTableOptionPersistent(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionTablespaceContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def tablespaceStorage(self):
+            return self.getTypedRuleContext(MySqlParser.TablespaceStorageContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionTablespace" ):
+                listener.enterTableOptionTablespace(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionTablespace" ):
+                listener.exitTableOptionTablespace(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionTablespace" ):
+                return visitor.visitTableOptionTablespace(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -12634,6 +12716,119 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitTableOptionPackKeys" ):
                 return visitor.visitTableOptionPackKeys(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionPasswordContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PASSWORD(self):
+            return self.getToken(MySqlParser.PASSWORD, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionPassword" ):
+                listener.enterTableOptionPassword(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionPassword" ):
+                listener.exitTableOptionPassword(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionPassword" ):
+                return visitor.visitTableOptionPassword(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionUnionContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def UNION(self):
+            return self.getToken(MySqlParser.UNION, 0)
+        def tables(self):
+            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionUnion" ):
+                listener.enterTableOptionUnion(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionUnion" ):
+                listener.exitTableOptionUnion(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionUnion" ):
+                return visitor.visitTableOptionUnion(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionSamplePageContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STATS_SAMPLE_PAGES(self):
+            return self.getToken(MySqlParser.STATS_SAMPLE_PAGES, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionSamplePage" ):
+                listener.enterTableOptionSamplePage(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionSamplePage" ):
+                listener.exitTableOptionSamplePage(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionSamplePage" ):
+                return visitor.visitTableOptionSamplePage(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionCharsetContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+        def CHARACTER(self):
+            return self.getToken(MySqlParser.CHARACTER, 0)
+        def SET(self):
+            return self.getToken(MySqlParser.SET, 0)
+        def CHARSET(self):
+            return self.getToken(MySqlParser.CHARSET, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionCharset" ):
+                listener.enterTableOptionCharset(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionCharset" ):
+                listener.exitTableOptionCharset(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionCharset" ):
+                return visitor.visitTableOptionCharset(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -12666,6 +12861,166 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class TableOptionKeyBlockSizeContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def KEY_BLOCK_SIZE(self):
+            return self.getToken(MySqlParser.KEY_BLOCK_SIZE, 0)
+        def fileSizeLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.FileSizeLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionKeyBlockSize" ):
+                listener.enterTableOptionKeyBlockSize(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionKeyBlockSize" ):
+                listener.exitTableOptionKeyBlockSize(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionKeyBlockSize" ):
+                return visitor.visitTableOptionKeyBlockSize(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionEncryptionContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ENCRYPTION(self):
+            return self.getToken(MySqlParser.ENCRYPTION, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionEncryption" ):
+                listener.enterTableOptionEncryption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionEncryption" ):
+                listener.exitTableOptionEncryption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionEncryption" ):
+                return visitor.visitTableOptionEncryption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionDataDirectoryContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DATA(self):
+            return self.getToken(MySqlParser.DATA, 0)
+        def DIRECTORY(self):
+            return self.getToken(MySqlParser.DIRECTORY, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionDataDirectory" ):
+                listener.enterTableOptionDataDirectory(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionDataDirectory" ):
+                listener.exitTableOptionDataDirectory(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionDataDirectory" ):
+                return visitor.visitTableOptionDataDirectory(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionRecalculationContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.extBoolValue = None # Token
+            self.copyFrom(ctx)
+
+        def STATS_AUTO_RECALC(self):
+            return self.getToken(MySqlParser.STATS_AUTO_RECALC, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionRecalculation" ):
+                listener.enterTableOptionRecalculation(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionRecalculation" ):
+                listener.exitTableOptionRecalculation(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionRecalculation" ):
+                return visitor.visitTableOptionRecalculation(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionAutoIncrementContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def AUTO_INCREMENT(self):
+            return self.getToken(MySqlParser.AUTO_INCREMENT, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionAutoIncrement" ):
+                listener.enterTableOptionAutoIncrement(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionAutoIncrement" ):
+                listener.exitTableOptionAutoIncrement(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionAutoIncrement" ):
+                return visitor.visitTableOptionAutoIncrement(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionChecksumContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.boolValue = None # Token
+            self.copyFrom(ctx)
+
+        def CHECKSUM(self):
+            return self.getToken(MySqlParser.CHECKSUM, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionChecksum" ):
+                listener.enterTableOptionChecksum(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionChecksum" ):
+                listener.exitTableOptionChecksum(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionChecksum" ):
+                return visitor.visitTableOptionChecksum(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class TableOptionDelayContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
@@ -12691,109 +13046,81 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class TableOptionSamplePageContext(TableOptionContext):
+    class TableOptionConnectionContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def STATS_SAMPLE_PAGES(self):
-            return self.getToken(MySqlParser.STATS_SAMPLE_PAGES, 0)
+        def CONNECTION(self):
+            return self.getToken(MySqlParser.CONNECTION, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionConnection" ):
+                listener.enterTableOptionConnection(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionConnection" ):
+                listener.exitTableOptionConnection(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionConnection" ):
+                return visitor.visitTableOptionConnection(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionCommentContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COMMENT(self):
+            return self.getToken(MySqlParser.COMMENT, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableOptionComment" ):
+                listener.enterTableOptionComment(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableOptionComment" ):
+                listener.exitTableOptionComment(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableOptionComment" ):
+                return visitor.visitTableOptionComment(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableOptionAverageContext(TableOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def AVG_ROW_LENGTH(self):
+            return self.getToken(MySqlParser.AVG_ROW_LENGTH, 0)
         def decimalLiteral(self):
             return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionSamplePage" ):
-                listener.enterTableOptionSamplePage(self)
+            if hasattr( listener, "enterTableOptionAverage" ):
+                listener.enterTableOptionAverage(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionSamplePage" ):
-                listener.exitTableOptionSamplePage(self)
+            if hasattr( listener, "exitTableOptionAverage" ):
+                listener.exitTableOptionAverage(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionSamplePage" ):
-                return visitor.visitTableOptionSamplePage(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionPersistentContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.extBoolValue = None # Token
-            self.copyFrom(ctx)
-
-        def STATS_PERSISTENT(self):
-            return self.getToken(MySqlParser.STATS_PERSISTENT, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionPersistent" ):
-                listener.enterTableOptionPersistent(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionPersistent" ):
-                listener.exitTableOptionPersistent(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionPersistent" ):
-                return visitor.visitTableOptionPersistent(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionCompressionContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def COMPRESSION(self):
-            return self.getToken(MySqlParser.COMPRESSION, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionCompression" ):
-                listener.enterTableOptionCompression(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionCompression" ):
-                listener.exitTableOptionCompression(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionCompression" ):
-                return visitor.visitTableOptionCompression(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionUnionContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def UNION(self):
-            return self.getToken(MySqlParser.UNION, 0)
-        def tables(self):
-            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionUnion" ):
-                listener.enterTableOptionUnion(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionUnion" ):
-                listener.exitTableOptionUnion(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionUnion" ):
-                return visitor.visitTableOptionUnion(self)
+            if hasattr( visitor, "visitTableOptionAverage" ):
+                return visitor.visitTableOptionAverage(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -12835,166 +13162,59 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class TableOptionRecalculationContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.extBoolValue = None # Token
-            self.copyFrom(ctx)
-
-        def STATS_AUTO_RECALC(self):
-            return self.getToken(MySqlParser.STATS_AUTO_RECALC, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionRecalculation" ):
-                listener.enterTableOptionRecalculation(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionRecalculation" ):
-                listener.exitTableOptionRecalculation(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionRecalculation" ):
-                return visitor.visitTableOptionRecalculation(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionTablespaceContext(TableOptionContext):
+    class TableOptionCompressionContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def tablespaceStorage(self):
-            return self.getTypedRuleContext(MySqlParser.TablespaceStorageContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionTablespace" ):
-                listener.enterTableOptionTablespace(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionTablespace" ):
-                listener.exitTableOptionTablespace(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionTablespace" ):
-                return visitor.visitTableOptionTablespace(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionAutoIncrementContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def AUTO_INCREMENT(self):
-            return self.getToken(MySqlParser.AUTO_INCREMENT, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionAutoIncrement" ):
-                listener.enterTableOptionAutoIncrement(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionAutoIncrement" ):
-                listener.exitTableOptionAutoIncrement(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionAutoIncrement" ):
-                return visitor.visitTableOptionAutoIncrement(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionCollateContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def COLLATE(self):
-            return self.getToken(MySqlParser.COLLATE, 0)
-        def collationName(self):
-            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
-
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionCollate" ):
-                listener.enterTableOptionCollate(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionCollate" ):
-                listener.exitTableOptionCollate(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionCollate" ):
-                return visitor.visitTableOptionCollate(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionPasswordContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def PASSWORD(self):
-            return self.getToken(MySqlParser.PASSWORD, 0)
+        def COMPRESSION(self):
+            return self.getToken(MySqlParser.COMPRESSION, 0)
         def STRING_LITERAL(self):
             return self.getToken(MySqlParser.STRING_LITERAL, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionPassword" ):
-                listener.enterTableOptionPassword(self)
+            if hasattr( listener, "enterTableOptionCompression" ):
+                listener.enterTableOptionCompression(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionPassword" ):
-                listener.exitTableOptionPassword(self)
+            if hasattr( listener, "exitTableOptionCompression" ):
+                listener.exitTableOptionCompression(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionPassword" ):
-                return visitor.visitTableOptionPassword(self)
+            if hasattr( visitor, "visitTableOptionCompression" ):
+                return visitor.visitTableOptionCompression(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class TableOptionChecksumContext(TableOptionContext):
+    class TableOptionInsertMethodContext(TableOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
             super().__init__(parser)
-            self.boolValue = None # Token
+            self.insertMethod = None # Token
             self.copyFrom(ctx)
 
-        def CHECKSUM(self):
-            return self.getToken(MySqlParser.CHECKSUM, 0)
+        def INSERT_METHOD(self):
+            return self.getToken(MySqlParser.INSERT_METHOD, 0)
+        def NO(self):
+            return self.getToken(MySqlParser.NO, 0)
+        def FIRST(self):
+            return self.getToken(MySqlParser.FIRST, 0)
+        def LAST(self):
+            return self.getToken(MySqlParser.LAST, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionChecksum" ):
-                listener.enterTableOptionChecksum(self)
+            if hasattr( listener, "enterTableOptionInsertMethod" ):
+                listener.enterTableOptionInsertMethod(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionChecksum" ):
-                listener.exitTableOptionChecksum(self)
+            if hasattr( listener, "exitTableOptionInsertMethod" ):
+                listener.exitTableOptionInsertMethod(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionChecksum" ):
-                return visitor.visitTableOptionChecksum(self)
+            if hasattr( visitor, "visitTableOptionInsertMethod" ):
+                return visitor.visitTableOptionInsertMethod(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -13022,226 +13242,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitTableOptionMinRows" ):
                 return visitor.visitTableOptionMinRows(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionDataDirectoryContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DATA(self):
-            return self.getToken(MySqlParser.DATA, 0)
-        def DIRECTORY(self):
-            return self.getToken(MySqlParser.DIRECTORY, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionDataDirectory" ):
-                listener.enterTableOptionDataDirectory(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionDataDirectory" ):
-                listener.exitTableOptionDataDirectory(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionDataDirectory" ):
-                return visitor.visitTableOptionDataDirectory(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionMaxRowsContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def MAX_ROWS(self):
-            return self.getToken(MySqlParser.MAX_ROWS, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionMaxRows" ):
-                listener.enterTableOptionMaxRows(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionMaxRows" ):
-                listener.exitTableOptionMaxRows(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionMaxRows" ):
-                return visitor.visitTableOptionMaxRows(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionCommentContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def COMMENT(self):
-            return self.getToken(MySqlParser.COMMENT, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionComment" ):
-                listener.enterTableOptionComment(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionComment" ):
-                listener.exitTableOptionComment(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionComment" ):
-                return visitor.visitTableOptionComment(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionEngineContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ENGINE(self):
-            return self.getToken(MySqlParser.ENGINE, 0)
-        def engineName(self):
-            return self.getTypedRuleContext(MySqlParser.EngineNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionEngine" ):
-                listener.enterTableOptionEngine(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionEngine" ):
-                listener.exitTableOptionEngine(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionEngine" ):
-                return visitor.visitTableOptionEngine(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionCharsetContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-        def CHARACTER(self):
-            return self.getToken(MySqlParser.CHARACTER, 0)
-        def SET(self):
-            return self.getToken(MySqlParser.SET, 0)
-        def CHARSET(self):
-            return self.getToken(MySqlParser.CHARSET, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionCharset" ):
-                listener.enterTableOptionCharset(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionCharset" ):
-                listener.exitTableOptionCharset(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionCharset" ):
-                return visitor.visitTableOptionCharset(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionConnectionContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def CONNECTION(self):
-            return self.getToken(MySqlParser.CONNECTION, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionConnection" ):
-                listener.enterTableOptionConnection(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionConnection" ):
-                listener.exitTableOptionConnection(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionConnection" ):
-                return visitor.visitTableOptionConnection(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionEncryptionContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ENCRYPTION(self):
-            return self.getToken(MySqlParser.ENCRYPTION, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionEncryption" ):
-                listener.enterTableOptionEncryption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionEncryption" ):
-                listener.exitTableOptionEncryption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionEncryption" ):
-                return visitor.visitTableOptionEncryption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableOptionAverageContext(TableOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def AVG_ROW_LENGTH(self):
-            return self.getToken(MySqlParser.AVG_ROW_LENGTH, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableOptionAverage" ):
-                listener.enterTableOptionAverage(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableOptionAverage" ):
-                listener.exitTableOptionAverage(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableOptionAverage" ):
-                return visitor.visitTableOptionAverage(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -13993,35 +13993,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class PartitionFunctionHashContext(PartitionFunctionDefinitionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionFunctionDefinitionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def HASH(self):
-            return self.getToken(MySqlParser.HASH, 0)
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def LINEAR(self):
-            return self.getToken(MySqlParser.LINEAR, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionFunctionHash" ):
-                listener.enterPartitionFunctionHash(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionFunctionHash" ):
-                listener.exitPartitionFunctionHash(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionFunctionHash" ):
-                return visitor.visitPartitionFunctionHash(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class PartitionFunctionKeyContext(PartitionFunctionDefinitionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionFunctionDefinitionContext
@@ -14050,6 +14021,35 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPartitionFunctionKey" ):
                 return visitor.visitPartitionFunctionKey(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PartitionFunctionHashContext(PartitionFunctionDefinitionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionFunctionDefinitionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def HASH(self):
+            return self.getToken(MySqlParser.HASH, 0)
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+
+        def LINEAR(self):
+            return self.getToken(MySqlParser.LINEAR, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionFunctionHash" ):
+                listener.enterPartitionFunctionHash(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionFunctionHash" ):
+                listener.exitPartitionFunctionHash(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionFunctionHash" ):
+                return visitor.visitPartitionFunctionHash(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -14431,45 +14431,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class PartitionSimpleContext(PartitionDefinitionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionDefinitionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def partitionOption(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PartitionOptionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PartitionOptionContext,i)
-
-        def subpartitionDefinition(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.SubpartitionDefinitionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.SubpartitionDefinitionContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionSimple" ):
-                listener.enterPartitionSimple(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionSimple" ):
-                listener.exitPartitionSimple(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionSimple" ):
-                return visitor.visitPartitionSimple(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class PartitionComparisionContext(PartitionDefinitionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionDefinitionContext
@@ -14615,6 +14576,45 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPartitionListVector" ):
                 return visitor.visitPartitionListVector(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PartitionSimpleContext(PartitionDefinitionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionDefinitionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def partitionOption(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PartitionOptionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PartitionOptionContext,i)
+
+        def subpartitionDefinition(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.SubpartitionDefinitionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.SubpartitionDefinitionContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionSimple" ):
+                listener.enterPartitionSimple(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionSimple" ):
+                listener.exitPartitionSimple(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionSimple" ):
+                return visitor.visitPartitionSimple(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -15091,119 +15091,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class PartitionOptionDataDirectoryContext(PartitionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
-            super().__init__(parser)
-            self.dataDirectory = None # Token
-            self.copyFrom(ctx)
-
-        def DATA(self):
-            return self.getToken(MySqlParser.DATA, 0)
-        def DIRECTORY(self):
-            return self.getToken(MySqlParser.DIRECTORY, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionOptionDataDirectory" ):
-                listener.enterPartitionOptionDataDirectory(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionOptionDataDirectory" ):
-                listener.exitPartitionOptionDataDirectory(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionOptionDataDirectory" ):
-                return visitor.visitPartitionOptionDataDirectory(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class PartitionOptionMaxRowsContext(PartitionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
-            super().__init__(parser)
-            self.maxRows = None # DecimalLiteralContext
-            self.copyFrom(ctx)
-
-        def MAX_ROWS(self):
-            return self.getToken(MySqlParser.MAX_ROWS, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionOptionMaxRows" ):
-                listener.enterPartitionOptionMaxRows(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionOptionMaxRows" ):
-                listener.exitPartitionOptionMaxRows(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionOptionMaxRows" ):
-                return visitor.visitPartitionOptionMaxRows(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class PartitionOptionMinRowsContext(PartitionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
-            super().__init__(parser)
-            self.minRows = None # DecimalLiteralContext
-            self.copyFrom(ctx)
-
-        def MIN_ROWS(self):
-            return self.getToken(MySqlParser.MIN_ROWS, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionOptionMinRows" ):
-                listener.enterPartitionOptionMinRows(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionOptionMinRows" ):
-                listener.exitPartitionOptionMinRows(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionOptionMinRows" ):
-                return visitor.visitPartitionOptionMinRows(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class PartitionOptionTablespaceContext(PartitionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
-            super().__init__(parser)
-            self.tablespace = None # UidContext
-            self.copyFrom(ctx)
-
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPartitionOptionTablespace" ):
-                listener.enterPartitionOptionTablespace(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPartitionOptionTablespace" ):
-                listener.exitPartitionOptionTablespace(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPartitionOptionTablespace" ):
-                return visitor.visitPartitionOptionTablespace(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class PartitionOptionCommentContext(PartitionOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
@@ -15288,6 +15175,62 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class PartitionOptionMaxRowsContext(PartitionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
+            super().__init__(parser)
+            self.maxRows = None # DecimalLiteralContext
+            self.copyFrom(ctx)
+
+        def MAX_ROWS(self):
+            return self.getToken(MySqlParser.MAX_ROWS, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionOptionMaxRows" ):
+                listener.enterPartitionOptionMaxRows(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionOptionMaxRows" ):
+                listener.exitPartitionOptionMaxRows(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionOptionMaxRows" ):
+                return visitor.visitPartitionOptionMaxRows(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PartitionOptionTablespaceContext(PartitionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
+            super().__init__(parser)
+            self.tablespace = None # UidContext
+            self.copyFrom(ctx)
+
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionOptionTablespace" ):
+                listener.enterPartitionOptionTablespace(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionOptionTablespace" ):
+                listener.exitPartitionOptionTablespace(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionOptionTablespace" ):
+                return visitor.visitPartitionOptionTablespace(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class PartitionOptionEngineContext(PartitionOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
@@ -15313,6 +15256,63 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPartitionOptionEngine" ):
                 return visitor.visitPartitionOptionEngine(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PartitionOptionMinRowsContext(PartitionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
+            super().__init__(parser)
+            self.minRows = None # DecimalLiteralContext
+            self.copyFrom(ctx)
+
+        def MIN_ROWS(self):
+            return self.getToken(MySqlParser.MIN_ROWS, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionOptionMinRows" ):
+                listener.enterPartitionOptionMinRows(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionOptionMinRows" ):
+                listener.exitPartitionOptionMinRows(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionOptionMinRows" ):
+                return visitor.visitPartitionOptionMinRows(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PartitionOptionDataDirectoryContext(PartitionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PartitionOptionContext
+            super().__init__(parser)
+            self.dataDirectory = None # Token
+            self.copyFrom(ctx)
+
+        def DATA(self):
+            return self.getToken(MySqlParser.DATA, 0)
+        def DIRECTORY(self):
+            return self.getToken(MySqlParser.DIRECTORY, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPartitionOptionDataDirectory" ):
+                listener.enterPartitionOptionDataDirectory(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPartitionOptionDataDirectory" ):
+                listener.exitPartitionOptionDataDirectory(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPartitionOptionDataDirectory" ):
+                return visitor.visitPartitionOptionDataDirectory(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -16746,6 +16746,454 @@ class MySqlParser ( Parser ):
 
 
 
+    class AlterByDisableKeysContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DISABLE(self):
+            return self.getToken(MySqlParser.DISABLE, 0)
+        def KEYS(self):
+            return self.getToken(MySqlParser.KEYS, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDisableKeys" ):
+                listener.enterAlterByDisableKeys(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDisableKeys" ):
+                listener.exitAlterByDisableKeys(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDisableKeys" ):
+                return visitor.visitAlterByDisableKeys(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDefaultCharsetContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CHARACTER(self):
+            return self.getToken(MySqlParser.CHARACTER, 0)
+        def SET(self):
+            return self.getToken(MySqlParser.SET, 0)
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+        def COLLATE(self):
+            return self.getToken(MySqlParser.COLLATE, 0)
+        def collationName(self):
+            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDefaultCharset" ):
+                listener.enterAlterByDefaultCharset(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDefaultCharset" ):
+                listener.exitAlterByDefaultCharset(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDefaultCharset" ):
+                return visitor.visitAlterByDefaultCharset(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByConvertCharsetContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CONVERT(self):
+            return self.getToken(MySqlParser.CONVERT, 0)
+        def TO(self):
+            return self.getToken(MySqlParser.TO, 0)
+        def CHARACTER(self):
+            return self.getToken(MySqlParser.CHARACTER, 0)
+        def SET(self):
+            return self.getToken(MySqlParser.SET, 0)
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+        def COLLATE(self):
+            return self.getToken(MySqlParser.COLLATE, 0)
+        def collationName(self):
+            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByConvertCharset" ):
+                listener.enterAlterByConvertCharset(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByConvertCharset" ):
+                listener.exitAlterByConvertCharset(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByConvertCharset" ):
+                return visitor.visitAlterByConvertCharset(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def partitionDefinition(self):
+            return self.getTypedRuleContext(MySqlParser.PartitionDefinitionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddPartition" ):
+                listener.enterAlterByAddPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddPartition" ):
+                listener.exitAlterByAddPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddPartition" ):
+                return visitor.visitAlterByAddPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAnalyzePartitiionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ANALYZE(self):
+            return self.getToken(MySqlParser.ANALYZE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAnalyzePartitiion" ):
+                listener.enterAlterByAnalyzePartitiion(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAnalyzePartitiion" ):
+                listener.exitAlterByAnalyzePartitiion(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAnalyzePartitiion" ):
+                return visitor.visitAlterByAnalyzePartitiion(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddForeignKeyContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.name = None # UidContext
+            self.indexName = None # UidContext
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def FOREIGN(self):
+            return self.getToken(MySqlParser.FOREIGN, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def referenceDefinition(self):
+            return self.getTypedRuleContext(MySqlParser.ReferenceDefinitionContext,0)
+
+        def CONSTRAINT(self):
+            return self.getToken(MySqlParser.CONSTRAINT, 0)
+        def uid(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UidContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UidContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddForeignKey" ):
+                listener.enterAlterByAddForeignKey(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddForeignKey" ):
+                listener.exitAlterByAddForeignKey(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddForeignKey" ):
+                return visitor.visitAlterByAddForeignKey(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByRemovePartitioningContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REMOVE(self):
+            return self.getToken(MySqlParser.REMOVE, 0)
+        def PARTITIONING(self):
+            return self.getToken(MySqlParser.PARTITIONING, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByRemovePartitioning" ):
+                listener.enterAlterByRemovePartitioning(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByRemovePartitioning" ):
+                listener.exitAlterByRemovePartitioning(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByRemovePartitioning" ):
+                return visitor.visitAlterByRemovePartitioning(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByRenameContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.renameFormat = None # Token
+            self.copyFrom(ctx)
+
+        def RENAME(self):
+            return self.getToken(MySqlParser.RENAME, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def TO(self):
+            return self.getToken(MySqlParser.TO, 0)
+        def AS(self):
+            return self.getToken(MySqlParser.AS, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByRename" ):
+                listener.enterAlterByRename(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByRename" ):
+                listener.exitAlterByRename(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByRename" ):
+                return visitor.visitAlterByRename(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByOptimizePartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def OPTIMIZE(self):
+            return self.getToken(MySqlParser.OPTIMIZE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByOptimizePartition" ):
+                listener.enterAlterByOptimizePartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByOptimizePartition" ):
+                listener.exitAlterByOptimizePartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByOptimizePartition" ):
+                return visitor.visitAlterByOptimizePartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByImportTablespaceContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IMPORT(self):
+            return self.getToken(MySqlParser.IMPORT, 0)
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByImportTablespace" ):
+                listener.enterAlterByImportTablespace(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByImportTablespace" ):
+                listener.exitAlterByImportTablespace(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByImportTablespace" ):
+                return visitor.visitAlterByImportTablespace(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByCoalescePartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def COALESCE(self):
+            return self.getToken(MySqlParser.COALESCE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByCoalescePartition" ):
+                listener.enterAlterByCoalescePartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByCoalescePartition" ):
+                listener.exitAlterByCoalescePartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByCoalescePartition" ):
+                return visitor.visitAlterByCoalescePartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddColumnsContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def uid(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UidContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UidContext,i)
+
+        def columnDefinition(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.ColumnDefinitionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,i)
+
+        def COLUMN(self):
+            return self.getToken(MySqlParser.COLUMN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddColumns" ):
+                listener.enterAlterByAddColumns(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddColumns" ):
+                listener.exitAlterByAddColumns(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddColumns" ):
+                return visitor.visitAlterByAddColumns(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDropForeignKeyContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DROP(self):
+            return self.getToken(MySqlParser.DROP, 0)
+        def FOREIGN(self):
+            return self.getToken(MySqlParser.FOREIGN, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDropForeignKey" ):
+                listener.enterAlterByDropForeignKey(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDropForeignKey" ):
+                listener.exitAlterByDropForeignKey(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDropForeignKey" ):
+                return visitor.visitAlterByDropForeignKey(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByRebuildPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REBUILD(self):
+            return self.getToken(MySqlParser.REBUILD, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByRebuildPartition" ):
+                listener.enterAlterByRebuildPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByRebuildPartition" ):
+                listener.exitAlterByRebuildPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByRebuildPartition" ):
+                return visitor.visitAlterByRebuildPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class AlterByUpgradePartitioningContext(AlterSpecificationContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
@@ -16768,6 +17216,388 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAlterByUpgradePartitioning" ):
                 return visitor.visitAlterByUpgradePartitioning(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByRepairPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REPAIR(self):
+            return self.getToken(MySqlParser.REPAIR, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByRepairPartition" ):
+                listener.enterAlterByRepairPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByRepairPartition" ):
+                listener.exitAlterByRepairPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByRepairPartition" ):
+                return visitor.visitAlterByRepairPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByExchangePartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.validationFormat = None # Token
+            self.copyFrom(ctx)
+
+        def EXCHANGE(self):
+            return self.getToken(MySqlParser.EXCHANGE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def WITH(self, i:int=None):
+            if i is None:
+                return self.getTokens(MySqlParser.WITH)
+            else:
+                return self.getToken(MySqlParser.WITH, i)
+        def TABLE(self):
+            return self.getToken(MySqlParser.TABLE, 0)
+        def tableName(self):
+            return self.getTypedRuleContext(MySqlParser.TableNameContext,0)
+
+        def VALIDATION(self):
+            return self.getToken(MySqlParser.VALIDATION, 0)
+        def WITHOUT(self):
+            return self.getToken(MySqlParser.WITHOUT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByExchangePartition" ):
+                listener.enterAlterByExchangePartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByExchangePartition" ):
+                listener.exitAlterByExchangePartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByExchangePartition" ):
+                return visitor.visitAlterByExchangePartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddIndexContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.indexFormat = None # Token
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def INDEX(self):
+            return self.getToken(MySqlParser.INDEX, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def indexType(self):
+            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
+
+        def indexOption(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddIndex" ):
+                listener.enterAlterByAddIndex(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddIndex" ):
+                listener.exitAlterByAddIndex(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddIndex" ):
+                return visitor.visitAlterByAddIndex(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDropColumnContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DROP(self):
+            return self.getToken(MySqlParser.DROP, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def COLUMN(self):
+            return self.getToken(MySqlParser.COLUMN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDropColumn" ):
+                listener.enterAlterByDropColumn(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDropColumn" ):
+                listener.exitAlterByDropColumn(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDropColumn" ):
+                return visitor.visitAlterByDropColumn(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByImportPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def IMPORT(self):
+            return self.getToken(MySqlParser.IMPORT, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByImportPartition" ):
+                listener.enterAlterByImportPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByImportPartition" ):
+                listener.exitAlterByImportPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByImportPartition" ):
+                return visitor.visitAlterByImportPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByChangeDefaultContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ALTER(self):
+            return self.getToken(MySqlParser.ALTER, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def SET(self):
+            return self.getToken(MySqlParser.SET, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+        def defaultValue(self):
+            return self.getTypedRuleContext(MySqlParser.DefaultValueContext,0)
+
+        def DROP(self):
+            return self.getToken(MySqlParser.DROP, 0)
+        def COLUMN(self):
+            return self.getToken(MySqlParser.COLUMN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByChangeDefault" ):
+                listener.enterAlterByChangeDefault(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByChangeDefault" ):
+                listener.exitAlterByChangeDefault(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByChangeDefault" ):
+                return visitor.visitAlterByChangeDefault(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByForceContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def FORCE(self):
+            return self.getToken(MySqlParser.FORCE, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByForce" ):
+                listener.enterAlterByForce(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByForce" ):
+                listener.exitAlterByForce(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByForce" ):
+                return visitor.visitAlterByForce(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDropPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DROP(self):
+            return self.getToken(MySqlParser.DROP, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDropPartition" ):
+                listener.enterAlterByDropPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDropPartition" ):
+                listener.exitAlterByDropPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDropPartition" ):
+                return visitor.visitAlterByDropPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddSpecialIndexContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.keyType = None # Token
+            self.indexFormat = None # Token
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def FULLTEXT(self):
+            return self.getToken(MySqlParser.FULLTEXT, 0)
+        def SPATIAL(self):
+            return self.getToken(MySqlParser.SPATIAL, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def indexOption(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
+
+        def INDEX(self):
+            return self.getToken(MySqlParser.INDEX, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddSpecialIndex" ):
+                listener.enterAlterByAddSpecialIndex(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddSpecialIndex" ):
+                listener.exitAlterByAddSpecialIndex(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddSpecialIndex" ):
+                return visitor.visitAlterByAddSpecialIndex(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByModifyColumnContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MODIFY(self):
+            return self.getToken(MySqlParser.MODIFY, 0)
+        def uid(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UidContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UidContext,i)
+
+        def columnDefinition(self):
+            return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,0)
+
+        def COLUMN(self):
+            return self.getToken(MySqlParser.COLUMN, 0)
+        def FIRST(self):
+            return self.getToken(MySqlParser.FIRST, 0)
+        def AFTER(self):
+            return self.getToken(MySqlParser.AFTER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByModifyColumn" ):
+                listener.enterAlterByModifyColumn(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByModifyColumn" ):
+                listener.exitAlterByModifyColumn(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByModifyColumn" ):
+                return visitor.visitAlterByModifyColumn(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByTableOptionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def tableOption(self):
+            return self.getTypedRuleContext(MySqlParser.TableOptionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByTableOption" ):
+                listener.enterAlterByTableOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByTableOption" ):
+                listener.exitAlterByTableOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByTableOption" ):
+                return visitor.visitAlterByTableOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -16796,6 +17626,298 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAlterByDropPrimaryKey" ):
                 return visitor.visitAlterByDropPrimaryKey(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByLockContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.lockType = None # Token
+            self.copyFrom(ctx)
+
+        def LOCK(self):
+            return self.getToken(MySqlParser.LOCK, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+        def NONE(self):
+            return self.getToken(MySqlParser.NONE, 0)
+        def SHARED(self):
+            return self.getToken(MySqlParser.SHARED, 0)
+        def EXCLUSIVE(self):
+            return self.getToken(MySqlParser.EXCLUSIVE, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByLock" ):
+                listener.enterAlterByLock(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByLock" ):
+                listener.exitAlterByLock(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByLock" ):
+                return visitor.visitAlterByLock(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDiscardPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DISCARD(self):
+            return self.getToken(MySqlParser.DISCARD, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDiscardPartition" ):
+                listener.enterAlterByDiscardPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDiscardPartition" ):
+                listener.exitAlterByDiscardPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDiscardPartition" ):
+                return visitor.visitAlterByDiscardPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByDiscardTablespaceContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def DISCARD(self):
+            return self.getToken(MySqlParser.DISCARD, 0)
+        def TABLESPACE(self):
+            return self.getToken(MySqlParser.TABLESPACE, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByDiscardTablespace" ):
+                listener.enterAlterByDiscardTablespace(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByDiscardTablespace" ):
+                listener.exitAlterByDiscardTablespace(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByDiscardTablespace" ):
+                return visitor.visitAlterByDiscardTablespace(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByValidateContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.validationFormat = None # Token
+            self.copyFrom(ctx)
+
+        def VALIDATION(self):
+            return self.getToken(MySqlParser.VALIDATION, 0)
+        def WITHOUT(self):
+            return self.getToken(MySqlParser.WITHOUT, 0)
+        def WITH(self):
+            return self.getToken(MySqlParser.WITH, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByValidate" ):
+                listener.enterAlterByValidate(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByValidate" ):
+                listener.exitAlterByValidate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByValidate" ):
+                return visitor.visitAlterByValidate(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByAddPrimaryKeyContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.name = None # UidContext
+            self.copyFrom(ctx)
+
+        def ADD(self):
+            return self.getToken(MySqlParser.ADD, 0)
+        def PRIMARY(self):
+            return self.getToken(MySqlParser.PRIMARY, 0)
+        def KEY(self):
+            return self.getToken(MySqlParser.KEY, 0)
+        def indexColumnNames(self):
+            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+
+        def CONSTRAINT(self):
+            return self.getToken(MySqlParser.CONSTRAINT, 0)
+        def indexType(self):
+            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
+
+        def indexOption(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
+
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByAddPrimaryKey" ):
+                listener.enterAlterByAddPrimaryKey(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByAddPrimaryKey" ):
+                listener.exitAlterByAddPrimaryKey(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByAddPrimaryKey" ):
+                return visitor.visitAlterByAddPrimaryKey(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByCheckPartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CHECK(self):
+            return self.getToken(MySqlParser.CHECK, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByCheckPartition" ):
+                listener.enterAlterByCheckPartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByCheckPartition" ):
+                listener.exitAlterByCheckPartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByCheckPartition" ):
+                return visitor.visitAlterByCheckPartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByEnableKeysContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ENABLE(self):
+            return self.getToken(MySqlParser.ENABLE, 0)
+        def KEYS(self):
+            return self.getToken(MySqlParser.KEYS, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByEnableKeys" ):
+                listener.enterAlterByEnableKeys(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByEnableKeys" ):
+                listener.exitAlterByEnableKeys(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByEnableKeys" ):
+                return visitor.visitAlterByEnableKeys(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterByReorganizePartitionContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REORGANIZE(self):
+            return self.getToken(MySqlParser.REORGANIZE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def INTO(self):
+            return self.getToken(MySqlParser.INTO, 0)
+        def partitionDefinition(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PartitionDefinitionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PartitionDefinitionContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterByReorganizePartition" ):
+                listener.enterAlterByReorganizePartition(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterByReorganizePartition" ):
+                listener.exitAlterByReorganizePartition(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterByReorganizePartition" ):
+                return visitor.visitAlterByReorganizePartition(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AlterBySetAlgorithmContext(AlterSpecificationContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
+            super().__init__(parser)
+            self.algType = None # Token
+            self.copyFrom(ctx)
+
+        def ALGORITHM(self):
+            return self.getToken(MySqlParser.ALGORITHM, 0)
+        def DEFAULT(self):
+            return self.getToken(MySqlParser.DEFAULT, 0)
+        def INPLACE(self):
+            return self.getToken(MySqlParser.INPLACE, 0)
+        def COPY(self):
+            return self.getToken(MySqlParser.COPY, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterBySetAlgorithm" ):
+                listener.enterAlterBySetAlgorithm(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterBySetAlgorithm" ):
+                listener.exitAlterBySetAlgorithm(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterBySetAlgorithm" ):
+                return visitor.visitAlterBySetAlgorithm(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -16838,95 +17960,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAlterByChangeColumn" ):
                 return visitor.visitAlterByChangeColumn(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddColumnContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def uid(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UidContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UidContext,i)
-
-        def columnDefinition(self):
-            return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,0)
-
-        def COLUMN(self):
-            return self.getToken(MySqlParser.COLUMN, 0)
-        def FIRST(self):
-            return self.getToken(MySqlParser.FIRST, 0)
-        def AFTER(self):
-            return self.getToken(MySqlParser.AFTER, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddColumn" ):
-                listener.enterAlterByAddColumn(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddColumn" ):
-                listener.exitAlterByAddColumn(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddColumn" ):
-                return visitor.visitAlterByAddColumn(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDiscardTablespaceContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DISCARD(self):
-            return self.getToken(MySqlParser.DISCARD, 0)
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDiscardTablespace" ):
-                listener.enterAlterByDiscardTablespace(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDiscardTablespace" ):
-                listener.exitAlterByDiscardTablespace(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDiscardTablespace" ):
-                return visitor.visitAlterByDiscardTablespace(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByForceContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def FORCE(self):
-            return self.getToken(MySqlParser.FORCE, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByForce" ):
-                listener.enterAlterByForce(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByForce" ):
-                listener.exitAlterByForce(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByForce" ):
-                return visitor.visitAlterByForce(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -16984,46 +18017,33 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class AlterByAddIndexContext(AlterSpecificationContext):
+    class AlterByTruncatePartitionContext(AlterSpecificationContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
             super().__init__(parser)
-            self.indexFormat = None # Token
             self.copyFrom(ctx)
 
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
+        def TRUNCATE(self):
+            return self.getToken(MySqlParser.TRUNCATE, 0)
+        def PARTITION(self):
+            return self.getToken(MySqlParser.PARTITION, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
 
-        def INDEX(self):
-            return self.getToken(MySqlParser.INDEX, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def indexType(self):
-            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
-
-        def indexOption(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
-
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddIndex" ):
-                listener.enterAlterByAddIndex(self)
+            if hasattr( listener, "enterAlterByTruncatePartition" ):
+                listener.enterAlterByTruncatePartition(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddIndex" ):
-                listener.exitAlterByAddIndex(self)
+            if hasattr( listener, "exitAlterByTruncatePartition" ):
+                listener.exitAlterByTruncatePartition(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddIndex" ):
-                return visitor.visitAlterByAddIndex(self)
+            if hasattr( visitor, "visitAlterByTruncatePartition" ):
+                return visitor.visitAlterByTruncatePartition(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -17060,75 +18080,7 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class AlterByReorganizePartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REORGANIZE(self):
-            return self.getToken(MySqlParser.REORGANIZE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def INTO(self):
-            return self.getToken(MySqlParser.INTO, 0)
-        def partitionDefinition(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PartitionDefinitionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PartitionDefinitionContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByReorganizePartition" ):
-                listener.enterAlterByReorganizePartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByReorganizePartition" ):
-                listener.exitAlterByReorganizePartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByReorganizePartition" ):
-                return visitor.visitAlterByReorganizePartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByRepairPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REPAIR(self):
-            return self.getToken(MySqlParser.REPAIR, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByRepairPartition" ):
-                listener.enterAlterByRepairPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByRepairPartition" ):
-                listener.exitAlterByRepairPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByRepairPartition" ):
-                return visitor.visitAlterByRepairPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddPartitionContext(AlterSpecificationContext):
+    class AlterByAddColumnContext(AlterSpecificationContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
             super().__init__(parser)
@@ -17136,73 +18088,6 @@ class MySqlParser ( Parser ):
 
         def ADD(self):
             return self.getToken(MySqlParser.ADD, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def partitionDefinition(self):
-            return self.getTypedRuleContext(MySqlParser.PartitionDefinitionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddPartition" ):
-                listener.enterAlterByAddPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddPartition" ):
-                listener.exitAlterByAddPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddPartition" ):
-                return visitor.visitAlterByAddPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByConvertCharsetContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def CONVERT(self):
-            return self.getToken(MySqlParser.CONVERT, 0)
-        def TO(self):
-            return self.getToken(MySqlParser.TO, 0)
-        def CHARACTER(self):
-            return self.getToken(MySqlParser.CHARACTER, 0)
-        def SET(self):
-            return self.getToken(MySqlParser.SET, 0)
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-        def COLLATE(self):
-            return self.getToken(MySqlParser.COLLATE, 0)
-        def collationName(self):
-            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByConvertCharset" ):
-                listener.enterAlterByConvertCharset(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByConvertCharset" ):
-                listener.exitAlterByConvertCharset(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByConvertCharset" ):
-                return visitor.visitAlterByConvertCharset(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByModifyColumnContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def MODIFY(self):
-            return self.getToken(MySqlParser.MODIFY, 0)
         def uid(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(MySqlParser.UidContext)
@@ -17220,865 +18105,16 @@ class MySqlParser ( Parser ):
             return self.getToken(MySqlParser.AFTER, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByModifyColumn" ):
-                listener.enterAlterByModifyColumn(self)
+            if hasattr( listener, "enterAlterByAddColumn" ):
+                listener.enterAlterByAddColumn(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByModifyColumn" ):
-                listener.exitAlterByModifyColumn(self)
+            if hasattr( listener, "exitAlterByAddColumn" ):
+                listener.exitAlterByAddColumn(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByModifyColumn" ):
-                return visitor.visitAlterByModifyColumn(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByRemovePartitioningContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REMOVE(self):
-            return self.getToken(MySqlParser.REMOVE, 0)
-        def PARTITIONING(self):
-            return self.getToken(MySqlParser.PARTITIONING, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByRemovePartitioning" ):
-                listener.enterAlterByRemovePartitioning(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByRemovePartitioning" ):
-                listener.exitAlterByRemovePartitioning(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByRemovePartitioning" ):
-                return visitor.visitAlterByRemovePartitioning(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterBySetAlgorithmContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.algType = None # Token
-            self.copyFrom(ctx)
-
-        def ALGORITHM(self):
-            return self.getToken(MySqlParser.ALGORITHM, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-        def INPLACE(self):
-            return self.getToken(MySqlParser.INPLACE, 0)
-        def COPY(self):
-            return self.getToken(MySqlParser.COPY, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterBySetAlgorithm" ):
-                listener.enterAlterBySetAlgorithm(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterBySetAlgorithm" ):
-                listener.exitAlterBySetAlgorithm(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterBySetAlgorithm" ):
-                return visitor.visitAlterBySetAlgorithm(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByTruncatePartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def TRUNCATE(self):
-            return self.getToken(MySqlParser.TRUNCATE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByTruncatePartition" ):
-                listener.enterAlterByTruncatePartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByTruncatePartition" ):
-                listener.exitAlterByTruncatePartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByTruncatePartition" ):
-                return visitor.visitAlterByTruncatePartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDisableKeysContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DISABLE(self):
-            return self.getToken(MySqlParser.DISABLE, 0)
-        def KEYS(self):
-            return self.getToken(MySqlParser.KEYS, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDisableKeys" ):
-                listener.enterAlterByDisableKeys(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDisableKeys" ):
-                listener.exitAlterByDisableKeys(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDisableKeys" ):
-                return visitor.visitAlterByDisableKeys(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByOptimizePartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def OPTIMIZE(self):
-            return self.getToken(MySqlParser.OPTIMIZE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByOptimizePartition" ):
-                listener.enterAlterByOptimizePartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByOptimizePartition" ):
-                listener.exitAlterByOptimizePartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByOptimizePartition" ):
-                return visitor.visitAlterByOptimizePartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByCoalescePartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def COALESCE(self):
-            return self.getToken(MySqlParser.COALESCE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByCoalescePartition" ):
-                listener.enterAlterByCoalescePartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByCoalescePartition" ):
-                listener.exitAlterByCoalescePartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByCoalescePartition" ):
-                return visitor.visitAlterByCoalescePartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByEnableKeysContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ENABLE(self):
-            return self.getToken(MySqlParser.ENABLE, 0)
-        def KEYS(self):
-            return self.getToken(MySqlParser.KEYS, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByEnableKeys" ):
-                listener.enterAlterByEnableKeys(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByEnableKeys" ):
-                listener.exitAlterByEnableKeys(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByEnableKeys" ):
-                return visitor.visitAlterByEnableKeys(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAnalyzePartitiionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ANALYZE(self):
-            return self.getToken(MySqlParser.ANALYZE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAnalyzePartitiion" ):
-                listener.enterAlterByAnalyzePartitiion(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAnalyzePartitiion" ):
-                listener.exitAlterByAnalyzePartitiion(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAnalyzePartitiion" ):
-                return visitor.visitAlterByAnalyzePartitiion(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByChangeDefaultContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ALTER(self):
-            return self.getToken(MySqlParser.ALTER, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def SET(self):
-            return self.getToken(MySqlParser.SET, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-        def defaultValue(self):
-            return self.getTypedRuleContext(MySqlParser.DefaultValueContext,0)
-
-        def DROP(self):
-            return self.getToken(MySqlParser.DROP, 0)
-        def COLUMN(self):
-            return self.getToken(MySqlParser.COLUMN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByChangeDefault" ):
-                listener.enterAlterByChangeDefault(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByChangeDefault" ):
-                listener.exitAlterByChangeDefault(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByChangeDefault" ):
-                return visitor.visitAlterByChangeDefault(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDiscardPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DISCARD(self):
-            return self.getToken(MySqlParser.DISCARD, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDiscardPartition" ):
-                listener.enterAlterByDiscardPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDiscardPartition" ):
-                listener.exitAlterByDiscardPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDiscardPartition" ):
-                return visitor.visitAlterByDiscardPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByLockContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.lockType = None # Token
-            self.copyFrom(ctx)
-
-        def LOCK(self):
-            return self.getToken(MySqlParser.LOCK, 0)
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-        def NONE(self):
-            return self.getToken(MySqlParser.NONE, 0)
-        def SHARED(self):
-            return self.getToken(MySqlParser.SHARED, 0)
-        def EXCLUSIVE(self):
-            return self.getToken(MySqlParser.EXCLUSIVE, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByLock" ):
-                listener.enterAlterByLock(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByLock" ):
-                listener.exitAlterByLock(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByLock" ):
-                return visitor.visitAlterByLock(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddSpecialIndexContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.keyType = None # Token
-            self.indexFormat = None # Token
-            self.copyFrom(ctx)
-
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
-
-        def FULLTEXT(self):
-            return self.getToken(MySqlParser.FULLTEXT, 0)
-        def SPATIAL(self):
-            return self.getToken(MySqlParser.SPATIAL, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def indexOption(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
-
-        def INDEX(self):
-            return self.getToken(MySqlParser.INDEX, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddSpecialIndex" ):
-                listener.enterAlterByAddSpecialIndex(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddSpecialIndex" ):
-                listener.exitAlterByAddSpecialIndex(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddSpecialIndex" ):
-                return visitor.visitAlterByAddSpecialIndex(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByRenameContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.renameFormat = None # Token
-            self.copyFrom(ctx)
-
-        def RENAME(self):
-            return self.getToken(MySqlParser.RENAME, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def TO(self):
-            return self.getToken(MySqlParser.TO, 0)
-        def AS(self):
-            return self.getToken(MySqlParser.AS, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByRename" ):
-                listener.enterAlterByRename(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByRename" ):
-                listener.exitAlterByRename(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByRename" ):
-                return visitor.visitAlterByRename(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddColumnsContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def uid(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UidContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UidContext,i)
-
-        def columnDefinition(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ColumnDefinitionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.ColumnDefinitionContext,i)
-
-        def COLUMN(self):
-            return self.getToken(MySqlParser.COLUMN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddColumns" ):
-                listener.enterAlterByAddColumns(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddColumns" ):
-                listener.exitAlterByAddColumns(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddColumns" ):
-                return visitor.visitAlterByAddColumns(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByExchangePartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.validationFormat = None # Token
-            self.copyFrom(ctx)
-
-        def EXCHANGE(self):
-            return self.getToken(MySqlParser.EXCHANGE, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def WITH(self, i:int=None):
-            if i is None:
-                return self.getTokens(MySqlParser.WITH)
-            else:
-                return self.getToken(MySqlParser.WITH, i)
-        def TABLE(self):
-            return self.getToken(MySqlParser.TABLE, 0)
-        def tableName(self):
-            return self.getTypedRuleContext(MySqlParser.TableNameContext,0)
-
-        def VALIDATION(self):
-            return self.getToken(MySqlParser.VALIDATION, 0)
-        def WITHOUT(self):
-            return self.getToken(MySqlParser.WITHOUT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByExchangePartition" ):
-                listener.enterAlterByExchangePartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByExchangePartition" ):
-                listener.exitAlterByExchangePartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByExchangePartition" ):
-                return visitor.visitAlterByExchangePartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDropForeignKeyContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DROP(self):
-            return self.getToken(MySqlParser.DROP, 0)
-        def FOREIGN(self):
-            return self.getToken(MySqlParser.FOREIGN, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDropForeignKey" ):
-                listener.enterAlterByDropForeignKey(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDropForeignKey" ):
-                listener.exitAlterByDropForeignKey(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDropForeignKey" ):
-                return visitor.visitAlterByDropForeignKey(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByValidateContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.validationFormat = None # Token
-            self.copyFrom(ctx)
-
-        def VALIDATION(self):
-            return self.getToken(MySqlParser.VALIDATION, 0)
-        def WITHOUT(self):
-            return self.getToken(MySqlParser.WITHOUT, 0)
-        def WITH(self):
-            return self.getToken(MySqlParser.WITH, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByValidate" ):
-                listener.enterAlterByValidate(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByValidate" ):
-                listener.exitAlterByValidate(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByValidate" ):
-                return visitor.visitAlterByValidate(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByImportPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def IMPORT(self):
-            return self.getToken(MySqlParser.IMPORT, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByImportPartition" ):
-                listener.enterAlterByImportPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByImportPartition" ):
-                listener.exitAlterByImportPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByImportPartition" ):
-                return visitor.visitAlterByImportPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByImportTablespaceContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def IMPORT(self):
-            return self.getToken(MySqlParser.IMPORT, 0)
-        def TABLESPACE(self):
-            return self.getToken(MySqlParser.TABLESPACE, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByImportTablespace" ):
-                listener.enterAlterByImportTablespace(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByImportTablespace" ):
-                listener.exitAlterByImportTablespace(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByImportTablespace" ):
-                return visitor.visitAlterByImportTablespace(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDropPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DROP(self):
-            return self.getToken(MySqlParser.DROP, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDropPartition" ):
-                listener.enterAlterByDropPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDropPartition" ):
-                listener.exitAlterByDropPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDropPartition" ):
-                return visitor.visitAlterByDropPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByRebuildPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REBUILD(self):
-            return self.getToken(MySqlParser.REBUILD, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByRebuildPartition" ):
-                listener.enterAlterByRebuildPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByRebuildPartition" ):
-                listener.exitAlterByRebuildPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByRebuildPartition" ):
-                return visitor.visitAlterByRebuildPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByCheckPartitionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def CHECK(self):
-            return self.getToken(MySqlParser.CHECK, 0)
-        def PARTITION(self):
-            return self.getToken(MySqlParser.PARTITION, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByCheckPartition" ):
-                listener.enterAlterByCheckPartition(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByCheckPartition" ):
-                listener.exitAlterByCheckPartition(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByCheckPartition" ):
-                return visitor.visitAlterByCheckPartition(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddForeignKeyContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.name = None # UidContext
-            self.indexName = None # UidContext
-            self.copyFrom(ctx)
-
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def FOREIGN(self):
-            return self.getToken(MySqlParser.FOREIGN, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
-
-        def referenceDefinition(self):
-            return self.getTypedRuleContext(MySqlParser.ReferenceDefinitionContext,0)
-
-        def CONSTRAINT(self):
-            return self.getToken(MySqlParser.CONSTRAINT, 0)
-        def uid(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UidContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UidContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddForeignKey" ):
-                listener.enterAlterByAddForeignKey(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddForeignKey" ):
-                listener.exitAlterByAddForeignKey(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddForeignKey" ):
-                return visitor.visitAlterByAddForeignKey(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByAddPrimaryKeyContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.name = None # UidContext
-            self.copyFrom(ctx)
-
-        def ADD(self):
-            return self.getToken(MySqlParser.ADD, 0)
-        def PRIMARY(self):
-            return self.getToken(MySqlParser.PRIMARY, 0)
-        def KEY(self):
-            return self.getToken(MySqlParser.KEY, 0)
-        def indexColumnNames(self):
-            return self.getTypedRuleContext(MySqlParser.IndexColumnNamesContext,0)
-
-        def CONSTRAINT(self):
-            return self.getToken(MySqlParser.CONSTRAINT, 0)
-        def indexType(self):
-            return self.getTypedRuleContext(MySqlParser.IndexTypeContext,0)
-
-        def indexOption(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.IndexOptionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.IndexOptionContext,i)
-
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByAddPrimaryKey" ):
-                listener.enterAlterByAddPrimaryKey(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByAddPrimaryKey" ):
-                listener.exitAlterByAddPrimaryKey(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByAddPrimaryKey" ):
-                return visitor.visitAlterByAddPrimaryKey(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByTableOptionContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def tableOption(self):
-            return self.getTypedRuleContext(MySqlParser.TableOptionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByTableOption" ):
-                listener.enterAlterByTableOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByTableOption" ):
-                listener.exitAlterByTableOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByTableOption" ):
-                return visitor.visitAlterByTableOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDropColumnContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def DROP(self):
-            return self.getToken(MySqlParser.DROP, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def COLUMN(self):
-            return self.getToken(MySqlParser.COLUMN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDropColumn" ):
-                listener.enterAlterByDropColumn(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDropColumn" ):
-                listener.exitAlterByDropColumn(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDropColumn" ):
-                return visitor.visitAlterByDropColumn(self)
+            if hasattr( visitor, "visitAlterByAddColumn" ):
+                return visitor.visitAlterByAddColumn(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -18108,42 +18144,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAlterByOrder" ):
                 return visitor.visitAlterByOrder(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterByDefaultCharsetContext(AlterSpecificationContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterSpecificationContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def CHARACTER(self):
-            return self.getToken(MySqlParser.CHARACTER, 0)
-        def SET(self):
-            return self.getToken(MySqlParser.SET, 0)
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-        def DEFAULT(self):
-            return self.getToken(MySqlParser.DEFAULT, 0)
-        def COLLATE(self):
-            return self.getToken(MySqlParser.COLLATE, 0)
-        def collationName(self):
-            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterByDefaultCharset" ):
-                listener.enterAlterByDefaultCharset(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterByDefaultCharset" ):
-                listener.exitAlterByDefaultCharset(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterByDefaultCharset" ):
-                return visitor.visitAlterByDefaultCharset(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -21611,84 +21611,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class UnionParenthesisSelectContext(SelectStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
-            super().__init__(parser)
-            self.unionType = None # Token
-            self.copyFrom(ctx)
-
-        def queryExpressionNointo(self):
-            return self.getTypedRuleContext(MySqlParser.QueryExpressionNointoContext,0)
-
-        def unionParenthesis(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UnionParenthesisContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UnionParenthesisContext,i)
-
-        def UNION(self):
-            return self.getToken(MySqlParser.UNION, 0)
-        def queryExpression(self):
-            return self.getTypedRuleContext(MySqlParser.QueryExpressionContext,0)
-
-        def orderByClause(self):
-            return self.getTypedRuleContext(MySqlParser.OrderByClauseContext,0)
-
-        def limitClause(self):
-            return self.getTypedRuleContext(MySqlParser.LimitClauseContext,0)
-
-        def lockClause(self):
-            return self.getTypedRuleContext(MySqlParser.LockClauseContext,0)
-
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-        def DISTINCT(self):
-            return self.getToken(MySqlParser.DISTINCT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterUnionParenthesisSelect" ):
-                listener.enterUnionParenthesisSelect(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitUnionParenthesisSelect" ):
-                listener.exitUnionParenthesisSelect(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitUnionParenthesisSelect" ):
-                return visitor.visitUnionParenthesisSelect(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ParenthesisSelectContext(SelectStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def queryExpression(self):
-            return self.getTypedRuleContext(MySqlParser.QueryExpressionContext,0)
-
-        def lockClause(self):
-            return self.getTypedRuleContext(MySqlParser.LockClauseContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterParenthesisSelect" ):
-                listener.enterParenthesisSelect(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitParenthesisSelect" ):
-                listener.exitParenthesisSelect(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitParenthesisSelect" ):
-                return visitor.visitParenthesisSelect(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class UnionSelectContext(SelectStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
@@ -21742,6 +21664,56 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class UnionParenthesisSelectContext(SelectStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
+            super().__init__(parser)
+            self.unionType = None # Token
+            self.copyFrom(ctx)
+
+        def queryExpressionNointo(self):
+            return self.getTypedRuleContext(MySqlParser.QueryExpressionNointoContext,0)
+
+        def unionParenthesis(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UnionParenthesisContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UnionParenthesisContext,i)
+
+        def UNION(self):
+            return self.getToken(MySqlParser.UNION, 0)
+        def queryExpression(self):
+            return self.getTypedRuleContext(MySqlParser.QueryExpressionContext,0)
+
+        def orderByClause(self):
+            return self.getTypedRuleContext(MySqlParser.OrderByClauseContext,0)
+
+        def limitClause(self):
+            return self.getTypedRuleContext(MySqlParser.LimitClauseContext,0)
+
+        def lockClause(self):
+            return self.getTypedRuleContext(MySqlParser.LockClauseContext,0)
+
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+        def DISTINCT(self):
+            return self.getToken(MySqlParser.DISTINCT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUnionParenthesisSelect" ):
+                listener.enterUnionParenthesisSelect(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUnionParenthesisSelect" ):
+                listener.exitUnionParenthesisSelect(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUnionParenthesisSelect" ):
+                return visitor.visitUnionParenthesisSelect(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class SimpleSelectContext(SelectStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
@@ -21766,6 +21738,34 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSimpleSelect" ):
                 return visitor.visitSimpleSelect(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ParenthesisSelectContext(SelectStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def queryExpression(self):
+            return self.getTypedRuleContext(MySqlParser.QueryExpressionContext,0)
+
+        def lockClause(self):
+            return self.getTypedRuleContext(MySqlParser.LockClauseContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterParenthesisSelect" ):
+                listener.enterParenthesisSelect(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitParenthesisSelect" ):
+                listener.exitParenthesisSelect(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitParenthesisSelect" ):
+                return visitor.visitParenthesisSelect(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -23594,37 +23594,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class TableSourceBaseContext(TableSourceContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def tableSourceItem(self):
-            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
-
-        def joinPart(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.JoinPartContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.JoinPartContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableSourceBase" ):
-                listener.enterTableSourceBase(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableSourceBase" ):
-                listener.exitTableSourceBase(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableSourceBase" ):
-                return visitor.visitTableSourceBase(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class TableSourceNestedContext(TableSourceContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceContext
@@ -23652,6 +23621,37 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitTableSourceNested" ):
                 return visitor.visitTableSourceNested(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableSourceBaseContext(TableSourceContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def tableSourceItem(self):
+            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
+
+        def joinPart(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.JoinPartContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.JoinPartContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableSourceBase" ):
+                listener.enterTableSourceBase(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableSourceBase" ):
+                listener.exitTableSourceBase(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableSourceBase" ):
+                return visitor.visitTableSourceBase(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -23730,31 +23730,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class TableSourcesItemContext(TableSourceItemContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceItemContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def tableSources(self):
-            return self.getTypedRuleContext(MySqlParser.TableSourcesContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableSourcesItem" ):
-                listener.enterTableSourcesItem(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableSourcesItem" ):
-                listener.exitTableSourcesItem(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableSourcesItem" ):
-                return visitor.visitTableSourcesItem(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SubqueryTableItemContext(TableSourceItemContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceItemContext
@@ -23825,6 +23800,31 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAtomTableItem" ):
                 return visitor.visitAtomTableItem(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class TableSourcesItemContext(TableSourceItemContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.TableSourceItemContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def tableSources(self):
+            return self.getTypedRuleContext(MySqlParser.TableSourcesContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableSourcesItem" ):
+                listener.enterTableSourcesItem(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableSourcesItem" ):
+                listener.exitTableSourcesItem(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableSourcesItem" ):
+                return visitor.visitTableSourcesItem(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -24143,6 +24143,82 @@ class MySqlParser ( Parser ):
 
 
 
+    class InnerJoinContext(JoinPartContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def JOIN(self):
+            return self.getToken(MySqlParser.JOIN, 0)
+        def tableSourceItem(self):
+            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
+
+        def ON(self):
+            return self.getToken(MySqlParser.ON, 0)
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+
+        def USING(self):
+            return self.getToken(MySqlParser.USING, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+
+        def INNER(self):
+            return self.getToken(MySqlParser.INNER, 0)
+        def CROSS(self):
+            return self.getToken(MySqlParser.CROSS, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterInnerJoin" ):
+                listener.enterInnerJoin(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitInnerJoin" ):
+                listener.exitInnerJoin(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitInnerJoin" ):
+                return visitor.visitInnerJoin(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NaturalJoinContext(JoinPartContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NATURAL(self):
+            return self.getToken(MySqlParser.NATURAL, 0)
+        def JOIN(self):
+            return self.getToken(MySqlParser.JOIN, 0)
+        def tableSourceItem(self):
+            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
+
+        def LEFT(self):
+            return self.getToken(MySqlParser.LEFT, 0)
+        def RIGHT(self):
+            return self.getToken(MySqlParser.RIGHT, 0)
+        def OUTER(self):
+            return self.getToken(MySqlParser.OUTER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNaturalJoin" ):
+                listener.enterNaturalJoin(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNaturalJoin" ):
+                listener.exitNaturalJoin(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNaturalJoin" ):
+                return visitor.visitNaturalJoin(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class OuterJoinContext(JoinPartContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
@@ -24186,41 +24262,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class NaturalJoinContext(JoinPartContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def NATURAL(self):
-            return self.getToken(MySqlParser.NATURAL, 0)
-        def JOIN(self):
-            return self.getToken(MySqlParser.JOIN, 0)
-        def tableSourceItem(self):
-            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
-
-        def LEFT(self):
-            return self.getToken(MySqlParser.LEFT, 0)
-        def RIGHT(self):
-            return self.getToken(MySqlParser.RIGHT, 0)
-        def OUTER(self):
-            return self.getToken(MySqlParser.OUTER, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNaturalJoin" ):
-                listener.enterNaturalJoin(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNaturalJoin" ):
-                listener.exitNaturalJoin(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNaturalJoin" ):
-                return visitor.visitNaturalJoin(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class StraightJoinContext(JoinPartContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
@@ -24249,47 +24290,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitStraightJoin" ):
                 return visitor.visitStraightJoin(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class InnerJoinContext(JoinPartContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.JoinPartContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def JOIN(self):
-            return self.getToken(MySqlParser.JOIN, 0)
-        def tableSourceItem(self):
-            return self.getTypedRuleContext(MySqlParser.TableSourceItemContext,0)
-
-        def ON(self):
-            return self.getToken(MySqlParser.ON, 0)
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def USING(self):
-            return self.getToken(MySqlParser.USING, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
-
-        def INNER(self):
-            return self.getToken(MySqlParser.INNER, 0)
-        def CROSS(self):
-            return self.getToken(MySqlParser.CROSS, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInnerJoin" ):
-                listener.enterInnerJoin(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInnerJoin" ):
-                listener.exitInnerJoin(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInnerJoin" ):
-                return visitor.visitInnerJoin(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -25256,27 +25256,36 @@ class MySqlParser ( Parser ):
 
 
 
-    class SelectStarElementContext(SelectElementContext):
+    class SelectExpressionElementContext(SelectElementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectElementContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def fullId(self):
-            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
 
+        def LOCAL_ID(self):
+            return self.getToken(MySqlParser.LOCAL_ID, 0)
+        def VAR_ASSIGN(self):
+            return self.getToken(MySqlParser.VAR_ASSIGN, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def AS(self):
+            return self.getToken(MySqlParser.AS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelectStarElement" ):
-                listener.enterSelectStarElement(self)
+            if hasattr( listener, "enterSelectExpressionElement" ):
+                listener.enterSelectExpressionElement(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelectStarElement" ):
-                listener.exitSelectStarElement(self)
+            if hasattr( listener, "exitSelectExpressionElement" ):
+                listener.exitSelectExpressionElement(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSelectStarElement" ):
-                return visitor.visitSelectStarElement(self)
+            if hasattr( visitor, "visitSelectExpressionElement" ):
+                return visitor.visitSelectExpressionElement(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -25311,36 +25320,27 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SelectExpressionElementContext(SelectElementContext):
+    class SelectStarElementContext(SelectElementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectElementContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+        def fullId(self):
+            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
 
-        def LOCAL_ID(self):
-            return self.getToken(MySqlParser.LOCAL_ID, 0)
-        def VAR_ASSIGN(self):
-            return self.getToken(MySqlParser.VAR_ASSIGN, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def AS(self):
-            return self.getToken(MySqlParser.AS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelectExpressionElement" ):
-                listener.enterSelectExpressionElement(self)
+            if hasattr( listener, "enterSelectStarElement" ):
+                listener.enterSelectStarElement(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelectExpressionElement" ):
-                listener.exitSelectExpressionElement(self)
+            if hasattr( listener, "exitSelectStarElement" ):
+                listener.exitSelectStarElement(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSelectExpressionElement" ):
-                return visitor.visitSelectExpressionElement(self)
+            if hasattr( visitor, "visitSelectStarElement" ):
+                return visitor.visitSelectStarElement(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -25530,34 +25530,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SelectIntoDumpFileContext(SelectIntoExpressionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectIntoExpressionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def INTO(self):
-            return self.getToken(MySqlParser.INTO, 0)
-        def DUMPFILE(self):
-            return self.getToken(MySqlParser.DUMPFILE, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSelectIntoDumpFile" ):
-                listener.enterSelectIntoDumpFile(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSelectIntoDumpFile" ):
-                listener.exitSelectIntoDumpFile(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSelectIntoDumpFile" ):
-                return visitor.visitSelectIntoDumpFile(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SelectIntoTextFileContext(SelectIntoExpressionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectIntoExpressionContext
@@ -25610,6 +25582,34 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSelectIntoTextFile" ):
                 return visitor.visitSelectIntoTextFile(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SelectIntoDumpFileContext(SelectIntoExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SelectIntoExpressionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def INTO(self):
+            return self.getToken(MySqlParser.INTO, 0)
+        def DUMPFILE(self):
+            return self.getToken(MySqlParser.DUMPFILE, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSelectIntoDumpFile" ):
+                listener.enterSelectIntoDumpFile(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSelectIntoDumpFile" ):
+                listener.exitSelectIntoDumpFile(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSelectIntoDumpFile" ):
+                return visitor.visitSelectIntoDumpFile(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -28146,6 +28146,33 @@ class MySqlParser ( Parser ):
 
 
 
+    class MasterStringOptionContext(MasterOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.MasterOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def stringMasterOption(self):
+            return self.getTypedRuleContext(MySqlParser.StringMasterOptionContext,0)
+
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMasterStringOption" ):
+                listener.enterMasterStringOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMasterStringOption" ):
+                listener.exitMasterStringOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMasterStringOption" ):
+                return visitor.visitMasterStringOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class MasterRealOptionContext(MasterOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.MasterOptionContext
@@ -28172,29 +28199,28 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class MasterStringOptionContext(MasterOptionContext):
+    class MasterBoolOptionContext(MasterOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.MasterOptionContext
             super().__init__(parser)
+            self.boolVal = None # Token
             self.copyFrom(ctx)
 
-        def stringMasterOption(self):
-            return self.getTypedRuleContext(MySqlParser.StringMasterOptionContext,0)
+        def boolMasterOption(self):
+            return self.getTypedRuleContext(MySqlParser.BoolMasterOptionContext,0)
 
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMasterStringOption" ):
-                listener.enterMasterStringOption(self)
+            if hasattr( listener, "enterMasterBoolOption" ):
+                listener.enterMasterBoolOption(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMasterStringOption" ):
-                listener.exitMasterStringOption(self)
+            if hasattr( listener, "exitMasterBoolOption" ):
+                listener.exitMasterBoolOption(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMasterStringOption" ):
-                return visitor.visitMasterStringOption(self)
+            if hasattr( visitor, "visitMasterBoolOption" ):
+                return visitor.visitMasterBoolOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -28225,32 +28251,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitMasterUidListOption" ):
                 return visitor.visitMasterUidListOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class MasterBoolOptionContext(MasterOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.MasterOptionContext
-            super().__init__(parser)
-            self.boolVal = None # Token
-            self.copyFrom(ctx)
-
-        def boolMasterOption(self):
-            return self.getTypedRuleContext(MySqlParser.BoolMasterOptionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMasterBoolOption" ):
-                listener.enterMasterBoolOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMasterBoolOption" ):
-                listener.exitMasterBoolOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMasterBoolOption" ):
-                return visitor.visitMasterBoolOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -28666,29 +28666,29 @@ class MySqlParser ( Parser ):
 
 
 
-    class WildDoTableReplicationContext(ReplicationFilterContext):
+    class WildIgnoreTableReplicationContext(ReplicationFilterContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ReplicationFilterContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def REPLICATE_WILD_DO_TABLE(self):
-            return self.getToken(MySqlParser.REPLICATE_WILD_DO_TABLE, 0)
+        def REPLICATE_WILD_IGNORE_TABLE(self):
+            return self.getToken(MySqlParser.REPLICATE_WILD_IGNORE_TABLE, 0)
         def simpleStrings(self):
             return self.getTypedRuleContext(MySqlParser.SimpleStringsContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterWildDoTableReplication" ):
-                listener.enterWildDoTableReplication(self)
+            if hasattr( listener, "enterWildIgnoreTableReplication" ):
+                listener.enterWildIgnoreTableReplication(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitWildDoTableReplication" ):
-                listener.exitWildDoTableReplication(self)
+            if hasattr( listener, "exitWildIgnoreTableReplication" ):
+                listener.exitWildIgnoreTableReplication(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWildDoTableReplication" ):
-                return visitor.visitWildDoTableReplication(self)
+            if hasattr( visitor, "visitWildIgnoreTableReplication" ):
+                return visitor.visitWildIgnoreTableReplication(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -28720,56 +28720,29 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class IgnoreDbReplicationContext(ReplicationFilterContext):
+    class IgnoreTableReplicationContext(ReplicationFilterContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ReplicationFilterContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def REPLICATE_IGNORE_DB(self):
-            return self.getToken(MySqlParser.REPLICATE_IGNORE_DB, 0)
-        def uidList(self):
-            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
+        def REPLICATE_IGNORE_TABLE(self):
+            return self.getToken(MySqlParser.REPLICATE_IGNORE_TABLE, 0)
+        def tables(self):
+            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIgnoreDbReplication" ):
-                listener.enterIgnoreDbReplication(self)
+            if hasattr( listener, "enterIgnoreTableReplication" ):
+                listener.enterIgnoreTableReplication(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIgnoreDbReplication" ):
-                listener.exitIgnoreDbReplication(self)
+            if hasattr( listener, "exitIgnoreTableReplication" ):
+                listener.exitIgnoreTableReplication(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIgnoreDbReplication" ):
-                return visitor.visitIgnoreDbReplication(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class WildIgnoreTableReplicationContext(ReplicationFilterContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ReplicationFilterContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REPLICATE_WILD_IGNORE_TABLE(self):
-            return self.getToken(MySqlParser.REPLICATE_WILD_IGNORE_TABLE, 0)
-        def simpleStrings(self):
-            return self.getTypedRuleContext(MySqlParser.SimpleStringsContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterWildIgnoreTableReplication" ):
-                listener.enterWildIgnoreTableReplication(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitWildIgnoreTableReplication" ):
-                listener.exitWildIgnoreTableReplication(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWildIgnoreTableReplication" ):
-                return visitor.visitWildIgnoreTableReplication(self)
+            if hasattr( visitor, "visitIgnoreTableReplication" ):
+                return visitor.visitIgnoreTableReplication(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -28831,29 +28804,56 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class IgnoreTableReplicationContext(ReplicationFilterContext):
+    class IgnoreDbReplicationContext(ReplicationFilterContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ReplicationFilterContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def REPLICATE_IGNORE_TABLE(self):
-            return self.getToken(MySqlParser.REPLICATE_IGNORE_TABLE, 0)
-        def tables(self):
-            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
+        def REPLICATE_IGNORE_DB(self):
+            return self.getToken(MySqlParser.REPLICATE_IGNORE_DB, 0)
+        def uidList(self):
+            return self.getTypedRuleContext(MySqlParser.UidListContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIgnoreTableReplication" ):
-                listener.enterIgnoreTableReplication(self)
+            if hasattr( listener, "enterIgnoreDbReplication" ):
+                listener.enterIgnoreDbReplication(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIgnoreTableReplication" ):
-                listener.exitIgnoreTableReplication(self)
+            if hasattr( listener, "exitIgnoreDbReplication" ):
+                listener.exitIgnoreDbReplication(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIgnoreTableReplication" ):
-                return visitor.visitIgnoreTableReplication(self)
+            if hasattr( visitor, "visitIgnoreDbReplication" ):
+                return visitor.visitIgnoreDbReplication(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class WildDoTableReplicationContext(ReplicationFilterContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ReplicationFilterContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REPLICATE_WILD_DO_TABLE(self):
+            return self.getToken(MySqlParser.REPLICATE_WILD_DO_TABLE, 0)
+        def simpleStrings(self):
+            return self.getTypedRuleContext(MySqlParser.SimpleStringsContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterWildDoTableReplication" ):
+                listener.enterWildDoTableReplication(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitWildDoTableReplication" ):
+                listener.exitWildDoTableReplication(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWildDoTableReplication" ):
+                return visitor.visitWildDoTableReplication(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -29118,37 +29118,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class MasterLogUntilOptionContext(UntilOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UntilOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def MASTER_LOG_FILE(self):
-            return self.getToken(MySqlParser.MASTER_LOG_FILE, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-        def MASTER_LOG_POS(self):
-            return self.getToken(MySqlParser.MASTER_LOG_POS, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMasterLogUntilOption" ):
-                listener.enterMasterLogUntilOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMasterLogUntilOption" ):
-                listener.exitMasterLogUntilOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMasterLogUntilOption" ):
-                return visitor.visitMasterLogUntilOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class GtidsUntilOptionContext(UntilOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UntilOptionContext
@@ -29199,6 +29168,37 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSqlGapsUntilOption" ):
                 return visitor.visitSqlGapsUntilOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class MasterLogUntilOptionContext(UntilOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UntilOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def MASTER_LOG_FILE(self):
+            return self.getToken(MySqlParser.MASTER_LOG_FILE, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+        def MASTER_LOG_POS(self):
+            return self.getToken(MySqlParser.MASTER_LOG_POS, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMasterLogUntilOption" ):
+                listener.enterMasterLogUntilOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMasterLogUntilOption" ):
+                listener.exitMasterLogUntilOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMasterLogUntilOption" ):
+                return visitor.visitMasterLogUntilOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -29329,60 +29329,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class UserConnectionOptionContext(ConnectionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
-            super().__init__(parser)
-            self.conOptUser = None # Token
-            self.copyFrom(ctx)
-
-        def USER(self):
-            return self.getToken(MySqlParser.USER, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterUserConnectionOption" ):
-                listener.enterUserConnectionOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitUserConnectionOption" ):
-                listener.exitUserConnectionOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitUserConnectionOption" ):
-                return visitor.visitUserConnectionOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class PasswordConnectionOptionContext(ConnectionOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
-            super().__init__(parser)
-            self.conOptPassword = None # Token
-            self.copyFrom(ctx)
-
-        def PASSWORD(self):
-            return self.getToken(MySqlParser.PASSWORD, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPasswordConnectionOption" ):
-                listener.enterPasswordConnectionOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPasswordConnectionOption" ):
-                listener.exitPasswordConnectionOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPasswordConnectionOption" ):
-                return visitor.visitPasswordConnectionOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class PluginDirConnectionOptionContext(ConnectionOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
@@ -29410,6 +29356,33 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class UserConnectionOptionContext(ConnectionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
+            super().__init__(parser)
+            self.conOptUser = None # Token
+            self.copyFrom(ctx)
+
+        def USER(self):
+            return self.getToken(MySqlParser.USER, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterUserConnectionOption" ):
+                listener.enterUserConnectionOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitUserConnectionOption" ):
+                listener.exitUserConnectionOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitUserConnectionOption" ):
+                return visitor.visitUserConnectionOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class DefaultAuthConnectionOptionContext(ConnectionOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
@@ -29433,6 +29406,33 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitDefaultAuthConnectionOption" ):
                 return visitor.visitDefaultAuthConnectionOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class PasswordConnectionOptionContext(ConnectionOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ConnectionOptionContext
+            super().__init__(parser)
+            self.conOptPassword = None # Token
+            self.copyFrom(ctx)
+
+        def PASSWORD(self):
+            return self.getToken(MySqlParser.PASSWORD, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterPasswordConnectionOption" ):
+                listener.enterPasswordConnectionOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitPasswordConnectionOption" ):
+                listener.exitPasswordConnectionOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitPasswordConnectionOption" ):
+                return visitor.visitPasswordConnectionOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -31210,33 +31210,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class OpenCursorContext(CursorStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CursorStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def OPEN(self):
-            return self.getToken(MySqlParser.OPEN, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterOpenCursor" ):
-                listener.enterOpenCursor(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitOpenCursor" ):
-                listener.exitOpenCursor(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitOpenCursor" ):
-                return visitor.visitOpenCursor(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class CloseCursorContext(CursorStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CursorStatementContext
@@ -31260,6 +31233,33 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitCloseCursor" ):
                 return visitor.visitCloseCursor(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class OpenCursorContext(CursorStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.CursorStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def OPEN(self):
+            return self.getToken(MySqlParser.OPEN, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterOpenCursor" ):
+                listener.enterOpenCursor(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitOpenCursor" ):
+                listener.exitOpenCursor(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitOpenCursor" ):
+                return visitor.visitOpenCursor(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -31723,27 +31723,77 @@ class MySqlParser ( Parser ):
 
 
 
-    class HandlerConditionNameContext(HandlerConditionValueContext):
+    class HandlerConditionWarningContext(HandlerConditionValueContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+        def SQLWARNING(self):
+            return self.getToken(MySqlParser.SQLWARNING, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterHandlerConditionWarning" ):
+                listener.enterHandlerConditionWarning(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitHandlerConditionWarning" ):
+                listener.exitHandlerConditionWarning(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitHandlerConditionWarning" ):
+                return visitor.visitHandlerConditionWarning(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class HandlerConditionCodeContext(HandlerConditionValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterHandlerConditionName" ):
-                listener.enterHandlerConditionName(self)
+            if hasattr( listener, "enterHandlerConditionCode" ):
+                listener.enterHandlerConditionCode(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitHandlerConditionName" ):
-                listener.exitHandlerConditionName(self)
+            if hasattr( listener, "exitHandlerConditionCode" ):
+                listener.exitHandlerConditionCode(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHandlerConditionName" ):
-                return visitor.visitHandlerConditionName(self)
+            if hasattr( visitor, "visitHandlerConditionCode" ):
+                return visitor.visitHandlerConditionCode(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class HandlerConditionNotfoundContext(HandlerConditionValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NOT(self):
+            return self.getToken(MySqlParser.NOT, 0)
+        def FOUND(self):
+            return self.getToken(MySqlParser.FOUND, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterHandlerConditionNotfound" ):
+                listener.enterHandlerConditionNotfound(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitHandlerConditionNotfound" ):
+                listener.exitHandlerConditionNotfound(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitHandlerConditionNotfound" ):
+                return visitor.visitHandlerConditionNotfound(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -31776,30 +31826,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class HandlerConditionWarningContext(HandlerConditionValueContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SQLWARNING(self):
-            return self.getToken(MySqlParser.SQLWARNING, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterHandlerConditionWarning" ):
-                listener.enterHandlerConditionWarning(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitHandlerConditionWarning" ):
-                listener.exitHandlerConditionWarning(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHandlerConditionWarning" ):
-                return visitor.visitHandlerConditionWarning(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class HandlerConditionExceptionContext(HandlerConditionValueContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
@@ -31824,53 +31850,27 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class HandlerConditionNotfoundContext(HandlerConditionValueContext):
+    class HandlerConditionNameContext(HandlerConditionValueContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def NOT(self):
-            return self.getToken(MySqlParser.NOT, 0)
-        def FOUND(self):
-            return self.getToken(MySqlParser.FOUND, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterHandlerConditionNotfound" ):
-                listener.enterHandlerConditionNotfound(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitHandlerConditionNotfound" ):
-                listener.exitHandlerConditionNotfound(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHandlerConditionNotfound" ):
-                return visitor.visitHandlerConditionNotfound(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class HandlerConditionCodeContext(HandlerConditionValueContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.HandlerConditionValueContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterHandlerConditionCode" ):
-                listener.enterHandlerConditionCode(self)
+            if hasattr( listener, "enterHandlerConditionName" ):
+                listener.enterHandlerConditionName(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitHandlerConditionCode" ):
-                listener.exitHandlerConditionCode(self)
+            if hasattr( listener, "exitHandlerConditionName" ):
+                listener.exitHandlerConditionName(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHandlerConditionCode" ):
-                return visitor.visitHandlerConditionCode(self)
+            if hasattr( visitor, "visitHandlerConditionName" ):
+                return visitor.visitHandlerConditionName(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -32195,6 +32195,38 @@ class MySqlParser ( Parser ):
 
 
 
+    class AlterUserMysqlV56Context(AlterUserContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterUserContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def ALTER(self):
+            return self.getToken(MySqlParser.ALTER, 0)
+        def USER(self):
+            return self.getToken(MySqlParser.USER, 0)
+        def userSpecification(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UserSpecificationContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UserSpecificationContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAlterUserMysqlV56" ):
+                listener.enterAlterUserMysqlV56(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAlterUserMysqlV56" ):
+                listener.exitAlterUserMysqlV56(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAlterUserMysqlV56" ):
+                return visitor.visitAlterUserMysqlV56(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class AlterUserMysqlV57Context(AlterUserContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterUserContext
@@ -32262,38 +32294,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitAlterUserMysqlV57" ):
                 return visitor.visitAlterUserMysqlV57(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AlterUserMysqlV56Context(AlterUserContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.AlterUserContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ALTER(self):
-            return self.getToken(MySqlParser.ALTER, 0)
-        def USER(self):
-            return self.getToken(MySqlParser.USER, 0)
-        def userSpecification(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UserSpecificationContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UserSpecificationContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAlterUserMysqlV56" ):
-                listener.enterAlterUserMysqlV56(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAlterUserMysqlV56" ):
-                listener.exitAlterUserMysqlV56(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAlterUserMysqlV56" ):
-                return visitor.visitAlterUserMysqlV56(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -33248,46 +33248,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class ShortRevokeContext(RevokeStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RevokeStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def REVOKE(self):
-            return self.getToken(MySqlParser.REVOKE, 0)
-        def ALL(self):
-            return self.getToken(MySqlParser.ALL, 0)
-        def GRANT(self):
-            return self.getToken(MySqlParser.GRANT, 0)
-        def OPTION(self):
-            return self.getToken(MySqlParser.OPTION, 0)
-        def FROM(self):
-            return self.getToken(MySqlParser.FROM, 0)
-        def userName(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.UserNameContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.UserNameContext,i)
-
-        def PRIVILEGES(self):
-            return self.getToken(MySqlParser.PRIVILEGES, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShortRevoke" ):
-                listener.enterShortRevoke(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShortRevoke" ):
-                listener.exitShortRevoke(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShortRevoke" ):
-                return visitor.visitShortRevoke(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class DetailRevokeContext(RevokeStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RevokeStatementContext
@@ -33334,6 +33294,46 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitDetailRevoke" ):
                 return visitor.visitDetailRevoke(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShortRevokeContext(RevokeStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.RevokeStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def REVOKE(self):
+            return self.getToken(MySqlParser.REVOKE, 0)
+        def ALL(self):
+            return self.getToken(MySqlParser.ALL, 0)
+        def GRANT(self):
+            return self.getToken(MySqlParser.GRANT, 0)
+        def OPTION(self):
+            return self.getToken(MySqlParser.OPTION, 0)
+        def FROM(self):
+            return self.getToken(MySqlParser.FROM, 0)
+        def userName(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.UserNameContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.UserNameContext,i)
+
+        def PRIVILEGES(self):
+            return self.getToken(MySqlParser.PRIVILEGES, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShortRevoke" ):
+                listener.enterShortRevoke(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShortRevoke" ):
+                listener.exitShortRevoke(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShortRevoke" ):
+                return visitor.visitShortRevoke(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -33699,6 +33699,31 @@ class MySqlParser ( Parser ):
 
 
 
+    class SimpleAuthOptionContext(UserAuthOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UserAuthOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def userName(self):
+            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSimpleAuthOption" ):
+                listener.enterSimpleAuthOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSimpleAuthOption" ):
+                listener.exitSimpleAuthOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleAuthOption" ):
+                return visitor.visitSimpleAuthOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class PasswordAuthOptionContext(UserAuthOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UserAuthOptionContext
@@ -33729,42 +33754,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitPasswordAuthOption" ):
                 return visitor.visitPasswordAuthOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class HashAuthOptionContext(UserAuthOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UserAuthOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def userName(self):
-            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
-
-        def IDENTIFIED(self):
-            return self.getToken(MySqlParser.IDENTIFIED, 0)
-        def WITH(self):
-            return self.getToken(MySqlParser.WITH, 0)
-        def authPlugin(self):
-            return self.getTypedRuleContext(MySqlParser.AuthPluginContext,0)
-
-        def AS(self):
-            return self.getToken(MySqlParser.AS, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterHashAuthOption" ):
-                listener.enterHashAuthOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitHashAuthOption" ):
-                listener.exitHashAuthOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitHashAuthOption" ):
-                return visitor.visitHashAuthOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -33805,7 +33794,7 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SimpleAuthOptionContext(UserAuthOptionContext):
+    class HashAuthOptionContext(UserAuthOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.UserAuthOptionContext
             super().__init__(parser)
@@ -33814,18 +33803,29 @@ class MySqlParser ( Parser ):
         def userName(self):
             return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
 
+        def IDENTIFIED(self):
+            return self.getToken(MySqlParser.IDENTIFIED, 0)
+        def WITH(self):
+            return self.getToken(MySqlParser.WITH, 0)
+        def authPlugin(self):
+            return self.getTypedRuleContext(MySqlParser.AuthPluginContext,0)
+
+        def AS(self):
+            return self.getToken(MySqlParser.AS, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSimpleAuthOption" ):
-                listener.enterSimpleAuthOption(self)
+            if hasattr( listener, "enterHashAuthOption" ):
+                listener.enterHashAuthOption(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSimpleAuthOption" ):
-                listener.exitSimpleAuthOption(self)
+            if hasattr( listener, "exitHashAuthOption" ):
+                listener.exitHashAuthOption(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSimpleAuthOption" ):
-                return visitor.visitSimpleAuthOption(self)
+            if hasattr( visitor, "visitHashAuthOption" ):
+                return visitor.visitHashAuthOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -34664,6 +34664,31 @@ class MySqlParser ( Parser ):
 
 
 
+    class DefiniteSchemaPrivLevelContext(PrivilegeLevelContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PrivilegeLevelContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDefiniteSchemaPrivLevel" ):
+                listener.enterDefiniteSchemaPrivLevel(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDefiniteSchemaPrivLevel" ):
+                listener.exitDefiniteSchemaPrivLevel(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDefiniteSchemaPrivLevel" ):
+                return visitor.visitDefiniteSchemaPrivLevel(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class DefiniteFullTablePrivLevelContext(PrivilegeLevelContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PrivilegeLevelContext
@@ -34688,6 +34713,28 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitDefiniteFullTablePrivLevel" ):
                 return visitor.visitDefiniteFullTablePrivLevel(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class GlobalPrivLevelContext(PrivilegeLevelContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PrivilegeLevelContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGlobalPrivLevel" ):
+                listener.enterGlobalPrivLevel(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGlobalPrivLevel" ):
+                listener.exitGlobalPrivLevel(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGlobalPrivLevel" ):
+                return visitor.visitGlobalPrivLevel(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -34735,53 +34782,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitCurrentSchemaPriviLevel" ):
                 return visitor.visitCurrentSchemaPriviLevel(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class GlobalPrivLevelContext(PrivilegeLevelContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PrivilegeLevelContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGlobalPrivLevel" ):
-                listener.enterGlobalPrivLevel(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGlobalPrivLevel" ):
-                listener.exitGlobalPrivLevel(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGlobalPrivLevel" ):
-                return visitor.visitGlobalPrivLevel(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class DefiniteSchemaPrivLevelContext(PrivilegeLevelContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PrivilegeLevelContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDefiniteSchemaPrivLevel" ):
-                listener.enterDefiniteSchemaPrivLevel(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDefiniteSchemaPrivLevel" ):
-                listener.exitDefiniteSchemaPrivLevel(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDefiniteSchemaPrivLevel" ):
-                return visitor.visitDefiniteSchemaPrivLevel(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -35668,31 +35668,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class SetAutocommitContext(SetStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def setAutocommitStatement(self):
-            return self.getTypedRuleContext(MySqlParser.SetAutocommitStatementContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSetAutocommit" ):
-                listener.enterSetAutocommit(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSetAutocommit" ):
-                listener.exitSetAutocommit(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSetAutocommit" ):
-                return visitor.visitSetAutocommit(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SetTransactionContext(SetStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
@@ -35754,42 +35729,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SetVariableContext(SetStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SET(self):
-            return self.getToken(MySqlParser.SET, 0)
-        def variableClause(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.VariableClauseContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.VariableClauseContext,i)
-
-        def expression(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSetVariable" ):
-                listener.enterSetVariable(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSetVariable" ):
-                listener.exitSetVariable(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSetVariable" ):
-                return visitor.visitSetVariable(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SetNamesContext(SetStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
@@ -35847,6 +35786,67 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSetPassword" ):
                 return visitor.visitSetPassword(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SetAutocommitContext(SetStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def setAutocommitStatement(self):
+            return self.getTypedRuleContext(MySqlParser.SetAutocommitStatementContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSetAutocommit" ):
+                listener.enterSetAutocommit(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSetAutocommit" ):
+                listener.exitSetAutocommit(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSetAutocommit" ):
+                return visitor.visitSetAutocommit(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class SetVariableContext(SetStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SetStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SET(self):
+            return self.getToken(MySqlParser.SET, 0)
+        def variableClause(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.VariableClauseContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.VariableClauseContext,i)
+
+        def expression(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSetVariable" ):
+                listener.enterSetVariable(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSetVariable" ):
+                listener.exitSetVariable(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSetVariable" ):
+                return visitor.visitSetVariable(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -36006,7 +36006,46 @@ class MySqlParser ( Parser ):
 
 
 
-    class ShowObjectFilterContext(ShowStatementContext):
+    class ShowOpenTablesContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.schemaFormat = None # Token
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def OPEN(self):
+            return self.getToken(MySqlParser.OPEN, 0)
+        def TABLES(self):
+            return self.getToken(MySqlParser.TABLES, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def showFilter(self):
+            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
+
+        def FROM(self):
+            return self.getToken(MySqlParser.FROM, 0)
+        def IN(self):
+            return self.getToken(MySqlParser.IN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowOpenTables" ):
+                listener.enterShowOpenTables(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowOpenTables" ):
+                listener.exitShowOpenTables(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowOpenTables" ):
+                return visitor.visitShowOpenTables(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowGlobalInfoContext(ShowStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
             super().__init__(parser)
@@ -36014,24 +36053,133 @@ class MySqlParser ( Parser ):
 
         def SHOW(self):
             return self.getToken(MySqlParser.SHOW, 0)
-        def showCommonEntity(self):
-            return self.getTypedRuleContext(MySqlParser.ShowCommonEntityContext,0)
-
-        def showFilter(self):
-            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
+        def showGlobalInfoClause(self):
+            return self.getTypedRuleContext(MySqlParser.ShowGlobalInfoClauseContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowObjectFilter" ):
-                listener.enterShowObjectFilter(self)
+            if hasattr( listener, "enterShowGlobalInfo" ):
+                listener.enterShowGlobalInfo(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowObjectFilter" ):
-                listener.exitShowObjectFilter(self)
+            if hasattr( listener, "exitShowGlobalInfo" ):
+                listener.exitShowGlobalInfo(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowObjectFilter" ):
-                return visitor.visitShowObjectFilter(self)
+            if hasattr( visitor, "visitShowGlobalInfo" ):
+                return visitor.visitShowGlobalInfo(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowCreateFullIdObjectContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.namedEntity = None # Token
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def CREATE(self):
+            return self.getToken(MySqlParser.CREATE, 0)
+        def fullId(self):
+            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
+
+        def EVENT(self):
+            return self.getToken(MySqlParser.EVENT, 0)
+        def FUNCTION(self):
+            return self.getToken(MySqlParser.FUNCTION, 0)
+        def PROCEDURE(self):
+            return self.getToken(MySqlParser.PROCEDURE, 0)
+        def TABLE(self):
+            return self.getToken(MySqlParser.TABLE, 0)
+        def TRIGGER(self):
+            return self.getToken(MySqlParser.TRIGGER, 0)
+        def VIEW(self):
+            return self.getToken(MySqlParser.VIEW, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowCreateFullIdObject" ):
+                listener.enterShowCreateFullIdObject(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowCreateFullIdObject" ):
+                listener.exitShowCreateFullIdObject(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowCreateFullIdObject" ):
+                return visitor.visitShowCreateFullIdObject(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowCreateUserContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def CREATE(self):
+            return self.getToken(MySqlParser.CREATE, 0)
+        def USER(self):
+            return self.getToken(MySqlParser.USER, 0)
+        def userName(self):
+            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowCreateUser" ):
+                listener.enterShowCreateUser(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowCreateUser" ):
+                listener.exitShowCreateUser(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowCreateUser" ):
+                return visitor.visitShowCreateUser(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowErrorsContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.errorFormat = None # Token
+            self.offset = None # DecimalLiteralContext
+            self.rowCount = None # DecimalLiteralContext
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def ERRORS(self):
+            return self.getToken(MySqlParser.ERRORS, 0)
+        def WARNINGS(self):
+            return self.getToken(MySqlParser.WARNINGS, 0)
+        def LIMIT(self):
+            return self.getToken(MySqlParser.LIMIT, 0)
+        def decimalLiteral(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowErrors" ):
+                listener.enterShowErrors(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowErrors" ):
+                listener.exitShowErrors(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowErrors" ):
+                return visitor.visitShowErrors(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -36067,7 +36215,7 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ShowGrantsContext(ShowStatementContext):
+    class ShowObjectFilterContext(ShowStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
             super().__init__(parser)
@@ -36075,74 +36223,133 @@ class MySqlParser ( Parser ):
 
         def SHOW(self):
             return self.getToken(MySqlParser.SHOW, 0)
-        def GRANTS(self):
-            return self.getToken(MySqlParser.GRANTS, 0)
-        def FOR(self):
-            return self.getToken(MySqlParser.FOR, 0)
-        def userName(self):
-            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
+        def showCommonEntity(self):
+            return self.getTypedRuleContext(MySqlParser.ShowCommonEntityContext,0)
+
+        def showFilter(self):
+            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowGrants" ):
-                listener.enterShowGrants(self)
+            if hasattr( listener, "enterShowObjectFilter" ):
+                listener.enterShowObjectFilter(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowGrants" ):
-                listener.exitShowGrants(self)
+            if hasattr( listener, "exitShowObjectFilter" ):
+                listener.exitShowObjectFilter(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowGrants" ):
-                return visitor.visitShowGrants(self)
+            if hasattr( visitor, "visitShowObjectFilter" ):
+                return visitor.visitShowObjectFilter(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class ShowLogEventsContext(ShowStatementContext):
+    class ShowCreateDbContext(ShowStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
             super().__init__(parser)
-            self.logFormat = None # Token
-            self.filename = None # Token
-            self.fromPosition = None # DecimalLiteralContext
-            self.offset = None # DecimalLiteralContext
-            self.rowCount = None # DecimalLiteralContext
+            self.schemaFormat = None # Token
             self.copyFrom(ctx)
 
         def SHOW(self):
             return self.getToken(MySqlParser.SHOW, 0)
-        def EVENTS(self):
-            return self.getToken(MySqlParser.EVENTS, 0)
-        def BINLOG(self):
-            return self.getToken(MySqlParser.BINLOG, 0)
-        def RELAYLOG(self):
-            return self.getToken(MySqlParser.RELAYLOG, 0)
-        def IN(self):
-            return self.getToken(MySqlParser.IN, 0)
-        def FROM(self):
-            return self.getToken(MySqlParser.FROM, 0)
-        def LIMIT(self):
-            return self.getToken(MySqlParser.LIMIT, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-        def decimalLiteral(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
+        def CREATE(self):
+            return self.getToken(MySqlParser.CREATE, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def DATABASE(self):
+            return self.getToken(MySqlParser.DATABASE, 0)
+        def SCHEMA(self):
+            return self.getToken(MySqlParser.SCHEMA, 0)
+        def ifNotExists(self):
+            return self.getTypedRuleContext(MySqlParser.IfNotExistsContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowLogEvents" ):
-                listener.enterShowLogEvents(self)
+            if hasattr( listener, "enterShowCreateDb" ):
+                listener.enterShowCreateDb(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowLogEvents" ):
-                listener.exitShowLogEvents(self)
+            if hasattr( listener, "exitShowCreateDb" ):
+                listener.exitShowCreateDb(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowLogEvents" ):
-                return visitor.visitShowLogEvents(self)
+            if hasattr( visitor, "visitShowCreateDb" ):
+                return visitor.visitShowCreateDb(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowEngineContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.engineOption = None # Token
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def ENGINE(self):
+            return self.getToken(MySqlParser.ENGINE, 0)
+        def engineName(self):
+            return self.getTypedRuleContext(MySqlParser.EngineNameContext,0)
+
+        def STATUS(self):
+            return self.getToken(MySqlParser.STATUS, 0)
+        def MUTEX(self):
+            return self.getToken(MySqlParser.MUTEX, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowEngine" ):
+                listener.enterShowEngine(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowEngine" ):
+                listener.exitShowEngine(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowEngine" ):
+                return visitor.visitShowEngine(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowSchemaFilterContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.schemaFormat = None # Token
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def showSchemaEntity(self):
+            return self.getTypedRuleContext(MySqlParser.ShowSchemaEntityContext,0)
+
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+        def showFilter(self):
+            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
+
+        def FROM(self):
+            return self.getToken(MySqlParser.FROM, 0)
+        def IN(self):
+            return self.getToken(MySqlParser.IN, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowSchemaFilter" ):
+                listener.enterShowSchemaFilter(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowSchemaFilter" ):
+                listener.exitShowSchemaFilter(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowSchemaFilter" ):
+                return visitor.visitShowSchemaFilter(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -36201,7 +36408,87 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ShowGlobalInfoContext(ShowStatementContext):
+    class ShowLogEventsContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.logFormat = None # Token
+            self.filename = None # Token
+            self.fromPosition = None # DecimalLiteralContext
+            self.offset = None # DecimalLiteralContext
+            self.rowCount = None # DecimalLiteralContext
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def EVENTS(self):
+            return self.getToken(MySqlParser.EVENTS, 0)
+        def BINLOG(self):
+            return self.getToken(MySqlParser.BINLOG, 0)
+        def RELAYLOG(self):
+            return self.getToken(MySqlParser.RELAYLOG, 0)
+        def IN(self):
+            return self.getToken(MySqlParser.IN, 0)
+        def FROM(self):
+            return self.getToken(MySqlParser.FROM, 0)
+        def LIMIT(self):
+            return self.getToken(MySqlParser.LIMIT, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+        def decimalLiteral(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowLogEvents" ):
+                listener.enterShowLogEvents(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowLogEvents" ):
+                listener.exitShowLogEvents(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowLogEvents" ):
+                return visitor.visitShowLogEvents(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowMasterLogsContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.logFormat = None # Token
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def LOGS(self):
+            return self.getToken(MySqlParser.LOGS, 0)
+        def BINARY(self):
+            return self.getToken(MySqlParser.BINARY, 0)
+        def MASTER(self):
+            return self.getToken(MySqlParser.MASTER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowMasterLogs" ):
+                listener.enterShowMasterLogs(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowMasterLogs" ):
+                listener.exitShowMasterLogs(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowMasterLogs" ):
+                return visitor.visitShowMasterLogs(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowGrantsContext(ShowStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
             super().__init__(parser)
@@ -36209,21 +36496,59 @@ class MySqlParser ( Parser ):
 
         def SHOW(self):
             return self.getToken(MySqlParser.SHOW, 0)
-        def showGlobalInfoClause(self):
-            return self.getTypedRuleContext(MySqlParser.ShowGlobalInfoClauseContext,0)
+        def GRANTS(self):
+            return self.getToken(MySqlParser.GRANTS, 0)
+        def FOR(self):
+            return self.getToken(MySqlParser.FOR, 0)
+        def userName(self):
+            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowGlobalInfo" ):
-                listener.enterShowGlobalInfo(self)
+            if hasattr( listener, "enterShowGrants" ):
+                listener.enterShowGrants(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowGlobalInfo" ):
-                listener.exitShowGlobalInfo(self)
+            if hasattr( listener, "exitShowGrants" ):
+                listener.exitShowGrants(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowGlobalInfo" ):
-                return visitor.visitShowGlobalInfo(self)
+            if hasattr( visitor, "visitShowGrants" ):
+                return visitor.visitShowGrants(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ShowSlaveStatusContext(ShowStatementContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def SHOW(self):
+            return self.getToken(MySqlParser.SHOW, 0)
+        def SLAVE(self):
+            return self.getToken(MySqlParser.SLAVE, 0)
+        def STATUS(self):
+            return self.getToken(MySqlParser.STATUS, 0)
+        def FOR(self):
+            return self.getToken(MySqlParser.FOR, 0)
+        def CHANNEL(self):
+            return self.getToken(MySqlParser.CHANNEL, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterShowSlaveStatus" ):
+                listener.enterShowSlaveStatus(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitShowSlaveStatus" ):
+                listener.exitShowSlaveStatus(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitShowSlaveStatus" ):
+                return visitor.visitShowSlaveStatus(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -36262,33 +36587,49 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ShowMasterLogsContext(ShowStatementContext):
+    class ShowProfileContext(ShowStatementContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
             super().__init__(parser)
-            self.logFormat = None # Token
+            self.queryCount = None # DecimalLiteralContext
+            self.offset = None # DecimalLiteralContext
+            self.rowCount = None # DecimalLiteralContext
             self.copyFrom(ctx)
 
         def SHOW(self):
             return self.getToken(MySqlParser.SHOW, 0)
-        def LOGS(self):
-            return self.getToken(MySqlParser.LOGS, 0)
-        def BINARY(self):
-            return self.getToken(MySqlParser.BINARY, 0)
-        def MASTER(self):
-            return self.getToken(MySqlParser.MASTER, 0)
+        def PROFILE(self):
+            return self.getToken(MySqlParser.PROFILE, 0)
+        def showProfileType(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.ShowProfileTypeContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.ShowProfileTypeContext,i)
+
+        def LIMIT(self):
+            return self.getToken(MySqlParser.LIMIT, 0)
+        def FOR(self):
+            return self.getToken(MySqlParser.FOR, 0)
+        def QUERY(self):
+            return self.getToken(MySqlParser.QUERY, 0)
+        def decimalLiteral(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
+
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowMasterLogs" ):
-                listener.enterShowMasterLogs(self)
+            if hasattr( listener, "enterShowProfile" ):
+                listener.enterShowProfile(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowMasterLogs" ):
-                listener.exitShowMasterLogs(self)
+            if hasattr( listener, "exitShowProfile" ):
+                listener.exitShowProfile(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowMasterLogs" ):
-                return visitor.visitShowMasterLogs(self)
+            if hasattr( visitor, "visitShowProfile" ):
+                return visitor.visitShowProfile(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -36341,347 +36682,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitShowColumns" ):
                 return visitor.visitShowColumns(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowCreateFullIdObjectContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.namedEntity = None # Token
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def CREATE(self):
-            return self.getToken(MySqlParser.CREATE, 0)
-        def fullId(self):
-            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
-
-        def EVENT(self):
-            return self.getToken(MySqlParser.EVENT, 0)
-        def FUNCTION(self):
-            return self.getToken(MySqlParser.FUNCTION, 0)
-        def PROCEDURE(self):
-            return self.getToken(MySqlParser.PROCEDURE, 0)
-        def TABLE(self):
-            return self.getToken(MySqlParser.TABLE, 0)
-        def TRIGGER(self):
-            return self.getToken(MySqlParser.TRIGGER, 0)
-        def VIEW(self):
-            return self.getToken(MySqlParser.VIEW, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowCreateFullIdObject" ):
-                listener.enterShowCreateFullIdObject(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowCreateFullIdObject" ):
-                listener.exitShowCreateFullIdObject(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowCreateFullIdObject" ):
-                return visitor.visitShowCreateFullIdObject(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowSchemaFilterContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.schemaFormat = None # Token
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def showSchemaEntity(self):
-            return self.getTypedRuleContext(MySqlParser.ShowSchemaEntityContext,0)
-
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def showFilter(self):
-            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
-
-        def FROM(self):
-            return self.getToken(MySqlParser.FROM, 0)
-        def IN(self):
-            return self.getToken(MySqlParser.IN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowSchemaFilter" ):
-                listener.enterShowSchemaFilter(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowSchemaFilter" ):
-                listener.exitShowSchemaFilter(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowSchemaFilter" ):
-                return visitor.visitShowSchemaFilter(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowProfileContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.queryCount = None # DecimalLiteralContext
-            self.offset = None # DecimalLiteralContext
-            self.rowCount = None # DecimalLiteralContext
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def PROFILE(self):
-            return self.getToken(MySqlParser.PROFILE, 0)
-        def showProfileType(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ShowProfileTypeContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.ShowProfileTypeContext,i)
-
-        def LIMIT(self):
-            return self.getToken(MySqlParser.LIMIT, 0)
-        def FOR(self):
-            return self.getToken(MySqlParser.FOR, 0)
-        def QUERY(self):
-            return self.getToken(MySqlParser.QUERY, 0)
-        def decimalLiteral(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowProfile" ):
-                listener.enterShowProfile(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowProfile" ):
-                listener.exitShowProfile(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowProfile" ):
-                return visitor.visitShowProfile(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowCreateUserContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def CREATE(self):
-            return self.getToken(MySqlParser.CREATE, 0)
-        def USER(self):
-            return self.getToken(MySqlParser.USER, 0)
-        def userName(self):
-            return self.getTypedRuleContext(MySqlParser.UserNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowCreateUser" ):
-                listener.enterShowCreateUser(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowCreateUser" ):
-                listener.exitShowCreateUser(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowCreateUser" ):
-                return visitor.visitShowCreateUser(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowEngineContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.engineOption = None # Token
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def ENGINE(self):
-            return self.getToken(MySqlParser.ENGINE, 0)
-        def engineName(self):
-            return self.getTypedRuleContext(MySqlParser.EngineNameContext,0)
-
-        def STATUS(self):
-            return self.getToken(MySqlParser.STATUS, 0)
-        def MUTEX(self):
-            return self.getToken(MySqlParser.MUTEX, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowEngine" ):
-                listener.enterShowEngine(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowEngine" ):
-                listener.exitShowEngine(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowEngine" ):
-                return visitor.visitShowEngine(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowSlaveStatusContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def SLAVE(self):
-            return self.getToken(MySqlParser.SLAVE, 0)
-        def STATUS(self):
-            return self.getToken(MySqlParser.STATUS, 0)
-        def FOR(self):
-            return self.getToken(MySqlParser.FOR, 0)
-        def CHANNEL(self):
-            return self.getToken(MySqlParser.CHANNEL, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowSlaveStatus" ):
-                listener.enterShowSlaveStatus(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowSlaveStatus" ):
-                listener.exitShowSlaveStatus(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowSlaveStatus" ):
-                return visitor.visitShowSlaveStatus(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowCreateDbContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.schemaFormat = None # Token
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def CREATE(self):
-            return self.getToken(MySqlParser.CREATE, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def DATABASE(self):
-            return self.getToken(MySqlParser.DATABASE, 0)
-        def SCHEMA(self):
-            return self.getToken(MySqlParser.SCHEMA, 0)
-        def ifNotExists(self):
-            return self.getTypedRuleContext(MySqlParser.IfNotExistsContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowCreateDb" ):
-                listener.enterShowCreateDb(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowCreateDb" ):
-                listener.exitShowCreateDb(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowCreateDb" ):
-                return visitor.visitShowCreateDb(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowOpenTablesContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.schemaFormat = None # Token
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def OPEN(self):
-            return self.getToken(MySqlParser.OPEN, 0)
-        def TABLES(self):
-            return self.getToken(MySqlParser.TABLES, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-        def showFilter(self):
-            return self.getTypedRuleContext(MySqlParser.ShowFilterContext,0)
-
-        def FROM(self):
-            return self.getToken(MySqlParser.FROM, 0)
-        def IN(self):
-            return self.getToken(MySqlParser.IN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowOpenTables" ):
-                listener.enterShowOpenTables(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowOpenTables" ):
-                listener.exitShowOpenTables(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowOpenTables" ):
-                return visitor.visitShowOpenTables(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ShowErrorsContext(ShowStatementContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ShowStatementContext
-            super().__init__(parser)
-            self.errorFormat = None # Token
-            self.offset = None # DecimalLiteralContext
-            self.rowCount = None # DecimalLiteralContext
-            self.copyFrom(ctx)
-
-        def SHOW(self):
-            return self.getToken(MySqlParser.SHOW, 0)
-        def ERRORS(self):
-            return self.getToken(MySqlParser.ERRORS, 0)
-        def WARNINGS(self):
-            return self.getToken(MySqlParser.WARNINGS, 0)
-        def LIMIT(self):
-            return self.getToken(MySqlParser.LIMIT, 0)
-        def decimalLiteral(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.DecimalLiteralContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterShowErrors" ):
-                listener.enterShowErrors(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitShowErrors" ):
-                listener.exitShowErrors(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitShowErrors" ):
-                return visitor.visitShowErrors(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -38534,6 +38534,65 @@ class MySqlParser ( Parser ):
 
 
 
+    class TableFlushOptionContext(FlushOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FlushOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def TABLES(self):
+            return self.getToken(MySqlParser.TABLES, 0)
+        def tables(self):
+            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
+
+        def flushTableOption(self):
+            return self.getTypedRuleContext(MySqlParser.FlushTableOptionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterTableFlushOption" ):
+                listener.enterTableFlushOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitTableFlushOption" ):
+                listener.exitTableFlushOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitTableFlushOption" ):
+                return visitor.visitTableFlushOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ChannelFlushOptionContext(FlushOptionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FlushOptionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def RELAY(self):
+            return self.getToken(MySqlParser.RELAY, 0)
+        def LOGS(self):
+            return self.getToken(MySqlParser.LOGS, 0)
+        def channelOption(self):
+            return self.getTypedRuleContext(MySqlParser.ChannelOptionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterChannelFlushOption" ):
+                listener.enterChannelFlushOption(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitChannelFlushOption" ):
+                listener.exitChannelFlushOption(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitChannelFlushOption" ):
+                return visitor.visitChannelFlushOption(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class SimpleFlushOptionContext(FlushOptionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FlushOptionContext
@@ -38590,65 +38649,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSimpleFlushOption" ):
                 return visitor.visitSimpleFlushOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ChannelFlushOptionContext(FlushOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FlushOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def RELAY(self):
-            return self.getToken(MySqlParser.RELAY, 0)
-        def LOGS(self):
-            return self.getToken(MySqlParser.LOGS, 0)
-        def channelOption(self):
-            return self.getTypedRuleContext(MySqlParser.ChannelOptionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterChannelFlushOption" ):
-                listener.enterChannelFlushOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitChannelFlushOption" ):
-                listener.exitChannelFlushOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitChannelFlushOption" ):
-                return visitor.visitChannelFlushOption(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class TableFlushOptionContext(FlushOptionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FlushOptionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def TABLES(self):
-            return self.getToken(MySqlParser.TABLES, 0)
-        def tables(self):
-            return self.getTypedRuleContext(MySqlParser.TablesContext,0)
-
-        def flushTableOption(self):
-            return self.getTypedRuleContext(MySqlParser.FlushTableOptionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterTableFlushOption" ):
-                listener.enterTableFlushOption(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitTableFlushOption" ):
-                listener.exitTableFlushOption(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitTableFlushOption" ):
-                return visitor.visitTableFlushOption(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -39305,35 +39305,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class DescribeConnectionContext(DescribeObjectClauseContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DescribeObjectClauseContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def FOR(self):
-            return self.getToken(MySqlParser.FOR, 0)
-        def CONNECTION(self):
-            return self.getToken(MySqlParser.CONNECTION, 0)
-        def uid(self):
-            return self.getTypedRuleContext(MySqlParser.UidContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDescribeConnection" ):
-                listener.enterDescribeConnection(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDescribeConnection" ):
-                listener.exitDescribeConnection(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDescribeConnection" ):
-                return visitor.visitDescribeConnection(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class DescribeStatementsContext(DescribeObjectClauseContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DescribeObjectClauseContext
@@ -39367,6 +39338,35 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitDescribeStatements" ):
                 return visitor.visitDescribeStatements(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class DescribeConnectionContext(DescribeObjectClauseContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DescribeObjectClauseContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def FOR(self):
+            return self.getToken(MySqlParser.FOR, 0)
+        def CONNECTION(self):
+            return self.getToken(MySqlParser.CONNECTION, 0)
+        def uid(self):
+            return self.getTypedRuleContext(MySqlParser.UidContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterDescribeConnection" ):
+                listener.enterDescribeConnection(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitDescribeConnection" ):
+                listener.exitDescribeConnection(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitDescribeConnection" ):
+                return visitor.visitDescribeConnection(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -41182,39 +41182,86 @@ class MySqlParser ( Parser ):
 
 
 
-    class SimpleDataTypeContext(DataTypeContext):
+    class SpatialDataTypeContext(DataTypeContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DataTypeContext
             super().__init__(parser)
             self.typeName = None # Token
             self.copyFrom(ctx)
 
-        def DATE(self):
-            return self.getToken(MySqlParser.DATE, 0)
-        def TINYBLOB(self):
-            return self.getToken(MySqlParser.TINYBLOB, 0)
-        def BLOB(self):
-            return self.getToken(MySqlParser.BLOB, 0)
-        def MEDIUMBLOB(self):
-            return self.getToken(MySqlParser.MEDIUMBLOB, 0)
-        def LONGBLOB(self):
-            return self.getToken(MySqlParser.LONGBLOB, 0)
-        def BOOL(self):
-            return self.getToken(MySqlParser.BOOL, 0)
-        def BOOLEAN(self):
-            return self.getToken(MySqlParser.BOOLEAN, 0)
+        def GEOMETRYCOLLECTION(self):
+            return self.getToken(MySqlParser.GEOMETRYCOLLECTION, 0)
+        def LINESTRING(self):
+            return self.getToken(MySqlParser.LINESTRING, 0)
+        def MULTILINESTRING(self):
+            return self.getToken(MySqlParser.MULTILINESTRING, 0)
+        def MULTIPOINT(self):
+            return self.getToken(MySqlParser.MULTIPOINT, 0)
+        def MULTIPOLYGON(self):
+            return self.getToken(MySqlParser.MULTIPOLYGON, 0)
+        def POINT(self):
+            return self.getToken(MySqlParser.POINT, 0)
+        def POLYGON(self):
+            return self.getToken(MySqlParser.POLYGON, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSimpleDataType" ):
-                listener.enterSimpleDataType(self)
+            if hasattr( listener, "enterSpatialDataType" ):
+                listener.enterSpatialDataType(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSimpleDataType" ):
-                listener.exitSimpleDataType(self)
+            if hasattr( listener, "exitSpatialDataType" ):
+                listener.exitSpatialDataType(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSimpleDataType" ):
-                return visitor.visitSimpleDataType(self)
+            if hasattr( visitor, "visitSpatialDataType" ):
+                return visitor.visitSpatialDataType(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class CollectionDataTypeContext(DataTypeContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DataTypeContext
+            super().__init__(parser)
+            self.typeName = None # Token
+            self.copyFrom(ctx)
+
+        def STRING_LITERAL(self, i:int=None):
+            if i is None:
+                return self.getTokens(MySqlParser.STRING_LITERAL)
+            else:
+                return self.getToken(MySqlParser.STRING_LITERAL, i)
+        def ENUM(self):
+            return self.getToken(MySqlParser.ENUM, 0)
+        def SET(self, i:int=None):
+            if i is None:
+                return self.getTokens(MySqlParser.SET)
+            else:
+                return self.getToken(MySqlParser.SET, i)
+        def BINARY(self):
+            return self.getToken(MySqlParser.BINARY, 0)
+        def CHARACTER(self):
+            return self.getToken(MySqlParser.CHARACTER, 0)
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+        def COLLATE(self):
+            return self.getToken(MySqlParser.COLLATE, 0)
+        def collationName(self):
+            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCollectionDataType" ):
+                listener.enterCollectionDataType(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCollectionDataType" ):
+                listener.exitCollectionDataType(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCollectionDataType" ):
+                return visitor.visitCollectionDataType(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -41291,43 +41338,6 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SpatialDataTypeContext(DataTypeContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DataTypeContext
-            super().__init__(parser)
-            self.typeName = None # Token
-            self.copyFrom(ctx)
-
-        def GEOMETRYCOLLECTION(self):
-            return self.getToken(MySqlParser.GEOMETRYCOLLECTION, 0)
-        def LINESTRING(self):
-            return self.getToken(MySqlParser.LINESTRING, 0)
-        def MULTILINESTRING(self):
-            return self.getToken(MySqlParser.MULTILINESTRING, 0)
-        def MULTIPOINT(self):
-            return self.getToken(MySqlParser.MULTIPOINT, 0)
-        def MULTIPOLYGON(self):
-            return self.getToken(MySqlParser.MULTIPOLYGON, 0)
-        def POINT(self):
-            return self.getToken(MySqlParser.POINT, 0)
-        def POLYGON(self):
-            return self.getToken(MySqlParser.POLYGON, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSpatialDataType" ):
-                listener.enterSpatialDataType(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSpatialDataType" ):
-                listener.exitSpatialDataType(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSpatialDataType" ):
-                return visitor.visitSpatialDataType(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class StringDataTypeContext(DataTypeContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DataTypeContext
@@ -41380,49 +41390,39 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class CollectionDataTypeContext(DataTypeContext):
+    class SimpleDataTypeContext(DataTypeContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.DataTypeContext
             super().__init__(parser)
             self.typeName = None # Token
             self.copyFrom(ctx)
 
-        def STRING_LITERAL(self, i:int=None):
-            if i is None:
-                return self.getTokens(MySqlParser.STRING_LITERAL)
-            else:
-                return self.getToken(MySqlParser.STRING_LITERAL, i)
-        def ENUM(self):
-            return self.getToken(MySqlParser.ENUM, 0)
-        def SET(self, i:int=None):
-            if i is None:
-                return self.getTokens(MySqlParser.SET)
-            else:
-                return self.getToken(MySqlParser.SET, i)
-        def BINARY(self):
-            return self.getToken(MySqlParser.BINARY, 0)
-        def CHARACTER(self):
-            return self.getToken(MySqlParser.CHARACTER, 0)
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-        def COLLATE(self):
-            return self.getToken(MySqlParser.COLLATE, 0)
-        def collationName(self):
-            return self.getTypedRuleContext(MySqlParser.CollationNameContext,0)
-
+        def DATE(self):
+            return self.getToken(MySqlParser.DATE, 0)
+        def TINYBLOB(self):
+            return self.getToken(MySqlParser.TINYBLOB, 0)
+        def BLOB(self):
+            return self.getToken(MySqlParser.BLOB, 0)
+        def MEDIUMBLOB(self):
+            return self.getToken(MySqlParser.MEDIUMBLOB, 0)
+        def LONGBLOB(self):
+            return self.getToken(MySqlParser.LONGBLOB, 0)
+        def BOOL(self):
+            return self.getToken(MySqlParser.BOOL, 0)
+        def BOOLEAN(self):
+            return self.getToken(MySqlParser.BOOLEAN, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCollectionDataType" ):
-                listener.enterCollectionDataType(self)
+            if hasattr( listener, "enterSimpleDataType" ):
+                listener.enterSimpleDataType(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCollectionDataType" ):
-                listener.exitCollectionDataType(self)
+            if hasattr( listener, "exitSimpleDataType" ):
+                listener.exitSimpleDataType(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCollectionDataType" ):
-                return visitor.visitCollectionDataType(self)
+            if hasattr( visitor, "visitSimpleDataType" ):
+                return visitor.visitSimpleDataType(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -42943,30 +42943,27 @@ class MySqlParser ( Parser ):
 
 
 
-    class UdfFunctionCallContext(FunctionCallContext):
+    class SpecificFunctionCallContext(FunctionCallContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FunctionCallContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def fullId(self):
-            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
-
-        def functionArgs(self):
-            return self.getTypedRuleContext(MySqlParser.FunctionArgsContext,0)
+        def specificFunction(self):
+            return self.getTypedRuleContext(MySqlParser.SpecificFunctionContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterUdfFunctionCall" ):
-                listener.enterUdfFunctionCall(self)
+            if hasattr( listener, "enterSpecificFunctionCall" ):
+                listener.enterSpecificFunctionCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitUdfFunctionCall" ):
-                listener.exitUdfFunctionCall(self)
+            if hasattr( listener, "exitSpecificFunctionCall" ):
+                listener.exitSpecificFunctionCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitUdfFunctionCall" ):
-                return visitor.visitUdfFunctionCall(self)
+            if hasattr( visitor, "visitSpecificFunctionCall" ):
+                return visitor.visitSpecificFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -42996,27 +42993,55 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class SpecificFunctionCallContext(FunctionCallContext):
+    class UdfFunctionCallContext(FunctionCallContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FunctionCallContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def specificFunction(self):
-            return self.getTypedRuleContext(MySqlParser.SpecificFunctionContext,0)
+        def fullId(self):
+            return self.getTypedRuleContext(MySqlParser.FullIdContext,0)
+
+        def functionArgs(self):
+            return self.getTypedRuleContext(MySqlParser.FunctionArgsContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSpecificFunctionCall" ):
-                listener.enterSpecificFunctionCall(self)
+            if hasattr( listener, "enterUdfFunctionCall" ):
+                listener.enterUdfFunctionCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSpecificFunctionCall" ):
-                listener.exitSpecificFunctionCall(self)
+            if hasattr( listener, "exitUdfFunctionCall" ):
+                listener.exitUdfFunctionCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSpecificFunctionCall" ):
-                return visitor.visitSpecificFunctionCall(self)
+            if hasattr( visitor, "visitUdfFunctionCall" ):
+                return visitor.visitUdfFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AggregateFunctionCallContext(FunctionCallContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FunctionCallContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def aggregateWindowedFunction(self):
+            return self.getTypedRuleContext(MySqlParser.AggregateWindowedFunctionContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAggregateFunctionCall" ):
+                listener.enterAggregateFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAggregateFunctionCall" ):
+                listener.exitAggregateFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAggregateFunctionCall" ):
+                return visitor.visitAggregateFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -43045,31 +43070,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitScalarFunctionCall" ):
                 return visitor.visitScalarFunctionCall(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class AggregateFunctionCallContext(FunctionCallContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.FunctionCallContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def aggregateWindowedFunction(self):
-            return self.getTypedRuleContext(MySqlParser.AggregateWindowedFunctionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterAggregateFunctionCall" ):
-                listener.enterAggregateFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitAggregateFunctionCall" ):
-                listener.exitAggregateFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitAggregateFunctionCall" ):
-                return visitor.visitAggregateFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -43168,106 +43168,44 @@ class MySqlParser ( Parser ):
 
 
 
-    class CharFunctionCallContext(SpecificFunctionContext):
+    class PositionFunctionCallContext(SpecificFunctionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
             super().__init__(parser)
+            self.positionString = None # StringLiteralContext
+            self.positionExpression = None # ExpressionContext
+            self.inString = None # StringLiteralContext
+            self.inExpression = None # ExpressionContext
             self.copyFrom(ctx)
 
-        def CHAR(self):
-            return self.getToken(MySqlParser.CHAR, 0)
-        def functionArgs(self):
-            return self.getTypedRuleContext(MySqlParser.FunctionArgsContext,0)
-
-        def USING(self):
-            return self.getToken(MySqlParser.USING, 0)
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterCharFunctionCall" ):
-                listener.enterCharFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitCharFunctionCall" ):
-                listener.exitCharFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitCharFunctionCall" ):
-                return visitor.visitCharFunctionCall(self)
+        def POSITION(self):
+            return self.getToken(MySqlParser.POSITION, 0)
+        def IN(self):
+            return self.getToken(MySqlParser.IN, 0)
+        def stringLiteral(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.StringLiteralContext)
             else:
-                return visitor.visitChildren(self)
+                return self.getTypedRuleContext(MySqlParser.StringLiteralContext,i)
 
-
-    class DataTypeFunctionCallContext(SpecificFunctionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
-            super().__init__(parser)
-            self.separator = None # Token
-            self.copyFrom(ctx)
-
-        def CONVERT(self):
-            return self.getToken(MySqlParser.CONVERT, 0)
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def convertedDataType(self):
-            return self.getTypedRuleContext(MySqlParser.ConvertedDataTypeContext,0)
-
-        def USING(self):
-            return self.getToken(MySqlParser.USING, 0)
-        def charsetName(self):
-            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
-
-        def CAST(self):
-            return self.getToken(MySqlParser.CAST, 0)
-        def AS(self):
-            return self.getToken(MySqlParser.AS, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterDataTypeFunctionCall" ):
-                listener.enterDataTypeFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitDataTypeFunctionCall" ):
-                listener.exitDataTypeFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitDataTypeFunctionCall" ):
-                return visitor.visitDataTypeFunctionCall(self)
+        def expression(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
             else:
-                return visitor.visitChildren(self)
+                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
 
-
-    class SimpleFunctionCallContext(SpecificFunctionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def CURRENT_DATE(self):
-            return self.getToken(MySqlParser.CURRENT_DATE, 0)
-        def CURRENT_TIME(self):
-            return self.getToken(MySqlParser.CURRENT_TIME, 0)
-        def CURRENT_TIMESTAMP(self):
-            return self.getToken(MySqlParser.CURRENT_TIMESTAMP, 0)
-        def CURRENT_USER(self):
-            return self.getToken(MySqlParser.CURRENT_USER, 0)
-        def LOCALTIME(self):
-            return self.getToken(MySqlParser.LOCALTIME, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSimpleFunctionCall" ):
-                listener.enterSimpleFunctionCall(self)
+            if hasattr( listener, "enterPositionFunctionCall" ):
+                listener.enterPositionFunctionCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSimpleFunctionCall" ):
-                listener.exitSimpleFunctionCall(self)
+            if hasattr( listener, "exitPositionFunctionCall" ):
+                listener.exitPositionFunctionCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSimpleFunctionCall" ):
-                return visitor.visitSimpleFunctionCall(self)
+            if hasattr( visitor, "visitPositionFunctionCall" ):
+                return visitor.visitPositionFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -43321,6 +43259,147 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
+    class SimpleFunctionCallContext(SpecificFunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CURRENT_DATE(self):
+            return self.getToken(MySqlParser.CURRENT_DATE, 0)
+        def CURRENT_TIME(self):
+            return self.getToken(MySqlParser.CURRENT_TIME, 0)
+        def CURRENT_TIMESTAMP(self):
+            return self.getToken(MySqlParser.CURRENT_TIMESTAMP, 0)
+        def CURRENT_USER(self):
+            return self.getToken(MySqlParser.CURRENT_USER, 0)
+        def LOCALTIME(self):
+            return self.getToken(MySqlParser.LOCALTIME, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterSimpleFunctionCall" ):
+                listener.enterSimpleFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitSimpleFunctionCall" ):
+                listener.exitSimpleFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitSimpleFunctionCall" ):
+                return visitor.visitSimpleFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class CharFunctionCallContext(SpecificFunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def CHAR(self):
+            return self.getToken(MySqlParser.CHAR, 0)
+        def functionArgs(self):
+            return self.getTypedRuleContext(MySqlParser.FunctionArgsContext,0)
+
+        def USING(self):
+            return self.getToken(MySqlParser.USING, 0)
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterCharFunctionCall" ):
+                listener.enterCharFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitCharFunctionCall" ):
+                listener.exitCharFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitCharFunctionCall" ):
+                return visitor.visitCharFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class WeightFunctionCallContext(SpecificFunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
+            super().__init__(parser)
+            self.stringFormat = None # Token
+            self.copyFrom(ctx)
+
+        def WEIGHT_STRING(self):
+            return self.getToken(MySqlParser.WEIGHT_STRING, 0)
+        def stringLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
+
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+
+        def AS(self):
+            return self.getToken(MySqlParser.AS, 0)
+        def decimalLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
+
+        def levelsInWeightString(self):
+            return self.getTypedRuleContext(MySqlParser.LevelsInWeightStringContext,0)
+
+        def CHAR(self):
+            return self.getToken(MySqlParser.CHAR, 0)
+        def BINARY(self):
+            return self.getToken(MySqlParser.BINARY, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterWeightFunctionCall" ):
+                listener.enterWeightFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitWeightFunctionCall" ):
+                listener.exitWeightFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitWeightFunctionCall" ):
+                return visitor.visitWeightFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class GetFormatFunctionCallContext(SpecificFunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
+            super().__init__(parser)
+            self.datetimeFormat = None # Token
+            self.copyFrom(ctx)
+
+        def GET_FORMAT(self):
+            return self.getToken(MySqlParser.GET_FORMAT, 0)
+        def stringLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
+
+        def DATE(self):
+            return self.getToken(MySqlParser.DATE, 0)
+        def TIME(self):
+            return self.getToken(MySqlParser.TIME, 0)
+        def DATETIME(self):
+            return self.getToken(MySqlParser.DATETIME, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterGetFormatFunctionCall" ):
+                listener.enterGetFormatFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitGetFormatFunctionCall" ):
+                listener.exitGetFormatFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitGetFormatFunctionCall" ):
+                return visitor.visitGetFormatFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
     class CaseFunctionCallContext(SpecificFunctionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
@@ -43362,78 +43441,106 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class PositionFunctionCallContext(SpecificFunctionContext):
+    class ExtractFunctionCallContext(SpecificFunctionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
             super().__init__(parser)
-            self.positionString = None # StringLiteralContext
-            self.positionExpression = None # ExpressionContext
-            self.inString = None # StringLiteralContext
-            self.inExpression = None # ExpressionContext
+            self.sourceString = None # StringLiteralContext
+            self.sourceExpression = None # ExpressionContext
             self.copyFrom(ctx)
 
-        def POSITION(self):
-            return self.getToken(MySqlParser.POSITION, 0)
-        def IN(self):
-            return self.getToken(MySqlParser.IN, 0)
-        def stringLiteral(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.StringLiteralContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.StringLiteralContext,i)
+        def EXTRACT(self):
+            return self.getToken(MySqlParser.EXTRACT, 0)
+        def intervalType(self):
+            return self.getTypedRuleContext(MySqlParser.IntervalTypeContext,0)
 
-        def expression(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
+        def FROM(self):
+            return self.getToken(MySqlParser.FROM, 0)
+        def stringLiteral(self):
+            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
+
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPositionFunctionCall" ):
-                listener.enterPositionFunctionCall(self)
+            if hasattr( listener, "enterExtractFunctionCall" ):
+                listener.enterExtractFunctionCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPositionFunctionCall" ):
-                listener.exitPositionFunctionCall(self)
+            if hasattr( listener, "exitExtractFunctionCall" ):
+                listener.exitExtractFunctionCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPositionFunctionCall" ):
-                return visitor.visitPositionFunctionCall(self)
+            if hasattr( visitor, "visitExtractFunctionCall" ):
+                return visitor.visitExtractFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class GetFormatFunctionCallContext(SpecificFunctionContext):
+    class DataTypeFunctionCallContext(SpecificFunctionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
             super().__init__(parser)
-            self.datetimeFormat = None # Token
+            self.separator = None # Token
             self.copyFrom(ctx)
 
-        def GET_FORMAT(self):
-            return self.getToken(MySqlParser.GET_FORMAT, 0)
-        def stringLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
+        def CONVERT(self):
+            return self.getToken(MySqlParser.CONVERT, 0)
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
 
-        def DATE(self):
-            return self.getToken(MySqlParser.DATE, 0)
-        def TIME(self):
-            return self.getToken(MySqlParser.TIME, 0)
-        def DATETIME(self):
-            return self.getToken(MySqlParser.DATETIME, 0)
+        def convertedDataType(self):
+            return self.getTypedRuleContext(MySqlParser.ConvertedDataTypeContext,0)
+
+        def USING(self):
+            return self.getToken(MySqlParser.USING, 0)
+        def charsetName(self):
+            return self.getTypedRuleContext(MySqlParser.CharsetNameContext,0)
+
+        def CAST(self):
+            return self.getToken(MySqlParser.CAST, 0)
+        def AS(self):
+            return self.getToken(MySqlParser.AS, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterGetFormatFunctionCall" ):
-                listener.enterGetFormatFunctionCall(self)
+            if hasattr( listener, "enterDataTypeFunctionCall" ):
+                listener.enterDataTypeFunctionCall(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitGetFormatFunctionCall" ):
-                listener.exitGetFormatFunctionCall(self)
+            if hasattr( listener, "exitDataTypeFunctionCall" ):
+                listener.exitDataTypeFunctionCall(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitGetFormatFunctionCall" ):
-                return visitor.visitGetFormatFunctionCall(self)
+            if hasattr( visitor, "visitDataTypeFunctionCall" ):
+                return visitor.visitDataTypeFunctionCall(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ValuesFunctionCallContext(SpecificFunctionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def VALUES(self):
+            return self.getToken(MySqlParser.VALUES, 0)
+        def fullColumnName(self):
+            return self.getTypedRuleContext(MySqlParser.FullColumnNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterValuesFunctionCall" ):
+                listener.enterValuesFunctionCall(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitValuesFunctionCall" ):
+                listener.exitValuesFunctionCall(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitValuesFunctionCall" ):
+                return visitor.visitValuesFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -43485,113 +43592,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitSubstrFunctionCall" ):
                 return visitor.visitSubstrFunctionCall(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ExtractFunctionCallContext(SpecificFunctionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
-            super().__init__(parser)
-            self.sourceString = None # StringLiteralContext
-            self.sourceExpression = None # ExpressionContext
-            self.copyFrom(ctx)
-
-        def EXTRACT(self):
-            return self.getToken(MySqlParser.EXTRACT, 0)
-        def intervalType(self):
-            return self.getTypedRuleContext(MySqlParser.IntervalTypeContext,0)
-
-        def FROM(self):
-            return self.getToken(MySqlParser.FROM, 0)
-        def stringLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
-
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExtractFunctionCall" ):
-                listener.enterExtractFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExtractFunctionCall" ):
-                listener.exitExtractFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExtractFunctionCall" ):
-                return visitor.visitExtractFunctionCall(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class WeightFunctionCallContext(SpecificFunctionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
-            super().__init__(parser)
-            self.stringFormat = None # Token
-            self.copyFrom(ctx)
-
-        def WEIGHT_STRING(self):
-            return self.getToken(MySqlParser.WEIGHT_STRING, 0)
-        def stringLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.StringLiteralContext,0)
-
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def AS(self):
-            return self.getToken(MySqlParser.AS, 0)
-        def decimalLiteral(self):
-            return self.getTypedRuleContext(MySqlParser.DecimalLiteralContext,0)
-
-        def levelsInWeightString(self):
-            return self.getTypedRuleContext(MySqlParser.LevelsInWeightStringContext,0)
-
-        def CHAR(self):
-            return self.getToken(MySqlParser.CHAR, 0)
-        def BINARY(self):
-            return self.getToken(MySqlParser.BINARY, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterWeightFunctionCall" ):
-                listener.enterWeightFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitWeightFunctionCall" ):
-                listener.exitWeightFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitWeightFunctionCall" ):
-                return visitor.visitWeightFunctionCall(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ValuesFunctionCallContext(SpecificFunctionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.SpecificFunctionContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def VALUES(self):
-            return self.getToken(MySqlParser.VALUES, 0)
-        def fullColumnName(self):
-            return self.getTypedRuleContext(MySqlParser.FullColumnNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterValuesFunctionCall" ):
-                listener.enterValuesFunctionCall(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitValuesFunctionCall" ):
-                listener.exitValuesFunctionCall(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitValuesFunctionCall" ):
-                return visitor.visitValuesFunctionCall(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -44161,36 +44161,6 @@ class MySqlParser ( Parser ):
 
 
 
-    class LevelWeightListContext(LevelsInWeightStringContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.LevelsInWeightStringContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def LEVEL(self):
-            return self.getToken(MySqlParser.LEVEL, 0)
-        def levelInWeightListElement(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.LevelInWeightListElementContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.LevelInWeightListElementContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLevelWeightList" ):
-                listener.enterLevelWeightList(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLevelWeightList" ):
-                listener.exitLevelWeightList(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLevelWeightList" ):
-                return visitor.visitLevelWeightList(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class LevelWeightRangeContext(LevelsInWeightStringContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.LevelsInWeightStringContext
@@ -44219,6 +44189,36 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitLevelWeightRange" ):
                 return visitor.visitLevelWeightRange(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LevelWeightListContext(LevelsInWeightStringContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.LevelsInWeightStringContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def LEVEL(self):
+            return self.getToken(MySqlParser.LEVEL, 0)
+        def levelInWeightListElement(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.LevelInWeightListElementContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.LevelInWeightListElementContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLevelWeightList" ):
+                listener.enterLevelWeightList(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLevelWeightList" ):
+                listener.exitLevelWeightList(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLevelWeightList" ):
+                return visitor.visitLevelWeightList(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -45152,34 +45152,6 @@ class MySqlParser ( Parser ):
             super().copyFrom(ctx)
 
 
-    class NotExpressionContext(ExpressionContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionContext
-            super().__init__(parser)
-            self.notOperator = None # Token
-            self.copyFrom(ctx)
-
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def NOT(self):
-            return self.getToken(MySqlParser.NOT, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNotExpression" ):
-                listener.enterNotExpression(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNotExpression" ):
-                listener.exitNotExpression(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNotExpression" ):
-                return visitor.visitNotExpression(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class IsExpressionContext(ExpressionContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionContext
@@ -45212,6 +45184,34 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitIsExpression" ):
                 return visitor.visitIsExpression(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class NotExpressionContext(ExpressionContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionContext
+            super().__init__(parser)
+            self.notOperator = None # Token
+            self.copyFrom(ctx)
+
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+
+        def NOT(self):
+            return self.getToken(MySqlParser.NOT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterNotExpression" ):
+                listener.enterNotExpression(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitNotExpression" ):
+                listener.exitNotExpression(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitNotExpression" ):
+                return visitor.visitNotExpression(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -45384,104 +45384,6 @@ class MySqlParser ( Parser ):
             super().copyFrom(ctx)
 
 
-    class ExpressionAtomPredicateContext(PredicateContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def expressionAtom(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,0)
-
-        def LOCAL_ID(self):
-            return self.getToken(MySqlParser.LOCAL_ID, 0)
-        def VAR_ASSIGN(self):
-            return self.getToken(MySqlParser.VAR_ASSIGN, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExpressionAtomPredicate" ):
-                listener.enterExpressionAtomPredicate(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExpressionAtomPredicate" ):
-                listener.exitExpressionAtomPredicate(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExpressionAtomPredicate" ):
-                return visitor.visitExpressionAtomPredicate(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class LikePredicateContext(PredicateContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def predicate(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
-
-        def LIKE(self):
-            return self.getToken(MySqlParser.LIKE, 0)
-        def NOT(self):
-            return self.getToken(MySqlParser.NOT, 0)
-        def ESCAPE(self):
-            return self.getToken(MySqlParser.ESCAPE, 0)
-        def STRING_LITERAL(self):
-            return self.getToken(MySqlParser.STRING_LITERAL, 0)
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterLikePredicate" ):
-                listener.enterLikePredicate(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitLikePredicate" ):
-                listener.exitLikePredicate(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitLikePredicate" ):
-                return visitor.visitLikePredicate(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class BinaryComparasionPredicateContext(PredicateContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
-            super().__init__(parser)
-            self.left = None # PredicateContext
-            self.right = None # PredicateContext
-            self.copyFrom(ctx)
-
-        def comparisonOperator(self):
-            return self.getTypedRuleContext(MySqlParser.ComparisonOperatorContext,0)
-
-        def predicate(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBinaryComparasionPredicate" ):
-                listener.enterBinaryComparasionPredicate(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBinaryComparasionPredicate" ):
-                listener.exitBinaryComparasionPredicate(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBinaryComparasionPredicate" ):
-                return visitor.visitBinaryComparasionPredicate(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class SoundsLikePredicateContext(PredicateContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
@@ -45514,71 +45416,66 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class BetweenPredicateContext(PredicateContext):
+    class ExpressionAtomPredicateContext(PredicateContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def predicate(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
+        def expressionAtom(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,0)
 
-        def BETWEEN(self):
-            return self.getToken(MySqlParser.BETWEEN, 0)
-        def AND(self):
-            return self.getToken(MySqlParser.AND, 0)
-        def NOT(self):
-            return self.getToken(MySqlParser.NOT, 0)
+        def LOCAL_ID(self):
+            return self.getToken(MySqlParser.LOCAL_ID, 0)
+        def VAR_ASSIGN(self):
+            return self.getToken(MySqlParser.VAR_ASSIGN, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBetweenPredicate" ):
-                listener.enterBetweenPredicate(self)
+            if hasattr( listener, "enterExpressionAtomPredicate" ):
+                listener.enterExpressionAtomPredicate(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBetweenPredicate" ):
-                listener.exitBetweenPredicate(self)
+            if hasattr( listener, "exitExpressionAtomPredicate" ):
+                listener.exitExpressionAtomPredicate(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBetweenPredicate" ):
-                return visitor.visitBetweenPredicate(self)
+            if hasattr( visitor, "visitExpressionAtomPredicate" ):
+                return visitor.visitExpressionAtomPredicate(self)
             else:
                 return visitor.visitChildren(self)
 
 
-    class RegexpPredicateContext(PredicateContext):
+    class InPredicateContext(PredicateContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
             super().__init__(parser)
-            self.regex = None # Token
             self.copyFrom(ctx)
 
-        def predicate(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
+        def predicate(self):
+            return self.getTypedRuleContext(MySqlParser.PredicateContext,0)
 
-        def REGEXP(self):
-            return self.getToken(MySqlParser.REGEXP, 0)
-        def RLIKE(self):
-            return self.getToken(MySqlParser.RLIKE, 0)
+        def IN(self):
+            return self.getToken(MySqlParser.IN, 0)
+        def selectStatement(self):
+            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
+
+        def expressions(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionsContext,0)
+
         def NOT(self):
             return self.getToken(MySqlParser.NOT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterRegexpPredicate" ):
-                listener.enterRegexpPredicate(self)
+            if hasattr( listener, "enterInPredicate" ):
+                listener.enterInPredicate(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitRegexpPredicate" ):
-                listener.exitRegexpPredicate(self)
+            if hasattr( listener, "exitInPredicate" ):
+                listener.exitInPredicate(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitRegexpPredicate" ):
-                return visitor.visitRegexpPredicate(self)
+            if hasattr( visitor, "visitInPredicate" ):
+                return visitor.visitInPredicate(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -45621,37 +45518,69 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class InPredicateContext(PredicateContext):
+    class BetweenPredicateContext(PredicateContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def predicate(self):
-            return self.getTypedRuleContext(MySqlParser.PredicateContext,0)
+        def predicate(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
 
-        def IN(self):
-            return self.getToken(MySqlParser.IN, 0)
-        def selectStatement(self):
-            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
-
-        def expressions(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionsContext,0)
-
+        def BETWEEN(self):
+            return self.getToken(MySqlParser.BETWEEN, 0)
+        def AND(self):
+            return self.getToken(MySqlParser.AND, 0)
         def NOT(self):
             return self.getToken(MySqlParser.NOT, 0)
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterInPredicate" ):
-                listener.enterInPredicate(self)
+            if hasattr( listener, "enterBetweenPredicate" ):
+                listener.enterBetweenPredicate(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitInPredicate" ):
-                listener.exitInPredicate(self)
+            if hasattr( listener, "exitBetweenPredicate" ):
+                listener.exitBetweenPredicate(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitInPredicate" ):
-                return visitor.visitInPredicate(self)
+            if hasattr( visitor, "visitBetweenPredicate" ):
+                return visitor.visitBetweenPredicate(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BinaryComparasionPredicateContext(PredicateContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
+            super().__init__(parser)
+            self.left = None # PredicateContext
+            self.right = None # PredicateContext
+            self.copyFrom(ctx)
+
+        def comparisonOperator(self):
+            return self.getTypedRuleContext(MySqlParser.ComparisonOperatorContext,0)
+
+        def predicate(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBinaryComparasionPredicate" ):
+                listener.enterBinaryComparasionPredicate(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBinaryComparasionPredicate" ):
+                listener.exitBinaryComparasionPredicate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBinaryComparasionPredicate" ):
+                return visitor.visitBinaryComparasionPredicate(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -45682,6 +45611,77 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitIsNullPredicate" ):
                 return visitor.visitIsNullPredicate(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class LikePredicateContext(PredicateContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def predicate(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
+
+        def LIKE(self):
+            return self.getToken(MySqlParser.LIKE, 0)
+        def NOT(self):
+            return self.getToken(MySqlParser.NOT, 0)
+        def ESCAPE(self):
+            return self.getToken(MySqlParser.ESCAPE, 0)
+        def STRING_LITERAL(self):
+            return self.getToken(MySqlParser.STRING_LITERAL, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterLikePredicate" ):
+                listener.enterLikePredicate(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitLikePredicate" ):
+                listener.exitLikePredicate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitLikePredicate" ):
+                return visitor.visitLikePredicate(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class RegexpPredicateContext(PredicateContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.PredicateContext
+            super().__init__(parser)
+            self.regex = None # Token
+            self.copyFrom(ctx)
+
+        def predicate(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.PredicateContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.PredicateContext,i)
+
+        def REGEXP(self):
+            return self.getToken(MySqlParser.REGEXP, 0)
+        def RLIKE(self):
+            return self.getToken(MySqlParser.RLIKE, 0)
+        def NOT(self):
+            return self.getToken(MySqlParser.NOT, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterRegexpPredicate" ):
+                listener.enterRegexpPredicate(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitRegexpPredicate" ):
+                listener.exitRegexpPredicate(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitRegexpPredicate" ):
+                return visitor.visitRegexpPredicate(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -45940,118 +45940,6 @@ class MySqlParser ( Parser ):
             super().copyFrom(ctx)
 
 
-    class FullColumnNameExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def fullColumnName(self):
-            return self.getTypedRuleContext(MySqlParser.FullColumnNameContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFullColumnNameExpressionAtom" ):
-                listener.enterFullColumnNameExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFullColumnNameExpressionAtom" ):
-                listener.exitFullColumnNameExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFullColumnNameExpressionAtom" ):
-                return visitor.visitFullColumnNameExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class ExistsExpessionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def EXISTS(self):
-            return self.getToken(MySqlParser.EXISTS, 0)
-        def selectStatement(self):
-            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterExistsExpessionAtom" ):
-                listener.enterExistsExpessionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitExistsExpessionAtom" ):
-                listener.exitExistsExpessionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitExistsExpessionAtom" ):
-                return visitor.visitExistsExpessionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class IntervalExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def INTERVAL(self):
-            return self.getToken(MySqlParser.INTERVAL, 0)
-        def expression(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
-
-        def intervalType(self):
-            return self.getTypedRuleContext(MySqlParser.IntervalTypeContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterIntervalExpressionAtom" ):
-                listener.enterIntervalExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitIntervalExpressionAtom" ):
-                listener.exitIntervalExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitIntervalExpressionAtom" ):
-                return visitor.visitIntervalExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class NestedRowExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def ROW(self):
-            return self.getToken(MySqlParser.ROW, 0)
-        def expression(self, i:int=None):
-            if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
-            else:
-                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterNestedRowExpressionAtom" ):
-                listener.enterNestedRowExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitNestedRowExpressionAtom" ):
-                listener.exitNestedRowExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitNestedRowExpressionAtom" ):
-                return visitor.visitNestedRowExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
     class UnaryExpressionAtomContext(ExpressionAtomContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
@@ -46076,56 +45964,6 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitUnaryExpressionAtom" ):
                 return visitor.visitUnaryExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class SubqueryExpessionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def selectStatement(self):
-            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterSubqueryExpessionAtom" ):
-                listener.enterSubqueryExpessionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitSubqueryExpessionAtom" ):
-                listener.exitSubqueryExpessionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitSubqueryExpessionAtom" ):
-                return visitor.visitSubqueryExpessionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class FunctionCallExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def functionCall(self):
-            return self.getTypedRuleContext(MySqlParser.FunctionCallContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterFunctionCallExpressionAtom" ):
-                listener.enterFunctionCallExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitFunctionCallExpressionAtom" ):
-                listener.exitFunctionCallExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitFunctionCallExpressionAtom" ):
-                return visitor.visitFunctionCallExpressionAtom(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -46160,27 +45998,52 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class ConstantExpressionAtomContext(ExpressionAtomContext):
+    class SubqueryExpessionAtomContext(ExpressionAtomContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def constant(self):
-            return self.getTypedRuleContext(MySqlParser.ConstantContext,0)
+        def selectStatement(self):
+            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterConstantExpressionAtom" ):
-                listener.enterConstantExpressionAtom(self)
+            if hasattr( listener, "enterSubqueryExpessionAtom" ):
+                listener.enterSubqueryExpessionAtom(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitConstantExpressionAtom" ):
-                listener.exitConstantExpressionAtom(self)
+            if hasattr( listener, "exitSubqueryExpessionAtom" ):
+                listener.exitSubqueryExpessionAtom(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitConstantExpressionAtom" ):
-                return visitor.visitConstantExpressionAtom(self)
+            if hasattr( visitor, "visitSubqueryExpessionAtom" ):
+                return visitor.visitSubqueryExpessionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class MysqlVariableExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def mysqlVariable(self):
+            return self.getTypedRuleContext(MySqlParser.MysqlVariableContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterMysqlVariableExpressionAtom" ):
+                listener.enterMysqlVariableExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitMysqlVariableExpressionAtom" ):
+                listener.exitMysqlVariableExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitMysqlVariableExpressionAtom" ):
+                return visitor.visitMysqlVariableExpressionAtom(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -46213,87 +46076,32 @@ class MySqlParser ( Parser ):
                 return visitor.visitChildren(self)
 
 
-    class BinaryExpressionAtomContext(ExpressionAtomContext):
+    class NestedRowExpressionAtomContext(ExpressionAtomContext):
 
         def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
             super().__init__(parser)
             self.copyFrom(ctx)
 
-        def BINARY(self):
-            return self.getToken(MySqlParser.BINARY, 0)
-        def expressionAtom(self):
-            return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBinaryExpressionAtom" ):
-                listener.enterBinaryExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBinaryExpressionAtom" ):
-                listener.exitBinaryExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBinaryExpressionAtom" ):
-                return visitor.visitBinaryExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class BitExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.left = None # ExpressionAtomContext
-            self.right = None # ExpressionAtomContext
-            self.copyFrom(ctx)
-
-        def bitOperator(self):
-            return self.getTypedRuleContext(MySqlParser.BitOperatorContext,0)
-
-        def expressionAtom(self, i:int=None):
+        def ROW(self):
+            return self.getToken(MySqlParser.ROW, 0)
+        def expression(self, i:int=None):
             if i is None:
-                return self.getTypedRuleContexts(MySqlParser.ExpressionAtomContext)
+                return self.getTypedRuleContexts(MySqlParser.ExpressionContext)
             else:
-                return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,i)
+                return self.getTypedRuleContext(MySqlParser.ExpressionContext,i)
 
 
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterBitExpressionAtom" ):
-                listener.enterBitExpressionAtom(self)
+            if hasattr( listener, "enterNestedRowExpressionAtom" ):
+                listener.enterNestedRowExpressionAtom(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitBitExpressionAtom" ):
-                listener.exitBitExpressionAtom(self)
+            if hasattr( listener, "exitNestedRowExpressionAtom" ):
+                listener.exitNestedRowExpressionAtom(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitBitExpressionAtom" ):
-                return visitor.visitBitExpressionAtom(self)
-            else:
-                return visitor.visitChildren(self)
-
-
-    class MysqlVariableExpressionAtomContext(ExpressionAtomContext):
-
-        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
-            super().__init__(parser)
-            self.copyFrom(ctx)
-
-        def mysqlVariable(self):
-            return self.getTypedRuleContext(MySqlParser.MysqlVariableContext,0)
-
-
-        def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterMysqlVariableExpressionAtom" ):
-                listener.enterMysqlVariableExpressionAtom(self)
-
-        def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitMysqlVariableExpressionAtom" ):
-                listener.exitMysqlVariableExpressionAtom(self)
-
-        def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitMysqlVariableExpressionAtom" ):
-                return visitor.visitMysqlVariableExpressionAtom(self)
+            if hasattr( visitor, "visitNestedRowExpressionAtom" ):
+                return visitor.visitNestedRowExpressionAtom(self)
             else:
                 return visitor.visitChildren(self)
 
@@ -46327,6 +46135,198 @@ class MySqlParser ( Parser ):
         def accept(self, visitor:ParseTreeVisitor):
             if hasattr( visitor, "visitMathExpressionAtom" ):
                 return visitor.visitMathExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class IntervalExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def INTERVAL(self):
+            return self.getToken(MySqlParser.INTERVAL, 0)
+        def expression(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionContext,0)
+
+        def intervalType(self):
+            return self.getTypedRuleContext(MySqlParser.IntervalTypeContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterIntervalExpressionAtom" ):
+                listener.enterIntervalExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitIntervalExpressionAtom" ):
+                listener.exitIntervalExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitIntervalExpressionAtom" ):
+                return visitor.visitIntervalExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ExistsExpessionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def EXISTS(self):
+            return self.getToken(MySqlParser.EXISTS, 0)
+        def selectStatement(self):
+            return self.getTypedRuleContext(MySqlParser.SelectStatementContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterExistsExpessionAtom" ):
+                listener.enterExistsExpessionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitExistsExpessionAtom" ):
+                listener.exitExistsExpessionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitExistsExpessionAtom" ):
+                return visitor.visitExistsExpessionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ConstantExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def constant(self):
+            return self.getTypedRuleContext(MySqlParser.ConstantContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterConstantExpressionAtom" ):
+                listener.enterConstantExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitConstantExpressionAtom" ):
+                listener.exitConstantExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitConstantExpressionAtom" ):
+                return visitor.visitConstantExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class FunctionCallExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def functionCall(self):
+            return self.getTypedRuleContext(MySqlParser.FunctionCallContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFunctionCallExpressionAtom" ):
+                listener.enterFunctionCallExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFunctionCallExpressionAtom" ):
+                listener.exitFunctionCallExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFunctionCallExpressionAtom" ):
+                return visitor.visitFunctionCallExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BinaryExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def BINARY(self):
+            return self.getToken(MySqlParser.BINARY, 0)
+        def expressionAtom(self):
+            return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBinaryExpressionAtom" ):
+                listener.enterBinaryExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBinaryExpressionAtom" ):
+                listener.exitBinaryExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBinaryExpressionAtom" ):
+                return visitor.visitBinaryExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class FullColumnNameExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def fullColumnName(self):
+            return self.getTypedRuleContext(MySqlParser.FullColumnNameContext,0)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterFullColumnNameExpressionAtom" ):
+                listener.enterFullColumnNameExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitFullColumnNameExpressionAtom" ):
+                listener.exitFullColumnNameExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitFullColumnNameExpressionAtom" ):
+                return visitor.visitFullColumnNameExpressionAtom(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class BitExpressionAtomContext(ExpressionAtomContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a MySqlParser.ExpressionAtomContext
+            super().__init__(parser)
+            self.left = None # ExpressionAtomContext
+            self.right = None # ExpressionAtomContext
+            self.copyFrom(ctx)
+
+        def bitOperator(self):
+            return self.getTypedRuleContext(MySqlParser.BitOperatorContext,0)
+
+        def expressionAtom(self, i:int=None):
+            if i is None:
+                return self.getTypedRuleContexts(MySqlParser.ExpressionAtomContext)
+            else:
+                return self.getTypedRuleContext(MySqlParser.ExpressionAtomContext,i)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterBitExpressionAtom" ):
+                listener.enterBitExpressionAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitBitExpressionAtom" ):
+                listener.exitBitExpressionAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitBitExpressionAtom" ):
+                return visitor.visitBitExpressionAtom(self)
             else:
                 return visitor.visitChildren(self)
 
