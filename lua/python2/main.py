@@ -51,12 +51,12 @@ class LuaPrintListener(LuaListener):
         self.currentFuntionName = None
 
     def exitFunctioncall(self, ctx):
-        funcName = ctx.getChild(0).getText();
+        funcName = ctx.varOrExp().getText()
         self.graph.edge(self.currentFuntionName, funcName);
 
     def enterStat13(self, ctx):
-        self.currentFuntionName = ctx.getChild(1).getText();
-        self.graph.nodes.add(self.currentFuntionName);
+        self.currentFuntionName = ctx.funcname().getText()
+        self.graph.nodes.add(self.currentFuntionName)
 
 def main():
     lexer = LuaLexer(FileStream("./t.lua"))
