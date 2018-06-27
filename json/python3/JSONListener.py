@@ -17,39 +17,84 @@ class JSONListener(ParseTreeListener):
         pass
 
 
-    # Enter a parse tree produced by JSONParser#obj.
-    def enterObj(self, ctx:JSONParser.ObjContext):
+    # Enter a parse tree produced by JSONParser#AnObj.
+    def enterAnObj(self, ctx:JSONParser.AnObjContext):
         pass
 
-    # Exit a parse tree produced by JSONParser#obj.
-    def exitObj(self, ctx:JSONParser.ObjContext):
-        pass
-
-
-    # Enter a parse tree produced by JSONParser#pair.
-    def enterPair(self, ctx:JSONParser.PairContext):
-        pass
-
-    # Exit a parse tree produced by JSONParser#pair.
-    def exitPair(self, ctx:JSONParser.PairContext):
+    # Exit a parse tree produced by JSONParser#AnObj.
+    def exitAnObj(self, ctx:JSONParser.AnObjContext):
         pass
 
 
-    # Enter a parse tree produced by JSONParser#array.
-    def enterArray(self, ctx:JSONParser.ArrayContext):
+    # Enter a parse tree produced by JSONParser#EmptyObj.
+    def enterEmptyObj(self, ctx:JSONParser.EmptyObjContext):
         pass
 
-    # Exit a parse tree produced by JSONParser#array.
-    def exitArray(self, ctx:JSONParser.ArrayContext):
+    # Exit a parse tree produced by JSONParser#EmptyObj.
+    def exitEmptyObj(self, ctx:JSONParser.EmptyObjContext):
         pass
 
 
-    # Enter a parse tree produced by JSONParser#value.
-    def enterValue(self, ctx:JSONParser.ValueContext):
+    # Enter a parse tree produced by JSONParser#PairGroup.
+    def enterPairGroup(self, ctx:JSONParser.PairGroupContext):
         pass
 
-    # Exit a parse tree produced by JSONParser#value.
-    def exitValue(self, ctx:JSONParser.ValueContext):
+    # Exit a parse tree produced by JSONParser#PairGroup.
+    def exitPairGroup(self, ctx:JSONParser.PairGroupContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#ArrayOfValues.
+    def enterArrayOfValues(self, ctx:JSONParser.ArrayOfValuesContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#ArrayOfValues.
+    def exitArrayOfValues(self, ctx:JSONParser.ArrayOfValuesContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#EmptyArray.
+    def enterEmptyArray(self, ctx:JSONParser.EmptyArrayContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#EmptyArray.
+    def exitEmptyArray(self, ctx:JSONParser.EmptyArrayContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#String.
+    def enterString(self, ctx:JSONParser.StringContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#String.
+    def exitString(self, ctx:JSONParser.StringContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#Atom.
+    def enterAtom(self, ctx:JSONParser.AtomContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#Atom.
+    def exitAtom(self, ctx:JSONParser.AtomContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#ObjValue.
+    def enterObjValue(self, ctx:JSONParser.ObjValueContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#ObjValue.
+    def exitObjValue(self, ctx:JSONParser.ObjValueContext):
+        pass
+
+
+    # Enter a parse tree produced by JSONParser#ArrayValue.
+    def enterArrayValue(self, ctx:JSONParser.ArrayValueContext):
+        pass
+
+    # Exit a parse tree produced by JSONParser#ArrayValue.
+    def exitArrayValue(self, ctx:JSONParser.ArrayValueContext):
         pass
 
 

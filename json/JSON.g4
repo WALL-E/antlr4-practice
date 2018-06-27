@@ -9,8 +9,8 @@ json
    ;
 
 obj
-   : '{' pair (',' pair)* '}'      #AnObject
-   | '{' '}'                       #EmptyObject
+   : '{' pair (',' pair)* '}'      #AnObj
+   | '{' '}'                       #EmptyObj
    ;
 
 pair
@@ -25,7 +25,7 @@ array
 value
    : STRING    #String
    | NUMBER    #Atom
-   | obj       #ObjectValue
+   | obj       #ObjValue
    | array     #ArrayValue
    | 'true'    #Atom
    | 'false'   #Atom

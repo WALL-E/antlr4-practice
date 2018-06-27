@@ -11,7 +11,7 @@ class Loader extends JSONBaseListener {
     ParseTreeProperty<String> xml = new ParseTreeProperty<String>();
     
     String getXML(ParseTree ctx) {return xml.get(ctx);}
-    void setXML(ParseTree ctx, String s) {xml.put(ctx, s)}
+    void setXML(ParseTree ctx, String s) {xml.put(ctx, s);}
     
 
     public void exitAtom(JSONParser.AtomContext ctx) {
@@ -19,35 +19,36 @@ class Loader extends JSONBaseListener {
     }
 
     public void exitString(JSONParser.StringContext ctx) {
-        setXML(ctx, stripQuotes(ctx.getText()));
+        setXML(ctx, ctx.getText().replace("\"", ""));
     }
 
     public void exitArrayValue(JSONParser.ArrayValueContext ctx) {
          setXML(ctx, getXML(ctx.array()));
     }
     
-    public void exitObjectValue(JSONParser.ObjectValueContext ctx) {
-         setXML(ctx, getXML(ctx.object()));
+    public void exitObjValue(JSONParser.ObjValueContext ctx) {
+         setXML(ctx, getXML(ctx.obj()));
     }
 
-    public void exitPair(JSONParser.PairContext ctx) {
-        String tag = stripQuotes(ctx.STRING().getText());
+    public void exitPairGroup(JSONParser.PairGroupContext ctx) {
+        String tag = ctx.STRING().getText().replace("\"", "");
         JSONParser.ValueContext vctx = ctx.value();
-        String x = String.format("<%s>%s<%s>", tag, getXML(vctx), tag);
+        String x = String.format("<%s>%s</%s>", tag, getXML(vctx), tag);
         
         setXML(ctx, x);
     }
     
-    public void exitAnObject(JSONParser.AnObjectContext ctx) {
+    public void exitAnObj(JSONParser.AnObjContext ctx) {
         StringBuilder buf = new StringBuilder();
         buf.append("\n");
         for (JSONParser.PairContext pctx : ctx.pair()) {
             buf.append(getXML(pctx));
+            buf.append("\n");
         }
         setXML(ctx, buf.toString());
     }
     
-    public void exitEmptyObject(JSONParser.EmptyObjectContext ctx) {
+    public void exitEmptyObj(JSONParser.EmptyObjContext ctx) {
         setXML(ctx, "");
     }
     
@@ -69,6 +70,9 @@ class Loader extends JSONBaseListener {
     
     public void exitJson(JSONParser.JsonContext ctx) {
          setXML(ctx, getXML(ctx.getChild(0)));
+
+         System.out.println("<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+         System.out.println(getXML(ctx.getChild(0)));
     }
 }
 
@@ -85,12 +89,12 @@ public class JSON2XML {
 
         JSONLexer lexer = new JSONLexer(input);
         JSONParser parser = new JSONParser(new CommonTokenStream(lexer));
-        ParseTree tree = parser.csvFile();
+        ParseTree tree = parser.json();
 
         ParseTreeWalker walker = new ParseTreeWalker();
         Loader loader = new Loader();
         walker.walk(loader, tree);
         
-        System.out.println("translate ok");
+        // System.out.println("translate ok");
     }
 }

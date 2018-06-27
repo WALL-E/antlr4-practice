@@ -1,4 +1,4 @@
 #!/bin/bash
 
 javac *.java
-java LoadCSV t.csv
+java JSON2XML t.json

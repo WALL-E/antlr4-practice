@@ -130,6 +130,44 @@ class JSONParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return JSONParser.RULE_obj
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class EmptyObjContext(ObjContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ObjContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEmptyObj" ):
+                listener.enterEmptyObj(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEmptyObj" ):
+                listener.exitEmptyObj(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEmptyObj" ):
+                return visitor.visitEmptyObj(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class AnObjContext(ObjContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ObjContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def pair(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(JSONParser.PairContext)
@@ -137,23 +175,19 @@ class JSONParser ( Parser ):
                 return self.getTypedRuleContext(JSONParser.PairContext,i)
 
 
-        def getRuleIndex(self):
-            return JSONParser.RULE_obj
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterObj" ):
-                listener.enterObj(self)
+            if hasattr( listener, "enterAnObj" ):
+                listener.enterAnObj(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitObj" ):
-                listener.exitObj(self)
+            if hasattr( listener, "exitAnObj" ):
+                listener.exitAnObj(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitObj" ):
-                return visitor.visitObj(self)
+            if hasattr( visitor, "visitAnObj" ):
+                return visitor.visitAnObj(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -167,6 +201,7 @@ class JSONParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,1,self._ctx)
             if la_ == 1:
+                localctx = JSONParser.AnObjContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 12
                 self.match(JSONParser.T__0)
@@ -189,6 +224,7 @@ class JSONParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = JSONParser.EmptyObjContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 23
                 self.match(JSONParser.T__0)
@@ -211,30 +247,41 @@ class JSONParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def STRING(self):
-            return self.getToken(JSONParser.STRING, 0)
-
-        def value(self):
-            return self.getTypedRuleContext(JSONParser.ValueContext,0)
-
 
         def getRuleIndex(self):
             return JSONParser.RULE_pair
 
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class PairGroupContext(PairContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.PairContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STRING(self):
+            return self.getToken(JSONParser.STRING, 0)
+        def value(self):
+            return self.getTypedRuleContext(JSONParser.ValueContext,0)
+
+
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterPair" ):
-                listener.enterPair(self)
+            if hasattr( listener, "enterPairGroup" ):
+                listener.enterPairGroup(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitPair" ):
-                listener.exitPair(self)
+            if hasattr( listener, "exitPairGroup" ):
+                listener.exitPairGroup(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitPair" ):
-                return visitor.visitPair(self)
+            if hasattr( visitor, "visitPairGroup" ):
+                return visitor.visitPairGroup(self)
             else:
                 return visitor.visitChildren(self)
-
 
 
 
@@ -243,6 +290,7 @@ class JSONParser ( Parser ):
         localctx = JSONParser.PairContext(self, self._ctx, self.state)
         self.enterRule(localctx, 4, self.RULE_pair)
         try:
+            localctx = JSONParser.PairGroupContext(self, localctx)
             self.enterOuterAlt(localctx, 1)
             self.state = 27
             self.match(JSONParser.STRING)
@@ -264,6 +312,22 @@ class JSONParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
+
+        def getRuleIndex(self):
+            return JSONParser.RULE_array
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class ArrayOfValuesContext(ArrayContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ArrayContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def value(self, i:int=None):
             if i is None:
                 return self.getTypedRuleContexts(JSONParser.ValueContext)
@@ -271,23 +335,41 @@ class JSONParser ( Parser ):
                 return self.getTypedRuleContext(JSONParser.ValueContext,i)
 
 
-        def getRuleIndex(self):
-            return JSONParser.RULE_array
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterArray" ):
-                listener.enterArray(self)
+            if hasattr( listener, "enterArrayOfValues" ):
+                listener.enterArrayOfValues(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitArray" ):
-                listener.exitArray(self)
+            if hasattr( listener, "exitArrayOfValues" ):
+                listener.exitArrayOfValues(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitArray" ):
-                return visitor.visitArray(self)
+            if hasattr( visitor, "visitArrayOfValues" ):
+                return visitor.visitArrayOfValues(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class EmptyArrayContext(ArrayContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ArrayContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterEmptyArray" ):
+                listener.enterEmptyArray(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitEmptyArray" ):
+                listener.exitEmptyArray(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitEmptyArray" ):
+                return visitor.visitEmptyArray(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -301,6 +383,7 @@ class JSONParser ( Parser ):
             self._errHandler.sync(self)
             la_ = self._interp.adaptivePredict(self._input,3,self._ctx)
             if la_ == 1:
+                localctx = JSONParser.ArrayOfValuesContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 31
                 self.match(JSONParser.T__4)
@@ -323,6 +406,7 @@ class JSONParser ( Parser ):
                 pass
 
             elif la_ == 2:
+                localctx = JSONParser.EmptyArrayContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 42
                 self.match(JSONParser.T__4)
@@ -345,37 +429,112 @@ class JSONParser ( Parser ):
             super().__init__(parent, invokingState)
             self.parser = parser
 
-        def STRING(self):
-            return self.getToken(JSONParser.STRING, 0)
 
-        def NUMBER(self):
-            return self.getToken(JSONParser.NUMBER, 0)
+        def getRuleIndex(self):
+            return JSONParser.RULE_value
+
+     
+        def copyFrom(self, ctx:ParserRuleContext):
+            super().copyFrom(ctx)
+
+
+
+    class ObjValueContext(ValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
 
         def obj(self):
             return self.getTypedRuleContext(JSONParser.ObjContext,0)
 
 
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterObjValue" ):
+                listener.enterObjValue(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitObjValue" ):
+                listener.exitObjValue(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitObjValue" ):
+                return visitor.visitObjValue(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class StringContext(ValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def STRING(self):
+            return self.getToken(JSONParser.STRING, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterString" ):
+                listener.enterString(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitString" ):
+                listener.exitString(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitString" ):
+                return visitor.visitString(self)
+            else:
+                return visitor.visitChildren(self)
+
+
+    class ArrayValueContext(ValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
         def array(self):
             return self.getTypedRuleContext(JSONParser.ArrayContext,0)
 
 
-        def getRuleIndex(self):
-            return JSONParser.RULE_value
-
         def enterRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "enterValue" ):
-                listener.enterValue(self)
+            if hasattr( listener, "enterArrayValue" ):
+                listener.enterArrayValue(self)
 
         def exitRule(self, listener:ParseTreeListener):
-            if hasattr( listener, "exitValue" ):
-                listener.exitValue(self)
+            if hasattr( listener, "exitArrayValue" ):
+                listener.exitArrayValue(self)
 
         def accept(self, visitor:ParseTreeVisitor):
-            if hasattr( visitor, "visitValue" ):
-                return visitor.visitValue(self)
+            if hasattr( visitor, "visitArrayValue" ):
+                return visitor.visitArrayValue(self)
             else:
                 return visitor.visitChildren(self)
 
+
+    class AtomContext(ValueContext):
+
+        def __init__(self, parser, ctx:ParserRuleContext): # actually a JSONParser.ValueContext
+            super().__init__(parser)
+            self.copyFrom(ctx)
+
+        def NUMBER(self):
+            return self.getToken(JSONParser.NUMBER, 0)
+
+        def enterRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "enterAtom" ):
+                listener.enterAtom(self)
+
+        def exitRule(self, listener:ParseTreeListener):
+            if hasattr( listener, "exitAtom" ):
+                listener.exitAtom(self)
+
+        def accept(self, visitor:ParseTreeVisitor):
+            if hasattr( visitor, "visitAtom" ):
+                return visitor.visitAtom(self)
+            else:
+                return visitor.visitChildren(self)
 
 
 
@@ -388,36 +547,43 @@ class JSONParser ( Parser ):
             self._errHandler.sync(self)
             token = self._input.LA(1)
             if token in [JSONParser.STRING]:
+                localctx = JSONParser.StringContext(self, localctx)
                 self.enterOuterAlt(localctx, 1)
                 self.state = 46
                 self.match(JSONParser.STRING)
                 pass
             elif token in [JSONParser.NUMBER]:
+                localctx = JSONParser.AtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 2)
                 self.state = 47
                 self.match(JSONParser.NUMBER)
                 pass
             elif token in [JSONParser.T__0]:
+                localctx = JSONParser.ObjValueContext(self, localctx)
                 self.enterOuterAlt(localctx, 3)
                 self.state = 48
                 self.obj()
                 pass
             elif token in [JSONParser.T__4]:
+                localctx = JSONParser.ArrayValueContext(self, localctx)
                 self.enterOuterAlt(localctx, 4)
                 self.state = 49
                 self.array()
                 pass
             elif token in [JSONParser.T__6]:
+                localctx = JSONParser.AtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 5)
                 self.state = 50
                 self.match(JSONParser.T__6)
                 pass
             elif token in [JSONParser.T__7]:
+                localctx = JSONParser.AtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 6)
                 self.state = 51
                 self.match(JSONParser.T__7)
                 pass
             elif token in [JSONParser.T__8]:
+                localctx = JSONParser.AtomContext(self, localctx)
                 self.enterOuterAlt(localctx, 7)
                 self.state = 52
                 self.match(JSONParser.T__8)

@@ -14,23 +14,48 @@ class JSONVisitor(ParseTreeVisitor):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JSONParser#obj.
-    def visitObj(self, ctx:JSONParser.ObjContext):
+    # Visit a parse tree produced by JSONParser#AnObj.
+    def visitAnObj(self, ctx:JSONParser.AnObjContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JSONParser#pair.
-    def visitPair(self, ctx:JSONParser.PairContext):
+    # Visit a parse tree produced by JSONParser#EmptyObj.
+    def visitEmptyObj(self, ctx:JSONParser.EmptyObjContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JSONParser#array.
-    def visitArray(self, ctx:JSONParser.ArrayContext):
+    # Visit a parse tree produced by JSONParser#PairGroup.
+    def visitPairGroup(self, ctx:JSONParser.PairGroupContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by JSONParser#value.
-    def visitValue(self, ctx:JSONParser.ValueContext):
+    # Visit a parse tree produced by JSONParser#ArrayOfValues.
+    def visitArrayOfValues(self, ctx:JSONParser.ArrayOfValuesContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JSONParser#EmptyArray.
+    def visitEmptyArray(self, ctx:JSONParser.EmptyArrayContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JSONParser#String.
+    def visitString(self, ctx:JSONParser.StringContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JSONParser#Atom.
+    def visitAtom(self, ctx:JSONParser.AtomContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JSONParser#ObjValue.
+    def visitObjValue(self, ctx:JSONParser.ObjValueContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by JSONParser#ArrayValue.
+    def visitArrayValue(self, ctx:JSONParser.ArrayValueContext):
         return self.visitChildren(ctx)
 
 

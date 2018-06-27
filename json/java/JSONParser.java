@@ -125,27 +125,51 @@ public class JSONParser extends Parser {
 	}
 
 	public static class ObjContext extends ParserRuleContext {
+		public ObjContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_obj; }
+	 
+		public ObjContext() { }
+		public void copyFrom(ObjContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class EmptyObjContext extends ObjContext {
+		public EmptyObjContext(ObjContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterEmptyObj(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitEmptyObj(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitEmptyObj(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AnObjContext extends ObjContext {
 		public List<PairContext> pair() {
 			return getRuleContexts(PairContext.class);
 		}
 		public PairContext pair(int i) {
 			return getRuleContext(PairContext.class,i);
 		}
-		public ObjContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_obj; }
+		public AnObjContext(ObjContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterObj(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterAnObj(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitObj(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitAnObj(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitObj(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitAnObj(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -159,6 +183,7 @@ public class JSONParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,1,_ctx) ) {
 			case 1:
+				_localctx = new AnObjContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(12);
@@ -186,6 +211,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new EmptyObjContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(23);
@@ -208,25 +234,33 @@ public class JSONParser extends Parser {
 	}
 
 	public static class PairContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(JSONParser.STRING, 0); }
-		public ValueContext value() {
-			return getRuleContext(ValueContext.class,0);
-		}
 		public PairContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_pair; }
+	 
+		public PairContext() { }
+		public void copyFrom(PairContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class PairGroupContext extends PairContext {
+		public TerminalNode STRING() { return getToken(JSONParser.STRING, 0); }
+		public ValueContext value() {
+			return getRuleContext(ValueContext.class,0);
+		}
+		public PairGroupContext(PairContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterPairGroup(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitPair(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitPairGroup(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitPair(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitPairGroup(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -235,6 +269,7 @@ public class JSONParser extends Parser {
 		PairContext _localctx = new PairContext(_ctx, getState());
 		enterRule(_localctx, 4, RULE_pair);
 		try {
+			_localctx = new PairGroupContext(_localctx);
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(27);
@@ -257,27 +292,51 @@ public class JSONParser extends Parser {
 	}
 
 	public static class ArrayContext extends ParserRuleContext {
+		public ArrayContext(ParserRuleContext parent, int invokingState) {
+			super(parent, invokingState);
+		}
+		@Override public int getRuleIndex() { return RULE_array; }
+	 
+		public ArrayContext() { }
+		public void copyFrom(ArrayContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ArrayOfValuesContext extends ArrayContext {
 		public List<ValueContext> value() {
 			return getRuleContexts(ValueContext.class);
 		}
 		public ValueContext value(int i) {
 			return getRuleContext(ValueContext.class,i);
 		}
-		public ArrayContext(ParserRuleContext parent, int invokingState) {
-			super(parent, invokingState);
-		}
-		@Override public int getRuleIndex() { return RULE_array; }
+		public ArrayOfValuesContext(ArrayContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterArray(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterArrayOfValues(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitArray(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitArrayOfValues(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitArray(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitArrayOfValues(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class EmptyArrayContext extends ArrayContext {
+		public EmptyArrayContext(ArrayContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterEmptyArray(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitEmptyArray(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitEmptyArray(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -291,6 +350,7 @@ public class JSONParser extends Parser {
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,3,_ctx) ) {
 			case 1:
+				_localctx = new ArrayOfValuesContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(31);
@@ -318,6 +378,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case 2:
+				_localctx = new EmptyArrayContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(42);
@@ -340,29 +401,85 @@ public class JSONParser extends Parser {
 	}
 
 	public static class ValueContext extends ParserRuleContext {
-		public TerminalNode STRING() { return getToken(JSONParser.STRING, 0); }
-		public TerminalNode NUMBER() { return getToken(JSONParser.NUMBER, 0); }
-		public ObjContext obj() {
-			return getRuleContext(ObjContext.class,0);
-		}
-		public ArrayContext array() {
-			return getRuleContext(ArrayContext.class,0);
-		}
 		public ValueContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
 		@Override public int getRuleIndex() { return RULE_value; }
+	 
+		public ValueContext() { }
+		public void copyFrom(ValueContext ctx) {
+			super.copyFrom(ctx);
+		}
+	}
+	public static class ObjValueContext extends ValueContext {
+		public ObjContext obj() {
+			return getRuleContext(ObjContext.class,0);
+		}
+		public ObjValueContext(ValueContext ctx) { copyFrom(ctx); }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterValue(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterObjValue(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitValue(this);
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitObjValue(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitValue(this);
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitObjValue(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class StringContext extends ValueContext {
+		public TerminalNode STRING() { return getToken(JSONParser.STRING, 0); }
+		public StringContext(ValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterString(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitString(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitString(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class ArrayValueContext extends ValueContext {
+		public ArrayContext array() {
+			return getRuleContext(ArrayContext.class,0);
+		}
+		public ArrayValueContext(ValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterArrayValue(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitArrayValue(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitArrayValue(this);
+			else return visitor.visitChildren(this);
+		}
+	}
+	public static class AtomContext extends ValueContext {
+		public TerminalNode NUMBER() { return getToken(JSONParser.NUMBER, 0); }
+		public AtomContext(ValueContext ctx) { copyFrom(ctx); }
+		@Override
+		public void enterRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).enterAtom(this);
+		}
+		@Override
+		public void exitRule(ParseTreeListener listener) {
+			if ( listener instanceof JSONListener ) ((JSONListener)listener).exitAtom(this);
+		}
+		@Override
+		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
+			if ( visitor instanceof JSONVisitor ) return ((JSONVisitor<? extends T>)visitor).visitAtom(this);
 			else return visitor.visitChildren(this);
 		}
 	}
@@ -375,6 +492,7 @@ public class JSONParser extends Parser {
 			_errHandler.sync(this);
 			switch (_input.LA(1)) {
 			case STRING:
+				_localctx = new StringContext(_localctx);
 				enterOuterAlt(_localctx, 1);
 				{
 				setState(46);
@@ -382,6 +500,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case NUMBER:
+				_localctx = new AtomContext(_localctx);
 				enterOuterAlt(_localctx, 2);
 				{
 				setState(47);
@@ -389,6 +508,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case T__0:
+				_localctx = new ObjValueContext(_localctx);
 				enterOuterAlt(_localctx, 3);
 				{
 				setState(48);
@@ -396,6 +516,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case T__4:
+				_localctx = new ArrayValueContext(_localctx);
 				enterOuterAlt(_localctx, 4);
 				{
 				setState(49);
@@ -403,6 +524,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case T__6:
+				_localctx = new AtomContext(_localctx);
 				enterOuterAlt(_localctx, 5);
 				{
 				setState(50);
@@ -410,6 +532,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case T__7:
+				_localctx = new AtomContext(_localctx);
 				enterOuterAlt(_localctx, 6);
 				{
 				setState(51);
@@ -417,6 +540,7 @@ public class JSONParser extends Parser {
 				}
 				break;
 			case T__8:
+				_localctx = new AtomContext(_localctx);
 				enterOuterAlt(_localctx, 7);
 				{
 				setState(52);
