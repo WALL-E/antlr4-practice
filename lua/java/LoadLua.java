@@ -54,17 +54,13 @@ class Loader extends LuaBaseListener {
     String currentFuntionName = null;
  
     public void exitFunctioncall(LuaParser.FunctioncallContext ctx) {
-        String funcName = ctx.getChild(0).getText();
+        String funcName = ctx.varOrExp().getText();
         graph.edge(currentFuntionName, funcName);
-
-        // System.out.println(ctx.getChild(0).getText());
     }
 
     public void enterStat13(LuaParser.Stat13Context ctx) {
-        currentFuntionName = ctx.getChild(1).getText();
+        currentFuntionName = ctx.funcname().getText();
         graph.nodes.add(currentFuntionName);
-
-        //System.out.println(ctx.getChild(1).getText());
     }
 }
 
