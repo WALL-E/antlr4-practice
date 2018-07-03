@@ -42,9 +42,9 @@ public class CheckSymbols {
         CommonTokenStream tokens = new CommonTokenStream(lexer);
         CymbolParser parser = new CymbolParser(tokens);
         parser.setBuildParseTree(true);
-        ParseTree tree = parser.root();
+        ParseTree tree = parser.file();
         // show tree in text form
-//        System.out.println(tree.toStringTree(parser));
+        System.out.println(tree.toStringTree(parser));
 
         ParseTreeWalker walker = new ParseTreeWalker();
         DefPhase def = new DefPhase();

@@ -15,13 +15,13 @@ public class CymbolBaseListener implements CymbolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterRoot(CymbolParser.RootContext ctx) { }
+	@Override public void enterFile(CymbolParser.FileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitRoot(CymbolParser.RootContext ctx) { }
+	@Override public void exitFile(CymbolParser.FileContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
@@ -39,13 +39,13 @@ public class CymbolBaseListener implements CymbolListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void enterVarType(CymbolParser.VarTypeContext ctx) { }
+	@Override public void enterType(CymbolParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
-	@Override public void exitVarType(CymbolParser.VarTypeContext ctx) { }
+	@Override public void exitType(CymbolParser.TypeContext ctx) { }
 	/**
 	 * {@inheritDoc}
 	 *

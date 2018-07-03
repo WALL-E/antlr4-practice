@@ -20,11 +20,11 @@ public class CymbolParser extends Parser {
 		T__9=10, T__10=11, T__11=12, T__12=13, T__13=14, T__14=15, T__15=16, T__16=17, 
 		T__17=18, K_FLOAT=19, K_INT=20, K_VOID=21, ID=22, INT=23, WS=24, SL_COMMENT=25;
 	public static final int
-		RULE_root = 0, RULE_varDecl = 1, RULE_varType = 2, RULE_functionDecl = 3, 
+		RULE_file = 0, RULE_varDecl = 1, RULE_type = 2, RULE_functionDecl = 3, 
 		RULE_formalParameters = 4, RULE_formalParameter = 5, RULE_block = 6, RULE_stat = 7, 
 		RULE_expr = 8, RULE_exprList = 9;
 	public static final String[] ruleNames = {
-		"root", "varDecl", "varType", "functionDecl", "formalParameters", "formalParameter", 
+		"file", "varDecl", "type", "functionDecl", "formalParameters", "formalParameter", 
 		"block", "stat", "expr", "exprList"
 	};
 
@@ -87,7 +87,7 @@ public class CymbolParser extends Parser {
 		super(input);
 		_interp = new ParserATNSimulator(this,_ATN,_decisionToDFA,_sharedContextCache);
 	}
-	public static class RootContext extends ParserRuleContext {
+	public static class FileContext extends ParserRuleContext {
 		public List<FunctionDeclContext> functionDecl() {
 			return getRuleContexts(FunctionDeclContext.class);
 		}
@@ -100,28 +100,28 @@ public class CymbolParser extends Parser {
 		public VarDeclContext varDecl(int i) {
 			return getRuleContext(VarDeclContext.class,i);
 		}
-		public RootContext(ParserRuleContext parent, int invokingState) {
+		public FileContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_root; }
+		@Override public int getRuleIndex() { return RULE_file; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).enterRoot(this);
+			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).enterFile(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).exitRoot(this);
+			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).exitFile(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CymbolVisitor ) return ((CymbolVisitor<? extends T>)visitor).visitRoot(this);
+			if ( visitor instanceof CymbolVisitor ) return ((CymbolVisitor<? extends T>)visitor).visitFile(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final RootContext root() throws RecognitionException {
-		RootContext _localctx = new RootContext(_ctx, getState());
-		enterRule(_localctx, 0, RULE_root);
+	public final FileContext file() throws RecognitionException {
+		FileContext _localctx = new FileContext(_ctx, getState());
+		enterRule(_localctx, 0, RULE_file);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -166,8 +166,8 @@ public class CymbolParser extends Parser {
 	}
 
 	public static class VarDeclContext extends ParserRuleContext {
-		public VarTypeContext varType() {
-			return getRuleContext(VarTypeContext.class,0);
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(CymbolParser.ID, 0); }
 		public ExprContext expr() {
@@ -200,7 +200,7 @@ public class CymbolParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(26);
-			varType();
+			type();
 			setState(27);
 			match(ID);
 			setState(30);
@@ -230,29 +230,29 @@ public class CymbolParser extends Parser {
 		return _localctx;
 	}
 
-	public static class VarTypeContext extends ParserRuleContext {
-		public VarTypeContext(ParserRuleContext parent, int invokingState) {
+	public static class TypeContext extends ParserRuleContext {
+		public TypeContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_varType; }
+		@Override public int getRuleIndex() { return RULE_type; }
 		@Override
 		public void enterRule(ParseTreeListener listener) {
-			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).enterVarType(this);
+			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).enterType(this);
 		}
 		@Override
 		public void exitRule(ParseTreeListener listener) {
-			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).exitVarType(this);
+			if ( listener instanceof CymbolListener ) ((CymbolListener)listener).exitType(this);
 		}
 		@Override
 		public <T> T accept(ParseTreeVisitor<? extends T> visitor) {
-			if ( visitor instanceof CymbolVisitor ) return ((CymbolVisitor<? extends T>)visitor).visitVarType(this);
+			if ( visitor instanceof CymbolVisitor ) return ((CymbolVisitor<? extends T>)visitor).visitType(this);
 			else return visitor.visitChildren(this);
 		}
 	}
 
-	public final VarTypeContext varType() throws RecognitionException {
-		VarTypeContext _localctx = new VarTypeContext(_ctx, getState());
-		enterRule(_localctx, 4, RULE_varType);
+	public final TypeContext type() throws RecognitionException {
+		TypeContext _localctx = new TypeContext(_ctx, getState());
+		enterRule(_localctx, 4, RULE_type);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -281,8 +281,8 @@ public class CymbolParser extends Parser {
 	}
 
 	public static class FunctionDeclContext extends ParserRuleContext {
-		public VarTypeContext varType() {
-			return getRuleContext(VarTypeContext.class,0);
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(CymbolParser.ID, 0); }
 		public BlockContext block() {
@@ -318,7 +318,7 @@ public class CymbolParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(36);
-			varType();
+			type();
 			setState(37);
 			match(ID);
 			setState(38);
@@ -415,8 +415,8 @@ public class CymbolParser extends Parser {
 	}
 
 	public static class FormalParameterContext extends ParserRuleContext {
-		public VarTypeContext varType() {
-			return getRuleContext(VarTypeContext.class,0);
+		public TypeContext type() {
+			return getRuleContext(TypeContext.class,0);
 		}
 		public TerminalNode ID() { return getToken(CymbolParser.ID, 0); }
 		public FormalParameterContext(ParserRuleContext parent, int invokingState) {
@@ -445,7 +445,7 @@ public class CymbolParser extends Parser {
 			enterOuterAlt(_localctx, 1);
 			{
 			setState(53);
-			varType();
+			type();
 			setState(54);
 			match(ID);
 			}

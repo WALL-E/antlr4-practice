@@ -1,84 +1,136 @@
-// Generated from CYMBOL.g4 by ANTLR 4.7.1
+// Generated from Cymbol.g4 by ANTLR 4.7.1
 import org.antlr.v4.runtime.tree.ParseTreeVisitor;
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
- * by {@link CYMBOLParser}.
+ * by {@link CymbolParser}.
  *
  * @param <T> The return type of the visit operation. Use {@link Void} for
  * operations with no return type.
  */
-public interface CYMBOLVisitor<T> extends ParseTreeVisitor<T> {
+public interface CymbolVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#root}.
+	 * Visit a parse tree produced by {@link CymbolParser#file}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRoot(CYMBOLParser.RootContext ctx);
+	T visitFile(CymbolParser.FileContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#chunk}.
+	 * Visit a parse tree produced by {@link CymbolParser#varDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitChunk(CYMBOLParser.ChunkContext ctx);
+	T visitVarDecl(CymbolParser.VarDeclContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#varDecl}.
+	 * Visit a parse tree produced by {@link CymbolParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarDecl(CYMBOLParser.VarDeclContext ctx);
+	T visitType(CymbolParser.TypeContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#varType}.
+	 * Visit a parse tree produced by {@link CymbolParser#functionDecl}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarType(CYMBOLParser.VarTypeContext ctx);
+	T visitFunctionDecl(CymbolParser.FunctionDeclContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#functionDecl}.
+	 * Visit a parse tree produced by {@link CymbolParser#formalParameters}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctionDecl(CYMBOLParser.FunctionDeclContext ctx);
+	T visitFormalParameters(CymbolParser.FormalParametersContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#formalParameters}.
+	 * Visit a parse tree produced by {@link CymbolParser#formalParameter}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormalParameters(CYMBOLParser.FormalParametersContext ctx);
+	T visitFormalParameter(CymbolParser.FormalParameterContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#formalParameter}.
+	 * Visit a parse tree produced by {@link CymbolParser#block}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFormalParameter(CYMBOLParser.FormalParameterContext ctx);
+	T visitBlock(CymbolParser.BlockContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#block}.
+	 * Visit a parse tree produced by {@link CymbolParser#stat}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitBlock(CYMBOLParser.BlockContext ctx);
+	T visitStat(CymbolParser.StatContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#stat}.
+	 * Visit a parse tree produced by the {@code Call}
+	 * labeled alternative in {@link CymbolParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitStat(CYMBOLParser.StatContext ctx);
+	T visitCall(CymbolParser.CallContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#exprList}.
+	 * Visit a parse tree produced by the {@code Not}
+	 * labeled alternative in {@link CymbolParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExprList(CYMBOLParser.ExprListContext ctx);
+	T visitNot(CymbolParser.NotContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#expr}.
+	 * Visit a parse tree produced by the {@code Mult}
+	 * labeled alternative in {@link CymbolParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitExpr(CYMBOLParser.ExprContext ctx);
+	T visitMult(CymbolParser.MultContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CYMBOLParser#functioncall}.
+	 * Visit a parse tree produced by the {@code AddSub}
+	 * labeled alternative in {@link CymbolParser#expr}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitFunctioncall(CYMBOLParser.FunctioncallContext ctx);
+	T visitAddSub(CymbolParser.AddSubContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Equal}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitEqual(CymbolParser.EqualContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Var}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitVar(CymbolParser.VarContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Parens}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitParens(CymbolParser.ParensContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Index}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitIndex(CymbolParser.IndexContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Negate}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitNegate(CymbolParser.NegateContext ctx);
+	/**
+	 * Visit a parse tree produced by the {@code Int}
+	 * labeled alternative in {@link CymbolParser#expr}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitInt(CymbolParser.IntContext ctx);
+	/**
+	 * Visit a parse tree produced by {@link CymbolParser#exprList}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitExprList(CymbolParser.ExprListContext ctx);
 }

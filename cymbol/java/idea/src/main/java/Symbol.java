@@ -6,10 +6,6 @@
  * We make no guarantees that this code is fit for any purpose. 
  * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.
 ***/
-
-import org.antlr.symtab.*;
-
-
 public class Symbol { // A generic programming language symbol
     public static enum Type {tINVALID, tVOID, tINT, tFLOAT}
 

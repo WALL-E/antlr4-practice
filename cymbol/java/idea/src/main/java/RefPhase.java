@@ -7,8 +7,6 @@
  * Visit http://www.pragmaticprogrammer.com/titles/tpantlr2 for more book information.
 ***/
 import org.antlr.v4.runtime.tree.ParseTreeProperty;
-import org.antlr.symtab.*;
-
 
 public class RefPhase extends CymbolBaseListener {
     ParseTreeProperty<Scope> scopes;
@@ -19,7 +17,7 @@ public class RefPhase extends CymbolBaseListener {
         this.scopes = scopes;
         this.globals = globals;
     }
-    public void enterFile(CymbolParser.RootContext ctx) {
+    public void enterFile(CymbolParser.FileContext ctx) {
         currentScope = globals;
     }
 
@@ -51,11 +49,11 @@ public class RefPhase extends CymbolBaseListener {
     public void exitCall(CymbolParser.CallContext ctx) {
         // can only handle f(...) not expr(...)
         String funcName = ctx.ID().getText();
-        Symbol method = currentScope.resolve(funcName);
-        if ( method==null ) {
+        Symbol meth = currentScope.resolve(funcName);
+        if ( meth==null ) {
             CheckSymbols.error(ctx.ID().getSymbol(), "no such function: "+funcName);
         }
-        if ( method instanceof VariableSymbol ) {
+        if ( meth instanceof VariableSymbol ) {
             CheckSymbols.error(ctx.ID().getSymbol(), funcName+" is not a function");
         }
     }

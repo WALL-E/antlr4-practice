@@ -55,9 +55,9 @@ WS
 SL_COMMENT
 
 rule names:
-root
+file
 varDecl
-varType
+type
 functionDecl
 formalParameters
 formalParameter

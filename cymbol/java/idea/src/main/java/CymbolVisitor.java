@@ -10,11 +10,11 @@ import org.antlr.v4.runtime.tree.ParseTreeVisitor;
  */
 public interface CymbolVisitor<T> extends ParseTreeVisitor<T> {
 	/**
-	 * Visit a parse tree produced by {@link CymbolParser#root}.
+	 * Visit a parse tree produced by {@link CymbolParser#file}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitRoot(CymbolParser.RootContext ctx);
+	T visitFile(CymbolParser.FileContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CymbolParser#varDecl}.
 	 * @param ctx the parse tree
@@ -22,11 +22,11 @@ public interface CymbolVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitVarDecl(CymbolParser.VarDeclContext ctx);
 	/**
-	 * Visit a parse tree produced by {@link CymbolParser#varType}.
+	 * Visit a parse tree produced by {@link CymbolParser#type}.
 	 * @param ctx the parse tree
 	 * @return the visitor result
 	 */
-	T visitVarType(CymbolParser.VarTypeContext ctx);
+	T visitType(CymbolParser.TypeContext ctx);
 	/**
 	 * Visit a parse tree produced by {@link CymbolParser#functionDecl}.
 	 * @param ctx the parse tree

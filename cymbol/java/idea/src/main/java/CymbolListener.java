@@ -7,15 +7,15 @@ import org.antlr.v4.runtime.tree.ParseTreeListener;
  */
 public interface CymbolListener extends ParseTreeListener {
 	/**
-	 * Enter a parse tree produced by {@link CymbolParser#root}.
+	 * Enter a parse tree produced by {@link CymbolParser#file}.
 	 * @param ctx the parse tree
 	 */
-	void enterRoot(CymbolParser.RootContext ctx);
+	void enterFile(CymbolParser.FileContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CymbolParser#root}.
+	 * Exit a parse tree produced by {@link CymbolParser#file}.
 	 * @param ctx the parse tree
 	 */
-	void exitRoot(CymbolParser.RootContext ctx);
+	void exitFile(CymbolParser.FileContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CymbolParser#varDecl}.
 	 * @param ctx the parse tree
@@ -27,15 +27,15 @@ public interface CymbolListener extends ParseTreeListener {
 	 */
 	void exitVarDecl(CymbolParser.VarDeclContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link CymbolParser#varType}.
+	 * Enter a parse tree produced by {@link CymbolParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void enterVarType(CymbolParser.VarTypeContext ctx);
+	void enterType(CymbolParser.TypeContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link CymbolParser#varType}.
+	 * Exit a parse tree produced by {@link CymbolParser#type}.
 	 * @param ctx the parse tree
 	 */
-	void exitVarType(CymbolParser.VarTypeContext ctx);
+	void exitType(CymbolParser.TypeContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link CymbolParser#functionDecl}.
 	 * @param ctx the parse tree

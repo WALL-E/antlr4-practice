@@ -1,67 +1,102 @@
-# Generated from CYMBOL.g4 by ANTLR 4.7.1
+# Generated from Cymbol.g4 by ANTLR 4.7.1
 from antlr4 import *
 
-# This class defines a complete generic visitor for a parse tree produced by CYMBOLParser.
+# This class defines a complete generic visitor for a parse tree produced by CymbolParser.
 
-class CYMBOLVisitor(ParseTreeVisitor):
+class CymbolVisitor(ParseTreeVisitor):
 
-    # Visit a parse tree produced by CYMBOLParser#root.
+    # Visit a parse tree produced by CymbolParser#root.
     def visitRoot(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#chunk.
-    def visitChunk(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CYMBOLParser#varDecl.
+    # Visit a parse tree produced by CymbolParser#varDecl.
     def visitVarDecl(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#varType.
+    # Visit a parse tree produced by CymbolParser#varType.
     def visitVarType(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#functionDecl.
+    # Visit a parse tree produced by CymbolParser#functionDecl.
     def visitFunctionDecl(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#formalParameters.
+    # Visit a parse tree produced by CymbolParser#formalParameters.
     def visitFormalParameters(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#formalParameter.
+    # Visit a parse tree produced by CymbolParser#formalParameter.
     def visitFormalParameter(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#block.
+    # Visit a parse tree produced by CymbolParser#block.
     def visitBlock(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#stat.
+    # Visit a parse tree produced by CymbolParser#stat.
     def visitStat(self, ctx):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#exprList.
+    # Visit a parse tree produced by CymbolParser#Call.
+    def visitCall(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Not.
+    def visitNot(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Mult.
+    def visitMult(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#AddSub.
+    def visitAddSub(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Equal.
+    def visitEqual(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Var.
+    def visitVar(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Parens.
+    def visitParens(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Index.
+    def visitIndex(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Negate.
+    def visitNegate(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Int.
+    def visitInt(self, ctx):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#exprList.
     def visitExprList(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CYMBOLParser#expr.
-    def visitExpr(self, ctx):
-        return self.visitChildren(ctx)
-
-
-    # Visit a parse tree produced by CYMBOLParser#functioncall.
-    def visitFunctioncall(self, ctx):
         return self.visitChildren(ctx)
 
 

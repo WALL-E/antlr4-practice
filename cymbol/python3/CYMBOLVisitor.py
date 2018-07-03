@@ -1,73 +1,108 @@
-# Generated from CYMBOL.g4 by ANTLR 4.7.1
+# Generated from Cymbol.g4 by ANTLR 4.7.1
 from antlr4 import *
 if __name__ is not None and "." in __name__:
-    from .CYMBOLParser import CYMBOLParser
+    from .CymbolParser import CymbolParser
 else:
-    from CYMBOLParser import CYMBOLParser
+    from CymbolParser import CymbolParser
 
-# This class defines a complete generic visitor for a parse tree produced by CYMBOLParser.
+# This class defines a complete generic visitor for a parse tree produced by CymbolParser.
 
-class CYMBOLVisitor(ParseTreeVisitor):
+class CymbolVisitor(ParseTreeVisitor):
 
-    # Visit a parse tree produced by CYMBOLParser#root.
-    def visitRoot(self, ctx:CYMBOLParser.RootContext):
+    # Visit a parse tree produced by CymbolParser#root.
+    def visitRoot(self, ctx:CymbolParser.RootContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#chunk.
-    def visitChunk(self, ctx:CYMBOLParser.ChunkContext):
+    # Visit a parse tree produced by CymbolParser#varDecl.
+    def visitVarDecl(self, ctx:CymbolParser.VarDeclContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#varDecl.
-    def visitVarDecl(self, ctx:CYMBOLParser.VarDeclContext):
+    # Visit a parse tree produced by CymbolParser#varType.
+    def visitVarType(self, ctx:CymbolParser.VarTypeContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#varType.
-    def visitVarType(self, ctx:CYMBOLParser.VarTypeContext):
+    # Visit a parse tree produced by CymbolParser#functionDecl.
+    def visitFunctionDecl(self, ctx:CymbolParser.FunctionDeclContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#functionDecl.
-    def visitFunctionDecl(self, ctx:CYMBOLParser.FunctionDeclContext):
+    # Visit a parse tree produced by CymbolParser#formalParameters.
+    def visitFormalParameters(self, ctx:CymbolParser.FormalParametersContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#formalParameters.
-    def visitFormalParameters(self, ctx:CYMBOLParser.FormalParametersContext):
+    # Visit a parse tree produced by CymbolParser#formalParameter.
+    def visitFormalParameter(self, ctx:CymbolParser.FormalParameterContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#formalParameter.
-    def visitFormalParameter(self, ctx:CYMBOLParser.FormalParameterContext):
+    # Visit a parse tree produced by CymbolParser#block.
+    def visitBlock(self, ctx:CymbolParser.BlockContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#block.
-    def visitBlock(self, ctx:CYMBOLParser.BlockContext):
+    # Visit a parse tree produced by CymbolParser#stat.
+    def visitStat(self, ctx:CymbolParser.StatContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#stat.
-    def visitStat(self, ctx:CYMBOLParser.StatContext):
+    # Visit a parse tree produced by CymbolParser#Call.
+    def visitCall(self, ctx:CymbolParser.CallContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#exprList.
-    def visitExprList(self, ctx:CYMBOLParser.ExprListContext):
+    # Visit a parse tree produced by CymbolParser#Not.
+    def visitNot(self, ctx:CymbolParser.NotContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#expr.
-    def visitExpr(self, ctx:CYMBOLParser.ExprContext):
+    # Visit a parse tree produced by CymbolParser#Mult.
+    def visitMult(self, ctx:CymbolParser.MultContext):
         return self.visitChildren(ctx)
 
 
-    # Visit a parse tree produced by CYMBOLParser#functioncall.
-    def visitFunctioncall(self, ctx:CYMBOLParser.FunctioncallContext):
+    # Visit a parse tree produced by CymbolParser#AddSub.
+    def visitAddSub(self, ctx:CymbolParser.AddSubContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Equal.
+    def visitEqual(self, ctx:CymbolParser.EqualContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Var.
+    def visitVar(self, ctx:CymbolParser.VarContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Parens.
+    def visitParens(self, ctx:CymbolParser.ParensContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Index.
+    def visitIndex(self, ctx:CymbolParser.IndexContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Negate.
+    def visitNegate(self, ctx:CymbolParser.NegateContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#Int.
+    def visitInt(self, ctx:CymbolParser.IntContext):
+        return self.visitChildren(ctx)
+
+
+    # Visit a parse tree produced by CymbolParser#exprList.
+    def visitExprList(self, ctx:CymbolParser.ExprListContext):
         return self.visitChildren(ctx)
 
 
 
-del CYMBOLParser
+del CymbolParser

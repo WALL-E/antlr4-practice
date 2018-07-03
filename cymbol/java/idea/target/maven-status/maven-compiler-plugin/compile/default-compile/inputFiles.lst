@@ -1,0 +1,16 @@
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolParser.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/GlobalScope.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/BaseScope.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CheckSymbols.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/LocalScope.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolLexer.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/RefPhase.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/Symbol.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/DefPhase.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolListener.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolBaseListener.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/FunctionSymbol.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/VariableSymbol.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolVisitor.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/Scope.java
+/Users/zhangzheng/workspace/antlr4-practice/cymbol/java/idea/src/main/java/CymbolBaseVisitor.java

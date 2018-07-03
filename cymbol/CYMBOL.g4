@@ -1,73 +1,78 @@
-grammar CYMBOL;
+/** Simple statically-typed programming language with functions and variables
+ *  taken from "Language Implementation Patterns" book.
+ */
+grammar Cymbol;
 
-root: chunk*;
-
-chunk: stat
-    | functionDecl
-    ;
+file:   (functionDecl | varDecl)+ ;
 
 varDecl
-    : varType ID ('=' expr)? ';'
+    :   type ID ('=' expr)? ';'
     ;
-
-varType
-    :    'float' | 'int' | 'void'
-    ;
+type:   'float' | 'int' | 'void' ; // user-defined types
 
 functionDecl
-    : varType ID '(' formalParameters? ')' block // "void f(int x) {...}"
+    :   type ID '(' formalParameters? ')' block // "void f(int x) {...}"
     ;
 
-formalParameters  // 形参
-    : formalParameter (',' formalParameter)*
+formalParameters
+    :   formalParameter (',' formalParameter)*
     ;
-
 formalParameter
-    : varType ID
+    :   type ID
     ;
 
-block: '{' stat* '}';  // 语句组成的代码块，可以为空
+block:  '{' stat* '}' ;   // possibly empty statement block
 
-stat:  block
-    |  varDecl
-    |  'if' expr 'then' stat ('else' stat)?
-    |  'return' expr? ';'
-    |  expr '=' expr ';'  // 赋值
-    |  expr ';'  // 函数调用
+stat:   block
+    |   varDecl
+    |   'if' expr 'then' stat ('else' stat)?
+    |   'return' expr? ';' 
+    |   expr '=' expr ';' // assignment
+    |   expr ';'          // func call
     ;
 
-exprList: expr (',' expr)*; //形参列表
+/* expr below becomes the following non-left recursive rule:
+expr[int _p]
+    :   ( '-' expr[6]
+        | '!' expr[5]
+        | ID
+        | INT
+        | '(' expr ')'
+        )
+        ( {8 >= $_p}? '*' expr[9]
+        | {7 >= $_p}? ('+'|'-') expr[8]
+        | {4 >= $_p}? '==' expr[5]
+        | {10 >= $_p}? '[' expr ']'
+        | {9 >= $_p}? '(' exprList? ')'
+        )*
+    ;
+*/
 
-expr: functioncall
-    | expr '[' expr ']'
-    | '-' expr
-    | '!' expr
-    | expr '*' expr
-    | expr ('+'|'-') expr
-    | expr '==' expr
-    | ID
-    | FLOAT
-    | INT
-    | '(' expr ')'
+expr:   ID '(' exprList? ')'    # Call
+    |   expr '[' expr ']'       # Index
+    |   '-' expr                # Negate
+    |   '!' expr                # Not
+    |   expr '*' expr           # Mult
+    |   expr ('+'|'-') expr     # AddSub
+    |   expr '==' expr          # Equal
+    |   ID                      # Var
+    |   INT                     # Int
+    |   '(' expr ')'            # Parens
     ;
 
-functioncall: ID '(' exprList ')'; //类似f(), f(x), f(1,2)的函数调用表达式
+exprList : expr (',' expr)* ;   // arg list
 
+K_FLOAT : 'float';
+K_INT   : 'int';
+K_VOID  : 'void';
+ID  :   LETTER (LETTER | [0-9])* ;
+fragment
+LETTER : [a-zA-Z] ;
 
-// LEXER
+INT :   [0-9]+ ;
 
-ID
-    : [a-zA-Z_][a-zA-Z_0-9]*
-    ;
+WS  :   [ \t\n\r]+ -> skip ;
 
-FLOAT
-    : '-'? INT ('.' [0-9]+)?
-    ;
-
-INT
-    : '0' | '-'? [1-9] [0-9]*
-    ;
-
-WS  
-    : [ \t\u000C\r\n]+ -> skip
+SL_COMMENT
+    :   '//' .*? '\n' -> skip
     ;
